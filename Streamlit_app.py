@@ -39,8 +39,8 @@ if st.button("Predict"):
         average_CPL = CPLs.sum()/len(CPLs)
         average_CPLs.append(average_CPL)
         leads.append(int(budget//average_CPL)) 
-    AP_scales = [ap_scale_silos[silo] for silo in input_silos]
-    average_AP_scales = round(sum(AP_scales)/len(input_silos),1)
+    AP_scales = [ap_scale_silos[silo]*lead for silo,lead in zip(input_silos,leads)]
+    average_AP_scales = round(sum(AP_scales)/sum(leads),1)
 
     result = pd.DataFrame({"Silo":input_silos,"Budget":input_budget,"Average CPL":average_CPLs,"Leads":leads})
     result["Budget"] = result["Budget"].apply(lambda a: "$ " + '{:.2f}'.format(a))
