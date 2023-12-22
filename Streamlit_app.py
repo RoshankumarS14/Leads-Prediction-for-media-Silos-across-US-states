@@ -44,7 +44,12 @@ if st.button("Predict"):
     result = pd.DataFrame({"Silo":input_silos,"Budget":input_budget,"Average CPL":average_CPLs,"Leads":leads})
     result["Budget"] = result["Budget"].apply(lambda a: "$ " + str(round(a,2)))
     result["Average CPL"] = result["Average CPL"].apply(lambda a: "$ " + str(round(a,2)))
-    st.dataframe(result)
+    # st.dataframe(result)
+    # Convert the DataFrame to HTML and align all columns to the right
+    df_html = df.to_html(classes='table table-striped', justify='right')
+    
+    # Display the DataFrame
+    st.markdown(df_html, unsafe_allow_html=True)
     st.write("AP Scale: "+str(average_AP_scales))
     st.write("Total leads: "+str(sum(leads)))
 
