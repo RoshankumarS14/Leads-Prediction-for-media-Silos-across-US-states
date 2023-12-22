@@ -72,25 +72,7 @@ if st.button("Predict"):
     # Display the DataFrame
     st.markdown(df_html, unsafe_allow_html=True)
 
-# Assume these are your variables
-average_AP_scales = 1.23
-input_budget = [100, 200, 300]
-leads = [10, 20, 30]
 
-# Create a DataFrame
-df = pd.DataFrame({
-    ' ': ['AP Scale', 'Total Budget', 'Target Leads', 'Min Leads'],
-    '': [average_AP_scales, '${:.2f}'.format(sum(input_budget)), round(sum(leads))*2, round(sum(leads))]
-})
-
-# Convert the DataFrame to HTML and remove the borders
-df_html = df.to_html(index=False, border=0)
-
-# Add custom CSS to hide the borders
-df_html = df_html.replace('<table ','<table style="border-collapse: collapse; border: none;" ')
-
-# Display the DataFrame
-st.markdown(df_html, unsafe_allow_html=True)
 
 
 
