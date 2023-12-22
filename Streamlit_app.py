@@ -65,7 +65,7 @@ if st.button("Predict"):
     <pre>
     <table style="border: none;">
     <tr><td style="text-align: left; border: none;">AP Scale:</td><td style="text-align: right; border: none;">{average_AP_scales}</td></tr>
-    <tr><td style="text-align: left; border: none;">Total Budget:</td><td style="text-align: right; border: none;">${str(sum(input_budget))}</td></tr>
+    <tr><td style="text-align: left; border: none;">Total Budget:</td><td style="text-align: right; border: none;">${str(int(sum(input_budget)))}</td></tr>
     <tr><td style="text-align: left; border: none;">Target Leads:</td><td style="text-align: right; border: none;">{round(sum(leads))*2}</td></tr>
     <tr><td style="text-align: left; border: none;">Min Leads:</td><td style="text-align: right; border: none;">{round(sum(leads))}</td></tr>
     </table>
