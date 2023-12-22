@@ -58,15 +58,18 @@ if st.button("Predict"):
     # st.write("Total Budget: $"+'{:.2f}'.format(sum(input_budget)))
     # st.write("Target Leads: "+str(round(sum(leads))*2))
     # st.write("Min Leads: "+str(round(sum(leads))))
-    # Create a DataFrame
+
 
     # Create formatted strings
     st.markdown(f"""
-    - **AP Scale:**\t\t\t\t\t\t\t\t{average_AP_scales}
-    - **Total Budget:**\t${'{:.2f}'.format(sum(input_budget))}
-    - **Target Leads:**\t{round(sum(leads))*2}
-    - **Min Leads:**\t\t{round(sum(leads))}
+    <pre>
+    AP Scale:      {average_AP_scales}
+    Total Budget:  ${'{:.2f}'.format(sum(input_budget))}
+    Target Leads:  {round(sum(leads))*2}
+    Min Leads:     {round(sum(leads))}
+    </pre>
     """, unsafe_allow_html=True)
+
 
 
 
