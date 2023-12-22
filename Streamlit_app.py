@@ -42,7 +42,7 @@ if st.button("Predict"):
     average_AP_scales = round(sum(AP_scales)/len(input_silos),1)
 
     result = pd.DataFrame({"Silo":input_silos,"Budget":input_budget,"Average CPL":average_CPLs,"Leads":leads})
-    result["Budget"] = result["Budget"].apply(lambda a: "$ " + '{:.2f}'.format(a)))
+    result["Budget"] = result["Budget"].apply(lambda a: "$ " + '{:.2f}'.format(a))
     result["Average CPL"] = result["Average CPL"].apply(lambda a: "$ " + str(round(a,2)))
     # st.dataframe(result)
     # Convert the DataFrame to HTML and align all columns to the right
