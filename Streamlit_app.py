@@ -44,7 +44,7 @@ if st.button("Predict"):
     result = pd.DataFrame({"Silo":input_silos,"Budget":input_budget,"Average CPL":average_CPLs,"Leads":leads})
     st.dataframe(result)
     st.write("AP Scale: "+str(average_AP_scales))
-    st.write("Total leads: "+str(sum(leads))
+    st.write("Total leads: "+str(sum(leads)))
 
 
 
