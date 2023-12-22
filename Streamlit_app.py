@@ -21,7 +21,7 @@ input_budget = []
 st.text("Enter the budget for each of the media silos:")
 # For each selected option, display a row with the option and a text input
 for i, option in enumerate(input_silos):
-    col1, col2, col3, _ = st.columns([1,0.1,2.9,10])  # Adjust the ratio as needed
+    col1, col2, col3, _ = st.columns([1,0.1,2.9,12])  # Adjust the ratio as needed
     col1.markdown(f"<div style='text-align: center; color: white; padding-top: 30px; font-size:18px;'>{option}</div>", unsafe_allow_html=True)
     col2.markdown(f"<div style='text-align: right; color: white; padding-top: 28px; font-size: 20px;'>$</div>", unsafe_allow_html=True)
     text_input_slot = col3.empty()
