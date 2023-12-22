@@ -62,7 +62,7 @@ if st.button("Predict"):
 
     # Create formatted strings
     st.markdown(f"""
-    - **AP Scale:**\t\t{average_AP_scales}
+    - **AP Scale:**\t\t\t\t\t\t\t\t{average_AP_scales}
     - **Total Budget:**\t${'{:.2f}'.format(sum(input_budget))}
     - **Target Leads:**\t{round(sum(leads))*2}
     - **Min Leads:**\t\t{round(sum(leads))}
