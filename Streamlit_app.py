@@ -55,7 +55,7 @@ if st.button("Predict"):
     # Display the DataFrame
     st.markdown(df_html, unsafe_allow_html=True)
     # st.write("AP Scale: "+str(average_AP_scales))
-    # st.write("Total Budget: $"+'{:.2f}'.format(sum(input_budget)))
+    # st.write("Total Budget: $"+str(sum(input_budget)))
     # st.write("Target Leads: "+str(round(sum(leads))*2))
     # st.write("Min Leads: "+str(round(sum(leads))))
 
