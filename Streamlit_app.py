@@ -39,13 +39,14 @@ if st.button("Predict"):
         CPLs = pd.Series([CPL.values[0] if len(CPL)>0 else None for CPL in CPLs]).dropna()
         average_CPL = CPLs.sum()/len(CPLs)
         average_CPLs.append(average_CPL)
-        leads.append(int(budget//average_CPL)) 
+        leads.append(round(budget/average_CPL,1)) 
     AP_scales = [ap_scale_silos[silo]*lead for silo,lead in zip(input_silos,leads)]
     average_AP_scales = round(sum(AP_scales)/sum(leads),1)
 
     result = pd.DataFrame({"Silo":input_silos,"Budget":input_budget,"Average CPL":average_CPLs,"Leads":leads})
     result["Budget"] = result["Budget"].apply(lambda a: "$ " + '{:.2f}'.format(a))
     result["Average CPL"] = result["Average CPL"].apply(lambda a: "$ " + '{:.2f}'.format(a))
+    result.index = np.arange(1,len(result)+1)
     # st.dataframe(result)
     # Convert the DataFrame to HTML and align all columns to the right
     df_html = result.to_html(classes='table table-striped')
@@ -54,7 +55,7 @@ if st.button("Predict"):
     # Display the DataFrame
     st.markdown(df_html, unsafe_allow_html=True)
     st.write("AP Scale: "+str(average_AP_scales))
-    st.write("Total leads: "+str(sum(leads)))
+    st.write("Total leads: "+str(round(sum(leads))))
 
 
 
