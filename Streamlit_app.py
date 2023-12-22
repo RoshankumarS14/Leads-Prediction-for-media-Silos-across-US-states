@@ -48,7 +48,7 @@ if st.button("Predict"):
     # st.dataframe(result)
     # Convert the DataFrame to HTML and align all columns to the right
     df_html = result.to_html(classes='table table-striped')
-    df_html = df_html.replace('<table ','<table style="text-align:right; bottom-margin:20px;" ')
+    df_html = df_html.replace('<table ','<table style="text-align:right; margin-bottom:20px;" ')
     
     # Display the DataFrame
     st.markdown(df_html, unsafe_allow_html=True)
