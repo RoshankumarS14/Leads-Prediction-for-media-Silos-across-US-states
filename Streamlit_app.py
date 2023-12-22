@@ -59,13 +59,12 @@ if st.button("Predict"):
     # st.write("Target Leads: "+str(round(sum(leads))*2))
     # st.write("Min Leads: "+str(round(sum(leads))))
     # Create a DataFrame
-    formatted_df = pd.DataFrame({
-        ' ': ['AP Scale', 'Total Budget', 'Target Leads', 'Min Leads'],
-        '': [average_AP_scales, '${:.2f}'.format(sum(input_budget)), round(sum(leads))*2, round(sum(leads))]
-    })
 
-    # Display the DataFrame
-    st.table(formatted_df.set_index(' '))
+    # Create formatted strings
+    st.write(f"AP Scale:      {average_AP_scales}")
+    st.write(f"Total Budget:  ${'{:.2f}'.format(sum(input_budget))}")
+    st.write(f"Target Leads:  {round(sum(leads))*2}")
+    st.write(f"Min Leads:     {round(sum(leads))}")
 
 
 
