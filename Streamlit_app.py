@@ -18,6 +18,7 @@ input_states = st.multiselect("Select the states:",states)
 input_silos = st.multiselect("Select the Silos:",silos)
 input_budget = []
 
+st.text("Enter the budget for each of the media silos:")
 # For each selected option, display a row with the option and a text input
 for i, option in enumerate(input_silos):
     col1, col2, col3, _ = st.columns([1,0.1,2.9,6])  # Adjust the ratio as needed
