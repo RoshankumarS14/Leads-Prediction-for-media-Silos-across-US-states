@@ -60,15 +60,17 @@ if st.button("Predict"):
     # st.write("Min Leads: "+str(round(sum(leads))))
 
 
-    # Create formatted strings
-    st.markdown(f"""
-    <pre>
-    AP Scale:      {average_AP_scales}
-    Total Budget:  ${'{:.2f}'.format(sum(input_budget))}
-    Target Leads:  {round(sum(leads))*2}
-    Min Leads:     {round(sum(leads))}
-    </pre>
-    """, unsafe_allow_html=True)
+    # Create a DataFrame
+    output = pd.DataFrame({
+        ' ': ['AP Scale', 'Total Budget', 'Target Leads', 'Min Leads'],
+        '': [average_AP_scales, '${:.2f}'.format(sum(input_budget)), round(sum(leads))*2, round(sum(leads))]
+    })
+    
+    # Convert the DataFrame to HTML and remove the borders
+    df_html = output.to_html(index=False, border=0)
+    
+    # Display the DataFrame
+    st.markdown(df_html, unsafe_allow_html=True)
 
 
 
