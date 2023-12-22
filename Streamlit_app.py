@@ -46,7 +46,8 @@ if st.button("Predict"):
     result["Average CPL"] = result["Average CPL"].apply(lambda a: "$ " + str(round(a,2)))
     # st.dataframe(result)
     # Convert the DataFrame to HTML and align all columns to the right
-    df_html = result.to_html(classes='table table-striped', justify='left')
+    df_html = result.to_html(classes='table table-striped')
+    df_html = df_html.replace('<table ','<table style="text-align:right;" ')
     
     # Display the DataFrame
     st.markdown(df_html, unsafe_allow_html=True)
