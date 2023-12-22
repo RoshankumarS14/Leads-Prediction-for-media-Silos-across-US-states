@@ -22,7 +22,7 @@ input_budget = []
 for i, option in enumerate(input_silos):
     col1, col2, col3, _ = st.columns([1,0.1,2.9,2])  # Adjust the ratio as needed
     col1.markdown(f"<div style='text-align: center; color: white; padding-top: 30px; font-size:18px;'>{option}</div>", unsafe_allow_html=True)
-    col2.markdown(f"<div style='text-align: right; color: black; padding-top: 25px; font-size: 14px;'>$</div>", unsafe_allow_html=True)
+    col2.markdown(f"<div style='text-align: right; color: white; padding-top: 30px; font-size: 20px;'>$</div>", unsafe_allow_html=True)
     text_input_slot = col3.empty()
     user_input = text_input_slot.text_input('', '', key=f'input_{i}')
     input_budget.append(user_input)
