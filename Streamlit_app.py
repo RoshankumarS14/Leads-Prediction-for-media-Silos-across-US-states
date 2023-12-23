@@ -120,7 +120,7 @@ if st.button("Predict"):
                 'bordercolor': 'black',
                 'steps': [
                     {'range': [80, 100], 'color': 'green'},
-                    {'range': [50, 80], 'color': '#98FB98'},
+                    {'range': [50, 80], 'color': '#30F54B'},
                     {'range': [40, 50], 'color': 'yellow'},
                     {'range': [30, 40], 'color': 'orange'},
                     {'range': [0, 30], 'color': 'red'}
