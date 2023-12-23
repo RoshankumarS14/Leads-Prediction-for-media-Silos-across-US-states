@@ -192,11 +192,11 @@ if st.button("Predict"):
                         'borderwidth': 2,
                         'bordercolor': 'black',
                         'steps': [
-                            {'range': [85, 100], 'color': 'green'},
-                            {'range': [80, 85], 'color': '#30F54B'},
-                            {'range': [75, 80], 'color': 'yellow'},
-                            {'range': [70, 75], 'color': 'orange'},
-                            {'range': [70, 50], 'color': 'red'}
+                            {'range': [90, 100], 'color': 'green'},
+                            {'range': [85, 90], 'color': '#30F54B'},
+                            {'range': [80, 85], 'color': 'yellow'},
+                            {'range': [75, 80], 'color': 'orange'},
+                            {'range': [75, 50], 'color': 'red'}
                         ],
                         'threshold': {
                             'line': {'color': 'blue', 'width': 6},
