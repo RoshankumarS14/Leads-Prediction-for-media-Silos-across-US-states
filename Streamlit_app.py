@@ -10,10 +10,12 @@ st.set_page_config(
 )
 
 df = pd.read_excel("Silo-Data-Test.xlsx")
+role_adjuster = pd.read_excel("Silo-Data-Classifications.xlsx")
 states = df["ST"].unique()
 silos = df["Silo"].unique()
 ap_scale_silos = dict(df[["Silo","AP-Scale"]].values)
 
+role = st.selectbox("Select the job role:",role_adjuster["Role"])
 input_states = st.multiselect("Select the states:",states)
 input_silos = st.multiselect("Select the Silos:",silos)
 input_budget = []
@@ -59,15 +61,15 @@ if st.button("Predict"):
     # st.write("Target Leads: "+str(round(sum(leads))*2))
     # st.write("Min Leads: "+str(round(sum(leads))))
 
-
+    adjuster = role_adjuster[role_adjuster["Role"]==role]["Adjuster"].values[0]
     # Create formatted strings
     st.write(f"""
     <pre>
     <table style="border: none;">
     <tr><td style="text-align: left; border: none;">AP Scale:</td><td style="text-align: right; border: none;">{average_AP_scales}</td></tr>
     <tr><td style="text-align: left; border: none;">Total Budget:</td><td style="text-align: right; border: none;">${str(int(sum(input_budget)))}</td></tr>
-    <tr><td style="text-align: left; border: none;">Target Leads:</td><td style="text-align: right; border: none;">{round(sum(leads))*2}</td></tr>
-    <tr><td style="text-align: left; border: none;">Min Leads:</td><td style="text-align: right; border: none;">{round(sum(leads))}</td></tr>
+    <tr><td style="text-align: left; border: none;">Target Leads:</td><td style="text-align: right; border: none;">{round(sum(leads)*adjuster)*2}</td></tr>
+    <tr><td style="text-align: left; border: none;">Min Leads:</td><td style="text-align: right; border: none;">{round(sum(leads)*adjuster)}</td></tr>
     </table>
     </pre>
     """, unsafe_allow_html=True)
