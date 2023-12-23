@@ -79,15 +79,6 @@ for i in range(num_rows):
         user_input = text_input_slot.text_input('', '', key=f'input_{index}')
         input_budget.append(user_input)
 
-st.markdown("""
-    <style>
-    .reportview-container .main .block-container {
-        padding-top: 0rem;
-        padding-bottom: 0rem;
-    }
-    </style>
-    """, unsafe_allow_html=True)
-
 if st.button("Predict"):
     leads = []
     average_CPLs = []
@@ -126,18 +117,7 @@ if st.button("Predict"):
         spread = 10
     
         # Create the gauge chart
-        fig = go.Figure()
-
-        fig.update_layout(
-            autosize=False,
-            height=500,  # Adjust as needed
-            margin=dict(
-                b=0,  # bottom margin
-                t=0,  # top margin
-            )
-        )
-
-        
+        fig = go.Figure()        
         fig.add_trace(
             go.Indicator(
                 mode="gauge+number+delta",
