@@ -120,7 +120,7 @@ if st.button("Predict"):
         <pre>
         <table style="border: none;">
         <tr><td style="text-align: left; border: none;">AP Scale:</td><td style="text-align: right; border: none;">{int(average_AP_scales*10)}</td></tr>
-        <tr><td style="text-align: left; border: none;">Balance:</td><td style="text-align: right; border: none;">{int(calculate_rating(np.log([10000 if i>10000 else 50 if i<50 else i for i in input_budget])))}</td></tr>
+        <tr><td style="text-align: left; border: none;">Balance:</td><td style="text-align: right; border: none;">{int(calculate_rating(np.log([10000 if i>10000 else i for i in input_budget if i>50])))}</td></tr>
         <tr><td style="text-align: left; border: none;">Total Budget:</td><td style="text-align: right; border: none;">${str(int(sum(input_budget)))}</td></tr>
         <tr><td style="text-align: left; border: none;">Target Leads:</td><td style="text-align: right; border: none;">{round(sum(leads)*adjuster)*2}</td></tr>
         <tr><td style="text-align: left; border: none;">Min Leads:</td><td style="text-align: right; border: none;">{round(sum(leads)*adjuster)}</td></tr>
@@ -169,6 +169,41 @@ if st.button("Predict"):
         
             # Display the chart in Streamlit
             st.plotly_chart(fig, use_container_width=True)
+
+            # Create the gauge chart
+            fig2 = go.Figure()        
+            fig2.add_trace(
+                go.Indicator(
+                    mode="gauge+number+delta",
+                    title={'text': "Balance"},
+                    delta={'reference': ask_price, 'relative': False, 'increasing': {'color': "RebeccaPurple"}, 'decreasing': {'color': "#002b36"}},
+                    value=current_price,
+                    domain={'x': [0, 1], 'y': [0, 1]},
+                    gauge={
+                        'shape': 'angular',
+                        'axis': {'range': [bid_price - spread, ask_price + spread]},
+                        'bar': {'color': "black", 'thickness': 0.2},
+                        'bgcolor': 'black',
+                        'borderwidth': 2,
+                        'bordercolor': 'black',
+                        'steps': [
+                            {'range': [80, 100], 'color': 'green'},
+                            {'range': [75, 80], 'color': '#30F54B'},
+                            {'range': [70, 75], 'color': 'yellow'},
+                            {'range': [60, 70], 'color': 'orange'},
+                            {'range': [50, 60], 'color': 'red'}
+                        ],
+                        'threshold': {
+                            'line': {'color': 'blue', 'width': 6},
+                            'thickness': 0.75,
+                            'value': current_price,
+                        }
+                    }
+                )
+            )
+        
+            # Display the chart in Streamlit
+            st.plotly_chart(fig2, use_container_width=True)
 
     
 
