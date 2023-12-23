@@ -170,6 +170,11 @@ if st.button("Predict"):
             # Display the chart in Streamlit
             st.plotly_chart(fig, use_container_width=True)
 
+            current_price = int(calculate_rating(np.log([10000 if i>10000 else i for i in input_budget if i>50])))
+            ask_price = 100
+            bid_price = 50
+            spread = 5
+
             # Create the gauge chart
             fig2 = go.Figure()        
             fig2.add_trace(
