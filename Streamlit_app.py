@@ -108,14 +108,14 @@ if st.button("Predict"):
         go.Indicator(
             mode="gauge+number+delta",
             title={'text': "AP Scale"},
-            delta={'reference': ask_price, 'relative': False, 'increasing': {'color': "RebeccaPurple"}, 'decreasing': {'color': "RoyalBlue"}},
+            delta={'reference': ask_price, 'relative': False, 'increasing': {'color': "RebeccaPurple"}},
             value=current_price,
             domain={'x': [0, 1], 'y': [0, 1]},
             gauge={
                 'shape': 'angular',
                 'axis': {'range': [bid_price - spread, ask_price + spread]},
                 'bar': {'color': "darkblue"},
-                'bgcolor': 'blue',
+                'bgcolor': 'black',
                 'borderwidth': 2,
                 'bordercolor': 'black',
                 'steps': [
