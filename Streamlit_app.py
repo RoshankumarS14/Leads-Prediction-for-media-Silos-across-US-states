@@ -118,7 +118,20 @@ if st.button("Predict"):
     
         # Create the gauge chart
         fig = go.Figure()
-    
+
+        fig.update_layout(
+            autosize=False,
+            height=500,  # Adjust as needed
+            margin=dict(
+                l=50,  # left margin
+                r=50,  # right margin
+                b=20,  # bottom margin
+                t=20,  # top margin
+                pad=10  # padding
+            )
+        )
+
+        
         fig.add_trace(
             go.Indicator(
                 mode="gauge+number+delta",
