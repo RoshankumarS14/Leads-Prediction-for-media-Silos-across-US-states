@@ -72,9 +72,9 @@ if st.button("Predict"):
     # st.dataframe(result)
     # Convert the DataFrame to HTML and align all columns to the right
     df_html = result.to_html(classes='table table-striped')
-    df_html = df_html.replace('<table ','<table style="text-align:right; margin-bottom:20px;" ')
+    df_html = df_html.replace('<table ','<table style="text-align:right; margin-bottom:20px; margin-top:50px;" ')
 
-    col_df,col_gauge = st.columns([1,1])
+    col_df,col_gauge = st.columns([1.5,1])
 
     with col_df:
         # Display the DataFrame
