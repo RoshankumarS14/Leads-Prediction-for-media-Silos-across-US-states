@@ -1,6 +1,8 @@
 import streamlit as st
 import numpy as np
 import pandas as pd
+import plotly.graph_objects as go
+import plotly.express as px 
 
 st.set_page_config(
     page_title="Leads Prediction",
@@ -92,6 +94,47 @@ if st.button("Predict"):
     </table>
     </pre>
     """, unsafe_allow_html=True)
+
+    # Define your values
+    current_price = int(average_AP_scales*10)
+    ask_price = 100
+    bid_price = 0
+    spread = 10
+
+    # Create the gauge chart
+    fig = go.Figure()
+
+    fig.add_trace(
+        go.Indicator(
+            mode="gauge+number+delta",
+            title={'text': "AP Scale"},
+            delta={'reference': ask_price, 'relative': False, 'increasing': {'color': "RebeccaPurple"}, 'decreasing': {'color': "RoyalBlue"}},
+            value=current_price,
+            domain={'x': [0, 1], 'y': [0, 1]},
+            gauge={
+                'shape': 'angular',
+                'axis': {'range': [bid_price - spread, ask_price + spread]},
+                'bar': {'color': "darkblue"},
+                'bgcolor': 'yellow',
+                'borderwidth': 2,
+                'bordercolor': 'black',
+                'steps': [
+                    {'range': [80, 100], 'color': 'green'},
+                    {'range': [50, 80], 'color': 'yellow'},
+                    {'range': [30, 50], 'color': 'orange'},
+                    {'range': [0, 30], 'color': 'red'}
+                ],
+                'threshold': {
+                    'line': {'color': 'orange', 'width': 6},
+                    'thickness': 0.75,
+                    'value': current_price,
+                }
+            }
+        )
+    )
+
+    # Display the chart in Streamlit
+    st.plotly_chart(fig, use_container_width=True)
 
 
 
