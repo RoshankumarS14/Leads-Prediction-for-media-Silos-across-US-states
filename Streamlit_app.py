@@ -41,14 +41,43 @@ def calculate_rating(numbers):
     return rating
 
 st.text("Enter the budget for each of the media silos:")
-# For each selected option, display a row with the option and a text input
-for i, option in enumerate(input_silos):
-    col1, col2, col3, _ = st.columns([1,0.1,2.9,12])  # Adjust the ratio as needed
-    col1.markdown(f"<div style='text-align: center; color: white; padding-top: 30px; font-size:18px;'>{option}</div>", unsafe_allow_html=True)
-    col2.markdown(f"<div style='text-align: right; color: white; padding-top: 28px; font-size: 20px;'>$</div>", unsafe_allow_html=True)
-    text_input_slot = col3.empty()
-    user_input = text_input_slot.text_input('', '', key=f'input_{i}')
-    input_budget.append(user_input)
+# Calculate the number of rows
+num_rows = len(input_silos) // 3
+if len(input_silos) % 3 != 0:
+    num_rows += 1
+
+# For each row
+for i in range(num_rows):
+    # Create 9 columns: 3 for options, 3 for dollar signs, and 3 for inputs
+    cols = st.columns([0.7, 0.1, 0.9] * 3)  # Repeat the pattern for 3 sets of columns
+    
+    # For each set of option, dollar sign, and input
+    for j in range(3):
+        # Calculate the index for the silo
+        index = i * 3 + j
+        
+        # If the index is out of range, break the loop
+        if index >= len(input_silos):
+            break
+        
+        # Get the option
+        option = input_silos[index]
+        
+        # Calculate the index for the columns
+        col_option = cols[j*3]
+        col_dollar = cols[j*3 + 1]
+        col_input = cols[j*3 + 2]
+        
+        # Display the option
+        col_option.markdown(f"<div style='text-align: center; color: white; padding-top: 32px; font-size:18px;'>{option}</div>", unsafe_allow_html=True)
+        
+        # Display the dollar sign
+        col_dollar.markdown(f"<div style='text-align: right; color: white; padding-top: 30px; font-size: 20px;'>$</div>", unsafe_allow_html=True)
+        
+        # Create the text input slot
+        text_input_slot = col_input.empty()
+        user_input = text_input_slot.text_input('', '', key=f'input_{index}')
+        input_budget.append(user_input)
 
 if st.button("Predict"):
     leads = []
