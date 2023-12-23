@@ -159,7 +159,7 @@ if st.button("Predict"):
                             {'range': [0, 30], 'color': 'red'}
                         ],
                         'threshold': {
-                            'line': {'color': 'orange', 'width': 6},
+                            'line': {'color': 'blue', 'width': 6},
                             'thickness': 0.75,
                             'value': current_price,
                         }
