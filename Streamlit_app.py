@@ -123,11 +123,8 @@ if st.button("Predict"):
             autosize=False,
             height=500,  # Adjust as needed
             margin=dict(
-                l=50,  # left margin
-                r=50,  # right margin
-                b=20,  # bottom margin
-                t=20,  # top margin
-                pad=10  # padding
+                b=-20,  # bottom margin
+                t=-100,  # top margin
             )
         )
 
