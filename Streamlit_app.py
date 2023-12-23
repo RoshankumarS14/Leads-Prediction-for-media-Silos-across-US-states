@@ -101,74 +101,74 @@ if st.button("Predict"):
     # st.dataframe(result)
     # Convert the DataFrame to HTML and align all columns to the right
     df_html = result.to_html(classes='table table-striped')
-    df_html = df_html.replace('<table ','<table style="text-align:right; margin-bottom:20px; margin-top:50px;" ')
+    df_html = df_html.replace('<table ','<table style="text-align:right; margin-bottom:40px; margin-top:50px;" ')
 
     col_df,col_gauge = st.columns([1.5,1])
 
     with col_df:
         # Display the DataFrame
         st.markdown(df_html, unsafe_allow_html=True)
+        # st.write("AP Scale: "+str(average_AP_scales))
+        # st.write("Total Budget: $"+str(sum(input_budget)))
+        # st.write("Target Leads: "+str(round(sum(leads))*2))
+        # st.write("Min Leads: "+str(round(sum(leads))))
+    
+        adjuster = role_adjuster[role_adjuster["Role"]==role]["Adjuster"].values[0]
+        # Create formatted strings
+        st.write(f"""
+        Prediction Outcome
+        <pre>
+        <table style="border: none;">
+        <tr><td style="text-align: left; border: none;">AP Scale:</td><td style="text-align: right; border: none;">{int(average_AP_scales*10)}</td></tr>
+        <tr><td style="text-align: left; border: none;">Balance:</td><td style="text-align: right; border: none;">{int(calculate_rating([i for i in input_budget if i >=50]))}</td></tr>
+        <tr><td style="text-align: left; border: none;">Total Budget:</td><td style="text-align: right; border: none;">${str(int(sum(input_budget)))}</td></tr>
+        <tr><td style="text-align: left; border: none;">Target Leads:</td><td style="text-align: right; border: none;">{round(sum(leads)*adjuster)*2}</td></tr>
+        <tr><td style="text-align: left; border: none;">Min Leads:</td><td style="text-align: right; border: none;">{round(sum(leads)*adjuster)}</td></tr>
+        </table>
+        </pre>
+        """, unsafe_allow_html=True)
 
-    with col_gauge:
-        # Define your values
-        current_price = int(average_AP_scales*10)
-        ask_price = 100
-        bid_price = 0
-        spread = 10
-    
-        # Create the gauge chart
-        fig = go.Figure()        
-        fig.add_trace(
-            go.Indicator(
-                mode="gauge+number+delta",
-                title={'text': "AP Scale"},
-                delta={'reference': ask_price, 'relative': False, 'increasing': {'color': "RebeccaPurple"}, 'decreasing': {'color': "#002b36"}},
-                value=current_price,
-                domain={'x': [0, 1], 'y': [0, 1]},
-                gauge={
-                    'shape': 'angular',
-                    'axis': {'range': [bid_price - spread, ask_price + spread]},
-                    'bar': {'color': "black", 'thickness': 0.2},
-                    'bgcolor': 'black',
-                    'borderwidth': 2,
-                    'bordercolor': 'black',
-                    'steps': [
-                        {'range': [80, 100], 'color': 'green'},
-                        {'range': [50, 80], 'color': '#30F54B'},
-                        {'range': [40, 50], 'color': 'yellow'},
-                        {'range': [30, 40], 'color': 'orange'},
-                        {'range': [0, 30], 'color': 'red'}
-                    ],
-                    'threshold': {
-                        'line': {'color': 'orange', 'width': 6},
-                        'thickness': 0.75,
-                        'value': current_price,
-                    }
-                }
-            )
-        )
-    
-        # Display the chart in Streamlit
-        st.plotly_chart(fig, use_container_width=True)
+        with col_gauge:
+            # Define your values
+            current_price = int(average_AP_scales*10)
+            ask_price = 100
+            bid_price = 0
+            spread = 10
         
-    # st.write("AP Scale: "+str(average_AP_scales))
-    # st.write("Total Budget: $"+str(sum(input_budget)))
-    # st.write("Target Leads: "+str(round(sum(leads))*2))
-    # st.write("Min Leads: "+str(round(sum(leads))))
-
-    adjuster = role_adjuster[role_adjuster["Role"]==role]["Adjuster"].values[0]
-    # Create formatted strings
-    st.write(f"""
-    <pre>
-    <table style="border: none;">
-    <tr><td style="text-align: left; border: none;">AP Scale:</td><td style="text-align: right; border: none;">{int(average_AP_scales*10)}</td></tr>
-    <tr><td style="text-align: left; border: none;">Balance:</td><td style="text-align: right; border: none;">{int(calculate_rating([i for i in input_budget if i >=50]))}</td></tr>
-    <tr><td style="text-align: left; border: none;">Total Budget:</td><td style="text-align: right; border: none;">${str(int(sum(input_budget)))}</td></tr>
-    <tr><td style="text-align: left; border: none;">Target Leads:</td><td style="text-align: right; border: none;">{round(sum(leads)*adjuster)*2}</td></tr>
-    <tr><td style="text-align: left; border: none;">Min Leads:</td><td style="text-align: right; border: none;">{round(sum(leads)*adjuster)}</td></tr>
-    </table>
-    </pre>
-    """, unsafe_allow_html=True)
+            # Create the gauge chart
+            fig = go.Figure()        
+            fig.add_trace(
+                go.Indicator(
+                    mode="gauge+number+delta",
+                    title={'text': "AP Scale"},
+                    delta={'reference': ask_price, 'relative': False, 'increasing': {'color': "RebeccaPurple"}, 'decreasing': {'color': "#002b36"}},
+                    value=current_price,
+                    domain={'x': [0, 1], 'y': [0, 1]},
+                    gauge={
+                        'shape': 'angular',
+                        'axis': {'range': [bid_price - spread, ask_price + spread]},
+                        'bar': {'color': "black", 'thickness': 0.2},
+                        'bgcolor': 'black',
+                        'borderwidth': 2,
+                        'bordercolor': 'black',
+                        'steps': [
+                            {'range': [80, 100], 'color': 'green'},
+                            {'range': [50, 80], 'color': '#30F54B'},
+                            {'range': [40, 50], 'color': 'yellow'},
+                            {'range': [30, 40], 'color': 'orange'},
+                            {'range': [0, 30], 'color': 'red'}
+                        ],
+                        'threshold': {
+                            'line': {'color': 'orange', 'width': 6},
+                            'thickness': 0.75,
+                            'value': current_price,
+                        }
+                    }
+                )
+            )
+        
+            # Display the chart in Streamlit
+            st.plotly_chart(fig, use_container_width=True)
 
     
 
