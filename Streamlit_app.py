@@ -115,7 +115,7 @@ if st.button("Predict"):
                 'shape': 'angular',
                 'axis': {'range': [bid_price - spread, ask_price + spread]},
                 'bar': {'color': "darkblue"},
-                'bgcolor': 'yellow',
+                'bgcolor': 'blue',
                 'borderwidth': 2,
                 'bordercolor': 'black',
                 'steps': [
