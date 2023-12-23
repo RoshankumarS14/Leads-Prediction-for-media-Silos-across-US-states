@@ -84,7 +84,7 @@ if st.button("Predict"):
     st.write(f"""
     <pre>
     <table style="border: none;">
-    <tr><td style="text-align: left; border: none;">AP Scale:</td><td style="text-align: right; border: none;">{average_AP_scales*10}</td></tr>
+    <tr><td style="text-align: left; border: none;">AP Scale:</td><td style="text-align: right; border: none;">{int(average_AP_scales*10)}</td></tr>
     <tr><td style="text-align: left; border: none;">Proximity Rating:</td><td style="text-align: right; border: none;">{int(calculate_rating(input_budget))}</td></tr>
     <tr><td style="text-align: left; border: none;">Total Budget:</td><td style="text-align: right; border: none;">${str(int(sum(input_budget)))}</td></tr>
     <tr><td style="text-align: left; border: none;">Target Leads:</td><td style="text-align: right; border: none;">{round(sum(leads)*adjuster)*2}</td></tr>
