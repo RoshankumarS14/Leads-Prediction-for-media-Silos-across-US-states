@@ -24,8 +24,11 @@ def calculate_rating(numbers):
     # Calculate the standard deviation
     std_dev = np.std(numbers)
     
+    # Calculate the mean of the numbers
+    mean = np.mean(numbers)
+    
     # Normalize the standard deviation to a scale of 0 to 1
-    normalized_std_dev = std_dev / (max(numbers) - min(numbers))
+    normalized_std_dev = std_dev / mean if mean != 0 else 0
     
     # Calculate the rating
     rating = 100 * (1 - normalized_std_dev)
