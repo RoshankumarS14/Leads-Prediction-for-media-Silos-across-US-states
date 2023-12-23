@@ -20,6 +20,21 @@ input_states = st.multiselect("Select the states:",states)
 input_silos = st.multiselect("Select the Silos:",silos)
 input_budget = []
 
+def calculate_rating(numbers):
+    # Calculate the standard deviation
+    std_dev = np.std(numbers)
+    
+    # Normalize the standard deviation to a scale of 0 to 1
+    normalized_std_dev = std_dev / (max(numbers) - min(numbers))
+    
+    # Calculate the rating
+    rating = 100 * (1 - normalized_std_dev)
+    
+    # Make sure the rating is within the scale of 1 to 100
+    rating = max(min(rating, 100), 1)
+    
+    return rating
+
 st.text("Enter the budget for each of the media silos:")
 # For each selected option, display a row with the option and a text input
 for i, option in enumerate(input_silos):
@@ -67,6 +82,7 @@ if st.button("Predict"):
     <pre>
     <table style="border: none;">
     <tr><td style="text-align: left; border: none;">AP Scale:</td><td style="text-align: right; border: none;">{average_AP_scales}</td></tr>
+    <tr><td style="text-align: left; border: none;">Proximity Rating:</td><td style="text-align: right; border: none;">{calculate_rating(input_budget)}</td></tr>
     <tr><td style="text-align: left; border: none;">Total Budget:</td><td style="text-align: right; border: none;">${str(int(sum(input_budget)))}</td></tr>
     <tr><td style="text-align: left; border: none;">Target Leads:</td><td style="text-align: right; border: none;">{round(sum(leads)*adjuster)*2}</td></tr>
     <tr><td style="text-align: left; border: none;">Min Leads:</td><td style="text-align: right; border: none;">{round(sum(leads)*adjuster)}</td></tr>
