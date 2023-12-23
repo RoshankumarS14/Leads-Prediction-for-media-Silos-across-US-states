@@ -129,7 +129,7 @@ if st.button("Predict"):
                 gauge={
                     'shape': 'angular',
                     'axis': {'range': [bid_price - spread, ask_price + spread]},
-                    'bar': {'color': "black", 'thickness': 0.4},
+                    'bar': {'color': "black", 'thickness': 0.2},
                     'bgcolor': 'black',
                     'borderwidth': 2,
                     'bordercolor': 'black',
