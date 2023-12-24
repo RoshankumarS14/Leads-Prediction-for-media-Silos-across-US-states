@@ -16,7 +16,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-df = pd.read_excel("Silo-Data-Test.xlsx")
+df = pd.read_excel("Silo-Data-(12-04-23).xlsx")
 role_adjuster = pd.read_excel("Silo-Data-Classifications.xlsx")
 states = df["ST"].unique()
 silos = df["Silo"].unique()
@@ -101,6 +101,8 @@ if st.session_state.predict_leads:
         for state in input_states:
             CPLs.append(df[(df["Silo"]==silo) & (df["ST"]==state)]["CPL"])
         CPLs = pd.Series([CPL.values[0] if len(CPL)>0 else None for CPL in CPLs]).dropna()
+        if len(CPLs)==0:
+            CPLs = pd.Series([df[(df["Silo"]==silo) & (df["ST"]=="US")]["CPL"]])
         average_CPL = CPLs.sum()/len(CPLs)
         average_CPLs.append(average_CPL)
         leads.append(round(budget/average_CPL,1)) 
