@@ -213,7 +213,7 @@ if st.button("Predict"):
         st.text("Company Name:")
         st.text("Full Campaign: $")
         st.text("Half Campaign: $")
-        st.text("Quarter Campaign: $)
+        st.text("Quarter Campaign: $")
 
     
 
