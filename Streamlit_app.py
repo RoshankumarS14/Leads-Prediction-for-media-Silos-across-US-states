@@ -188,6 +188,8 @@ if st.session_state.predict_leads:
 
     if 'company_name' not in st.session_state:
         st.session_state.company_name = ''
+    if 'role' not in st.session_state:
+        st.session_state.role = ''
     
     col_name,col_name_input,col_role,col_role_input = st.columns([0.5,2,0.5,2]) 
     col_name.markdown(f"<div style='text-align: center; color: white; padding-top: 32px; font-size:18px;'>Company</div>", unsafe_allow_html=True)
