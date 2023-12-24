@@ -200,9 +200,6 @@ if st.button("Predict"):
     # Save the workbook
     writer.close()
 
-    with open("new_file.xlsx", "rb") as file:
-        file_bytes = file.read()
-
 if 'company_name' not in st.session_state:
     st.session_state.company_name = ''
 
@@ -230,6 +227,8 @@ for j in range(3):
     user_input = text_input_slot.text_input('', '', key=f'input_campaign{j}')
     
 file_name = "TJD" + st.session_state.company_name + ".xlsx"
+with open("new_file.xlsx", "rb") as file:
+     file_bytes = file.read()
 st.download_button(
     label="Create Campaign!",
     data=file_bytes,
