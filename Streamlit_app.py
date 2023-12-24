@@ -229,7 +229,7 @@ if st.button("Predict"):
     st.download_button(
         label="Create Campaign!",
         data=file_bytes,
-        file_name="TJD-"+str(company_name)+".xlsx",
+        file_name=f"TJD-{str(company_name)}.xlsx",
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         use_container_width=True
     )
