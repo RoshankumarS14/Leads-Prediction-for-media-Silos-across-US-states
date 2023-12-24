@@ -188,8 +188,8 @@ if st.session_state.predict_leads:
 
     if 'company_name' not in st.session_state:
         st.session_state.company_name = ''
-    if 'role' not in st.session_state:
-        st.session_state.role = ''
+    if 'user_role' not in st.session_state:
+        st.session_state.user_role = ''
     
     col_name,col_name_input,col_role,col_role_input = st.columns([0.5,2,0.5,2]) 
     col_name.markdown(f"<div style='text-align: center; color: white; padding-top: 32px; font-size:18px;'>Company</div>", unsafe_allow_html=True)
@@ -197,7 +197,7 @@ if st.session_state.predict_leads:
     st.session_state.company_name = name_input_slot.text_input('', '', key="Company_name")
     col_role.markdown(f"<div style='text-align: center; color: white; padding-top: 32px; font-size:18px;'>Role</div>", unsafe_allow_html=True)
     role_input_slot = col_role_input.empty()
-    st.session_state.role = role_input_slot.text_input('', '', key="role")
+    st.session_state.user_role = role_input_slot.text_input('', '', key="role")
     
     cols_campaign = st.columns([0.7, 0.1, 0.9] * 3) 
     campaigns=["Full:","Half:","Quarter:"]
