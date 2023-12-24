@@ -2,7 +2,10 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
-import plotly.express as px 
+import plotly.express as px
+from openpyxl import load_workbook
+from openpyxl.drawing.image import Image as XLImage
+from PIL import Image 
 
 st.set_page_config(
     page_title="Leads Prediction",
@@ -209,6 +212,38 @@ if st.button("Predict"):
         
             # Display the chart in Streamlit
             st.plotly_chart(fig2, use_container_width=True)
+
+        # Save the Plotly figure as an image file
+        fig.write_image("fig.png")
+
+        # Open the image file
+        img = Image.open('fig.png')
+        
+        # Resize the image
+        width, height = img.size
+        new_width = 360
+        new_height = 140
+        img = img.resize((new_width, new_height))
+        
+        # Save the resized image
+        img.save('resized_fig.png')
+        
+        # Load the workbook
+        wb = load_workbook('ProposalTemplate.xlsx')
+        
+        # Select the sheet
+        sheet = wb['juliabid']
+        
+        # Create an Image object
+        img = XLImage('resized_fig.png')
+        
+        # Add the image to the sheet
+        sheet.add_image(img, 'B20')
+        
+        # Save the workbook
+        wb.save('ProposalTemplate.xlsx')
+
+        st.download_button("Download","xlsx","ProposalTemplate.xlsx")
 
     
 
