@@ -85,7 +85,7 @@ for i in range(num_rows):
 
 st.session_state.predict_leads = st.button("Predict")
 
-if "predict_leads" in st.session_state:
+if st.session_state.predict_leads:
     leads = []
     average_CPLs = []
     input_budget = [float(i) for i in input_budget]
