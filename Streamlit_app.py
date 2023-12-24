@@ -211,7 +211,7 @@ if st.button("Predict"):
         )
 
         col_name,col_name_input = st.columns([1,2]) 
-        col_name.markdown(f"<div style='text-align: center; color: white; padding-top: 32px; font-size:18px;'>{option}</div>", unsafe_allow_html=True)
+        col_name.markdown(f"<div style='text-align: center; color: white; padding-top: 32px; font-size:18px;'>Company Name</div>", unsafe_allow_html=True)
         name_input_slot = col_name_input.empty()
         company_name = name_input_slot.text_input('', '', key="Company_name")
 
@@ -231,7 +231,7 @@ if st.button("Predict"):
             
             # Create the text input slot
             text_input_slot = col_input.empty()
-            user_input = text_input_slot.text_input('', '', key=f'input_campaign{index}')
+            user_input = text_input_slot.text_input('', '', key=f'input_campaign{j}')
 
 
     
