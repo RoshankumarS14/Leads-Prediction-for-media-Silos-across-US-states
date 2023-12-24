@@ -4,6 +4,7 @@ import pandas as pd
 from plot_utils import plot_gauge_Balance, plot_gauge_APScale
 from plotly.subplots import make_subplots
 from openpyxl import load_workbook
+from openpyxl.drawing.spreadsheet_drawing import OneCellAnchor
 from openpyxl.drawing.image import Image as XLImage
 from PIL import Image 
 import shutil
