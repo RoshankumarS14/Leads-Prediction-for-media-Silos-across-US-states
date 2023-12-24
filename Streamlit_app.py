@@ -156,7 +156,7 @@ if st.button("Predict"):
         # Resize the image
         width, height = img.size
         new_width = 360
-        new_height = 140
+        new_height = 155
         img = img.resize((new_width, new_height))
         
         # Save the resized image
