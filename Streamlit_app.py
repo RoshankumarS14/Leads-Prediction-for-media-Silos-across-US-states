@@ -175,15 +175,7 @@ if st.session_state.predict_leads:
     wb = load_workbook('New-Template.xlsx')
     
     # Select the sheet
-    sheet = wb['juliabid']
-
-    # Iterate over all images
-    for img in sheet._images.copy():  # Use copy to avoid modifying list while iterating
-        if isinstance(img.anchor, OneCellAnchor):
-            # Check if top left corner of image is in cell 'B36'
-            if img.anchor.from_cell.coord == 'B36':
-                # Remove image
-                sheet._images.remove(img)    
+    sheet = wb['juliabid'] 
     
     # Create an Image object
     img = XLImage('resized_fig.png')
