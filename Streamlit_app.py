@@ -197,8 +197,8 @@ if st.session_state.predict_leads:
     st.session_state.company_name = name_input_slot.text_input('', '', key="Company_name")
     col_role.markdown(f"<div style='text-align: center; color: white; padding-top: 32px; font-size:18px;'>Role:</div>", unsafe_allow_html=True)
     role_input_slot = col_role_input.empty()
-    if len(user_input) > max_chars:
-       st.warning(f"Input is too long! Please limit your input to {max_chars} characters.")
+    if len(user_input) > 18:
+       st.warning(f"Input is too long! Please limit your input to 18 characters.")
     st.session_state.user_role = role_input_slot.text_input('', '', key="role")
     
     cols_campaign = st.columns([0.7, 0.1, 0.9] * 3) 
