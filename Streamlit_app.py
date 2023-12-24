@@ -132,106 +132,106 @@ if st.button("Predict"):
         </pre>
         """, unsafe_allow_html=True)
 
-        with col_gauge:
-            trace1 = plot_gauge_APScale(int(average_AP_scales*10))
-            trace2 = plot_gauge_Balance(int(calculate_rating(np.log([10000 if i>10000 else i for i in input_budget if i>50]))))
-            # Create a subplot and add the gauges to it
-            fig = make_subplots(rows=2, cols=1, specs=[[{'type': 'indicator'}],[{'type': 'indicator'}]],vertical_spacing=0.2)
-            fig.append_trace(trace1, row=1, col=1)
-            fig.append_trace(trace2, row=2, col=1)
-            
-            # Display the chart in Streamlit
-            st.plotly_chart(fig, use_container_width=True)
+    with col_gauge:
+        trace1 = plot_gauge_APScale(int(average_AP_scales*10))
+        trace2 = plot_gauge_Balance(int(calculate_rating(np.log([10000 if i>10000 else i for i in input_budget if i>50]))))
+        # Create a subplot and add the gauges to it
+        fig = make_subplots(rows=2, cols=1, specs=[[{'type': 'indicator'}],[{'type': 'indicator'}]],vertical_spacing=0.2)
+        fig.append_trace(trace1, row=1, col=1)
+        fig.append_trace(trace2, row=2, col=1)
         
-        trace3 = plot_gauge_APScale(int(average_AP_scales*10),title="")
-        fig2 = make_subplots(rows=1, cols=1, specs=[[{'type': 'indicator'}]])
-        fig2.append_trace(trace3, row=1, col=1)
+        # Display the chart in Streamlit
+        st.plotly_chart(fig, use_container_width=True)
         
-        # Save the Plotly figure as an image file
-        fig2.write_image("fig.png")
+    trace3 = plot_gauge_APScale(int(average_AP_scales*10),title="")
+    fig2 = make_subplots(rows=1, cols=1, specs=[[{'type': 'indicator'}]])
+    fig2.append_trace(trace3, row=1, col=1)
+    
+    # Save the Plotly figure as an image file
+    fig2.write_image("fig.png")
 
-        # Open the image file
-        img = Image.open('fig.png')
-        
-        # Resize the image
-        width, height = img.size
-        new_width = 360
-        new_height = 155
-        img = img.resize((new_width, new_height))
-        
-        # Save the resized image
-        img.save('resized_fig.png')
-        
-        # Load the workbook
-        wb = load_workbook('New-Template.xlsx')
-        
-        # Select the sheet
-        sheet = wb['juliabid']
-        
-        # Create an Image object
-        img = XLImage('resized_fig.png')
-        
-        # Add the image to the sheet
-        sheet.add_image(img, 'B36')
-        
-        # Save the workbook
-        wb.save('New-Template.xlsx')
+    # Open the image file
+    img = Image.open('fig.png')
+    
+    # Resize the image
+    width, height = img.size
+    new_width = 360
+    new_height = 155
+    img = img.resize((new_width, new_height))
+    
+    # Save the resized image
+    img.save('resized_fig.png')
+    
+    # Load the workbook
+    wb = load_workbook('New-Template.xlsx')
+    
+    # Select the sheet
+    sheet = wb['juliabid']
+    
+    # Create an Image object
+    img = XLImage('resized_fig.png')
+    
+    # Add the image to the sheet
+    sheet.add_image(img, 'B36')
+    
+    # Save the workbook
+    wb.save('New-Template.xlsx')
 
-        # Copy the existing Excel file to a new file
-        output_path = shutil.copy('New-Template.xlsx', 'new_file.xlsx')
+    # Copy the existing Excel file to a new file
+    output_path = shutil.copy('New-Template.xlsx', 'new_file.xlsx')
 
-        # Create a Pandas Excel writer using openpyxl as the engine
-        writer = pd.ExcelWriter(
-            output_path,
-            engine='openpyxl',
-            mode='a',
-            if_sheet_exists='overlay',
-        )
-        
-        # Write DataFrame to Excel from cell X11 for the first column
-        result.iloc[:, 0].to_excel(writer, sheet_name='juliabid', startrow=10, startcol=23, header=False, index=False)
-        
-        # Write DataFrame to Excel from cell Y11 for the second column
-        pd.Series(input_budget).to_excel(writer, sheet_name='juliabid', startrow=10, startcol=24, header=False, index=False)
-        
-        # Write DataFrame to Excel from cell AA11 for the third column
-        result.iloc[:, 3].to_excel(writer, sheet_name='juliabid', startrow=10, startcol=26, header=False, index=False)
-        
-        # Save the workbook
-        writer.close()
+    # Create a Pandas Excel writer using openpyxl as the engine
+    writer = pd.ExcelWriter(
+        output_path,
+        engine='openpyxl',
+        mode='a',
+        if_sheet_exists='overlay',
+    )
+    
+    # Write DataFrame to Excel from cell X11 for the first column
+    result.iloc[:, 0].to_excel(writer, sheet_name='juliabid', startrow=10, startcol=23, header=False, index=False)
+    
+    # Write DataFrame to Excel from cell Y11 for the second column
+    pd.Series(input_budget).to_excel(writer, sheet_name='juliabid', startrow=10, startcol=24, header=False, index=False)
+    
+    # Write DataFrame to Excel from cell AA11 for the third column
+    result.iloc[:, 3].to_excel(writer, sheet_name='juliabid', startrow=10, startcol=26, header=False, index=False)
+    
+    # Save the workbook
+    writer.close()
 
-        with open("new_file.xlsx", "rb") as file:
-            file_bytes = file.read()
+    with open("new_file.xlsx", "rb") as file:
+        file_bytes = file.read()
+
+    col_name,col_name_input = st.columns([1,2]) 
+    col_name.markdown(f"<div style='text-align: center; color: white; padding-top: 32px; font-size:18px;'>Company Name</div>", unsafe_allow_html=True)
+    name_input_slot = col_name_input.empty()
+    company_name = name_input_slot.text_input('', '', key="Company_name")
+
+    cols_campaign = st.columns([0.7, 0.1, 0.9] * 3) 
+    campaigns=["Full Campaign:","Half Campaign:","Quarter Campaign:"]
+    for j in range(3):
+
+        col_name = cols_campaign[j*3]
+        col_dollar_sign = cols_campaign[j*3 + 1]
+        col_input = cols_campaign[j*3 + 2]
         
-        st.download_button(
-            label="Download",
-            data=file_bytes,
-            file_name="Analysis Report.xlsx",
-            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-        )
+        # Display the option
+        col_name.markdown(f"<div style='text-align: center; color: white; padding-top: 32px; font-size:18px;'>{campaigns[j]}</div>", unsafe_allow_html=True)
+        
+        # Display the dollar sign
+        col_dollar_sign.markdown(f"<div style='text-align: right; color: white; padding-top: 30px; font-size: 20px;'>$</div>", unsafe_allow_html=True)
+        
+        # Create the text input slot
+        text_input_slot = col_input.empty()
+        user_input = text_input_slot.text_input('', '', key=f'input_campaign{j}')
 
-        col_name,col_name_input = st.columns([1,2]) 
-        col_name.markdown(f"<div style='text-align: center; color: white; padding-top: 32px; font-size:18px;'>Company Name</div>", unsafe_allow_html=True)
-        name_input_slot = col_name_input.empty()
-        company_name = name_input_slot.text_input('', '', key="Company_name")
-
-        cols_campaign = st.columns([0.7, 0.1, 0.9] * 3) 
-        campaigns=["Full Campaign:","Half Campaign:","Quarter Campaign:"]
-        for j in range(3):
-
-            col_name = cols_campaign[j*3]
-            col_dollar = cols_campaign[j*3 + 1]
-            col_input = cols_campaign[j*3 + 2]
-            
-            # Display the option
-            col_option.markdown(f"<div style='text-align: center; color: white; padding-top: 32px; font-size:18px;'>{campaigns[j]}</div>", unsafe_allow_html=True)
-            
-            # Display the dollar sign
-            col_dollar.markdown(f"<div style='text-align: right; color: white; padding-top: 30px; font-size: 20px;'>$</div>", unsafe_allow_html=True)
-            
-            # Create the text input slot
-            text_input_slot = col_input.empty()
-            user_input = text_input_slot.text_input('', '', key=f'input_campaign{j}')
+    st.download_button(
+        label="Download",
+        data=file_bytes,
+        file_name="Analysis Report.xlsx",
+        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
 
 
     
