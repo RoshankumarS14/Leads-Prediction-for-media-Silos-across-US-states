@@ -10,7 +10,7 @@ def plot_gauge_Balance(value):
     trace = go.Indicator(
         mode="gauge+number+delta",
         title={'text': "Balance"},
-        delta={'reference': ask_price, 'relative': False, 'increasing': {'color': "RebeccaPurple"}, 'decreasing': {'color': "#002b36"}},
+        delta={'reference': ask_price, 'relative': False, 'increasing': {'color': "RebeccaPurple"}},
         value=current_price,
         domain={'x': [0, 1], 'y': [0, 1]},
         gauge={
