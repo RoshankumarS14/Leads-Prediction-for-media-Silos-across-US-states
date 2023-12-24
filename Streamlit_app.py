@@ -83,7 +83,9 @@ for i in range(num_rows):
         user_input = text_input_slot.text_input('', '', key=f'input_{index}')
         input_budget.append(user_input)
 
-if st.button("Predict"):
+predict_leads = st.button("Predict")
+
+if predict_leads:
     leads = []
     average_CPLs = []
     input_budget = [float(i) for i in input_budget]
