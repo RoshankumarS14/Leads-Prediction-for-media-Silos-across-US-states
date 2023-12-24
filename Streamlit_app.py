@@ -83,7 +83,13 @@ for i in range(num_rows):
         user_input = text_input_slot.text_input('', '', key=f'input_{index}')
         input_budget.append(user_input)
 
-st.session_state.predict_leads = st.button("Predict")
+def set_predict_leads():
+    st.session_state.predict_leads = True
+
+if 'predict_leads' not in st.session_state:
+    st.session_state.predict_leads = False
+
+st.button("Predict", on_click=set_predict_leads)
 
 if st.session_state.predict_leads:
     leads = []
