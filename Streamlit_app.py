@@ -1,6 +1,7 @@
 import streamlit as st
 import numpy as np
 import pandas as pd
+from plot_utils import plot_gauge_Balance
 import plotly.graph_objects as go
 import plotly.express as px
 from openpyxl import load_workbook
