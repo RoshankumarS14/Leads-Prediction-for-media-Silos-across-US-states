@@ -192,7 +192,7 @@ if st.button("Predict"):
         result.iloc[:, 0].to_excel(writer, sheet_name='juliabid', startrow=10, startcol=23, header=False, index=False)
         
         # Write DataFrame to Excel from cell Y11 for the second column
-        input_budget.to_excel(writer, sheet_name='juliabid', startrow=10, startcol=24, header=False, index=False)
+        pd.Series(input_budget).to_excel(writer, sheet_name='juliabid', startrow=10, startcol=24, header=False, index=False)
         
         # Write DataFrame to Excel from cell AA11 for the third column
         result.iloc[:, 3].to_excel(writer, sheet_name='juliabid', startrow=10, startcol=26, header=False, index=False)
