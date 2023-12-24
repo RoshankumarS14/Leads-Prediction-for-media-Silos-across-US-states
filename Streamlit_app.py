@@ -6,6 +6,7 @@ import plotly.express as px
 from openpyxl import load_workbook
 from openpyxl.drawing.image import Image as XLImage
 from PIL import Image 
+import shutil
 
 st.set_page_config(
     page_title="Leads Prediction",
@@ -243,11 +244,16 @@ if st.button("Predict"):
         # Save the workbook
         wb.save('ProposalTemplate.xlsx')
 
+        # Copy the existing Excel file to a new file
+        output_path = shutil.copy('ProposalTemplate.xlsx', 'new_file.xlsx')
+
         # Create a Pandas Excel writer using openpyxl as the engine
-        writer = pd.ExcelWriter('ProposalTemplate.xlsx', engine='openpyxl')
-        
-        # It is important to set the workbook of the writer object to the loaded workbook
-        writer.book = wb
+        writer = pd.ExcelWriter(
+            output_path,
+            engine='openpyxl',
+            mode='a',
+            if_sheet_exists='overlay',
+        )
         
         # Write DataFrame to Excel from cell X11 for the first column
         result.iloc[:, 0].to_excel(writer, sheet_name='juliabid', startrow=10, startcol=23, header=False, index=False)
