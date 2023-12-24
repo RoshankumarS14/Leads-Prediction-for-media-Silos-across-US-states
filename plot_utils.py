@@ -66,10 +66,9 @@ def plot_gauge_APScale(value):
                 'line': {'color': 'blue', 'width': 6},
                 'thickness': 0.75,
                 'value': current_price,
-                         }
+                        }
                     }
                 )
-            )
     return trace
         
            
