@@ -197,6 +197,8 @@ if st.session_state.predict_leads:
     st.session_state.company_name = name_input_slot.text_input('', '', key="Company_name")
     col_role.markdown(f"<div style='text-align: center; color: white; padding-top: 32px; font-size:18px;'>Role:</div>", unsafe_allow_html=True)
     role_input_slot = col_role_input.empty()
+    if len(user_input) > max_chars:
+       st.warning(f"Input is too long! Please limit your input to {max_chars} characters.")
     st.session_state.user_role = role_input_slot.text_input('', '', key="role")
     
     cols_campaign = st.columns([0.7, 0.1, 0.9] * 3) 
@@ -243,6 +245,8 @@ if st.session_state.predict_leads:
     campaigns_values = [0 if i=="" else '{:.2f}'.format(float(i)) for i in campaigns_values] 
     store_values = [st.session_state.company_name,campaigns_values[0],campaigns_values[1],campaigns_values[2]]
     pd.Series(store_values).to_excel(writer, sheet_name='juliabid', startrow=4, startcol=24, header=False, index=False)
+
+    pd.Series([st.session_state.user_role]).to_excel(writer, sheet_name='juliabid', startrow=6, startcol=26, header=False, index=False)
     
     # Save the workbook
     writer.close()
