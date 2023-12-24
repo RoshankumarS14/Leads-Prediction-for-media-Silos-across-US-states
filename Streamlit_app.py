@@ -209,7 +209,7 @@ if st.button("Predict"):
     company_name = name_input_slot.text_input('', '', key="Company_name")
 
     cols_campaign = st.columns([0.7, 0.1, 0.9] * 3) 
-    campaigns=["Full Campaign:","Half Campaign:","Quarter Campaign:"]
+    campaigns=["Full:","Half:","Quarter:"]
     for j in range(3):
 
         col_name = cols_campaign[j*3]
@@ -227,10 +227,11 @@ if st.button("Predict"):
         user_input = text_input_slot.text_input('', '', key=f'input_campaign{j}')
 
     st.download_button(
-        label="Download",
+        label="Create Campaign!",
         data=file_bytes,
-        file_name="Analysis Report.xlsx",
-        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        file_name="TJD-"+str(company_name)+".xlsx",
+        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        use_container_width=True
     )
 
 
