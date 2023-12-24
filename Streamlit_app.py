@@ -196,7 +196,9 @@ if st.session_state.predict_leads:
     
     cols_campaign = st.columns([0.7, 0.1, 0.9] * 3) 
     campaigns=["Full:","Half:","Quarter:"]
-    campaigns_values = [0,0,0]
+    if "campaign" not in st.session_state:
+        st.session_state["campaign"] = []
+        
     for j in range(3):
     
         col_name = cols_campaign[j*3]
@@ -212,7 +214,7 @@ if st.session_state.predict_leads:
         # Create the text input slot
         text_input_slot = col_input.empty()
         user_input = text_input_slot.text_input('', '', key=f'input_campaign{j}')
-        campaigns_values[j-1]=user_input
+        st.session_state["campaign"].append(user_input)
 
     # Copy the existing Excel file to a new file
     output_path = shutil.copy('New-Template.xlsx', 'new_file.xlsx')
@@ -234,7 +236,11 @@ if st.session_state.predict_leads:
     # Write DataFrame to Excel from cell AA11 for the third column
     result.iloc[:, 3].to_excel(writer, sheet_name='juliabid', startrow=10, startcol=26, header=False, index=False)
 
-    campaigns_values = ['{:.2f}'.format(float(i)) for i in campaigns_values]
+    if len(st.session_state["campaign"])==3:
+        campaigns_values = ['{:.2f}'.format(float(i)) for i in st.session_state["campaign"]]
+    else:
+        campaigns_values = [0,0,0]
+        
     store_values = [st.session_state.company_name].extend(campaigns_values)
     pd.Series(store_values).to_excel(writer, sheet_name='juliabid', startrow=4, startcol=24, header=False, index=False)
     
