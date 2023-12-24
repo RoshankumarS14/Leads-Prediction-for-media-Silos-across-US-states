@@ -202,42 +202,42 @@ if "predict_leads" in st.session_state:
     # Save the workbook
     writer.close()
 
-if 'company_name' not in st.session_state:
-    st.session_state.company_name = ''
-
-col_name,col_name_input = st.columns([0.5,2]) 
-col_name.markdown(f"<div style='text-align: center; color: white; padding-top: 32px; font-size:18px;'>Company Name</div>", unsafe_allow_html=True)
-name_input_slot = col_name_input.empty()
-st.session_state.company_name = name_input_slot.text_input('', '', key="Company_name")
-
-cols_campaign = st.columns([0.7, 0.1, 0.9] * 3) 
-campaigns=["Full:","Half:","Quarter:"]
-for j in range(3):
-
-    col_name = cols_campaign[j*3]
-    col_dollar_sign = cols_campaign[j*3 + 1]
-    col_input = cols_campaign[j*3 + 2]
+    if 'company_name' not in st.session_state:
+        st.session_state.company_name = ''
     
-    # Display the option
-    col_name.markdown(f"<div style='text-align: center; color: white; padding-top: 32px; font-size:18px; margin-bottom:60px;'>{campaigns[j]}</div>", unsafe_allow_html=True)
+    col_name,col_name_input = st.columns([0.5,2]) 
+    col_name.markdown(f"<div style='text-align: center; color: white; padding-top: 32px; font-size:18px;'>Company Name</div>", unsafe_allow_html=True)
+    name_input_slot = col_name_input.empty()
+    st.session_state.company_name = name_input_slot.text_input('', '', key="Company_name")
     
-    # Display the dollar sign
-    col_dollar_sign.markdown(f"<div style='text-align: right; color: white; padding-top: 30px; font-size: 20px; margin-bottom:60px;'>$</div>", unsafe_allow_html=True)
+    cols_campaign = st.columns([0.7, 0.1, 0.9] * 3) 
+    campaigns=["Full:","Half:","Quarter:"]
+    for j in range(3):
     
-    # Create the text input slot
-    text_input_slot = col_input.empty()
-    user_input = text_input_slot.text_input('', '', key=f'input_campaign{j}')
-    
-file_name = "TJD-" + st.session_state.company_name + ".xlsx"
-with open("new_file.xlsx", "rb") as file:
-     file_bytes = file.read()
-st.download_button(
-    label="Create Campaign!",
-    data=file_bytes,
-    file_name=file_name,
-    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    use_container_width=True
-)
+        col_name = cols_campaign[j*3]
+        col_dollar_sign = cols_campaign[j*3 + 1]
+        col_input = cols_campaign[j*3 + 2]
+        
+        # Display the option
+        col_name.markdown(f"<div style='text-align: center; color: white; padding-top: 32px; font-size:18px; margin-bottom:60px;'>{campaigns[j]}</div>", unsafe_allow_html=True)
+        
+        # Display the dollar sign
+        col_dollar_sign.markdown(f"<div style='text-align: right; color: white; padding-top: 30px; font-size: 20px; margin-bottom:60px;'>$</div>", unsafe_allow_html=True)
+        
+        # Create the text input slot
+        text_input_slot = col_input.empty()
+        user_input = text_input_slot.text_input('', '', key=f'input_campaign{j}')
+        
+    file_name = "TJD-" + st.session_state.company_name + ".xlsx"
+    with open("new_file.xlsx", "rb") as file:
+         file_bytes = file.read()
+    st.download_button(
+        label="Create Campaign!",
+        data=file_bytes,
+        file_name=file_name,
+        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        use_container_width=True
+    )
 
 
     
