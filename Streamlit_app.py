@@ -243,6 +243,24 @@ if st.button("Predict"):
         # Save the workbook
         wb.save('ProposalTemplate.xlsx')
 
+        # Create a Pandas Excel writer using openpyxl as the engine
+        writer = pd.ExcelWriter('ProposalTemplate.xlsx', engine='openpyxl')
+        
+        # It is important to set the workbook of the writer object to the loaded workbook
+        writer.book = wb
+        
+        # Write DataFrame to Excel from cell X11 for the first column
+        result.iloc[:, 0].to_excel(writer, sheet_name='juliabid', startrow=10, startcol=23, header=False, index=False)
+        
+        # Write DataFrame to Excel from cell Y11 for the second column
+        result.iloc[:, 1].to_excel(writer, sheet_name='juliabid', startrow=10, startcol=24, header=False, index=False)
+        
+        # Write DataFrame to Excel from cell AA11 for the third column
+        result.iloc[:, 3].to_excel(writer, sheet_name='juliabid', startrow=10, startcol=26, header=False, index=False)
+        
+        # Save the workbook
+        writer.save()
+
         with open("ProposalTemplate.xlsx", "rb") as file:
             file_bytes = file.read()
         
