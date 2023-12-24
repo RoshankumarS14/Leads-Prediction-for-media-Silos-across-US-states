@@ -203,10 +203,13 @@ if st.button("Predict"):
     with open("new_file.xlsx", "rb") as file:
         file_bytes = file.read()
 
+    if 'company_name' not in st.session_state:
+        st.session_state.company_name = ''
+
     col_name,col_name_input = st.columns([0.5,2]) 
     col_name.markdown(f"<div style='text-align: center; color: white; padding-top: 32px; font-size:18px;'>Company Name</div>", unsafe_allow_html=True)
     name_input_slot = col_name_input.empty()
-    company_name = name_input_slot.text_input('', '', key="Company_name")
+    st.session_state.company_name = name_input_slot.text_input('', '', key="Company_name")
 
     cols_campaign = st.columns([0.7, 0.1, 0.9] * 3) 
     campaigns=["Full:","Half:","Quarter:"]
@@ -225,11 +228,12 @@ if st.button("Predict"):
         # Create the text input slot
         text_input_slot = col_input.empty()
         user_input = text_input_slot.text_input('', '', key=f'input_campaign{j}')
-
+        
+    file_name = "JFD" + st.session_state.company_name + ".xlsx"
     st.download_button(
         label="Create Campaign!",
         data=file_bytes,
-        file_name=f"TJD-{str(company_name)}.xlsx",
+        file_name=file_name,
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         use_container_width=True
     )
