@@ -163,7 +163,7 @@ if st.button("Predict"):
         img.save('resized_fig.png')
         
         # Load the workbook
-        wb = load_workbook('ProposalTemplate.xlsx')
+        wb = load_workbook('New-Template.xlsx')
         
         # Select the sheet
         sheet = wb['juliabid']
@@ -172,13 +172,13 @@ if st.button("Predict"):
         img = XLImage('resized_fig.png')
         
         # Add the image to the sheet
-        sheet.add_image(img, 'B20')
+        sheet.add_image(img, 'B36')
         
         # Save the workbook
-        wb.save('ProposalTemplate.xlsx')
+        wb.save('New-Template.xlsx')
 
         # Copy the existing Excel file to a new file
-        output_path = shutil.copy('ProposalTemplate.xlsx', 'new_file.xlsx')
+        output_path = shutil.copy('New-Template.xlsx', 'new_file.xlsx')
 
         # Create a Pandas Excel writer using openpyxl as the engine
         writer = pd.ExcelWriter(
@@ -192,7 +192,7 @@ if st.button("Predict"):
         result.iloc[:, 0].to_excel(writer, sheet_name='juliabid', startrow=10, startcol=23, header=False, index=False)
         
         # Write DataFrame to Excel from cell Y11 for the second column
-        result.iloc[:, 1].to_excel(writer, sheet_name='juliabid', startrow=10, startcol=24, header=False, index=False)
+        input_budget.to_excel(writer, sheet_name='juliabid', startrow=10, startcol=24, header=False, index=False)
         
         # Write DataFrame to Excel from cell AA11 for the third column
         result.iloc[:, 3].to_excel(writer, sheet_name='juliabid', startrow=10, startcol=26, header=False, index=False)
@@ -206,7 +206,7 @@ if st.button("Predict"):
         st.download_button(
             label="Download",
             data=file_bytes,
-            file_name="your_file.xlsx",
+            file_name="Analysis Report.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         )
 
