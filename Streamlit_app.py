@@ -229,7 +229,7 @@ if st.button("Predict"):
         text_input_slot = col_input.empty()
         user_input = text_input_slot.text_input('', '', key=f'input_campaign{j}')
         
-    file_name = "JFD" + st.session_state.company_name + ".xlsx"
+    file_name = "TJD" + st.session_state.company_name + ".xlsx"
     st.download_button(
         label="Create Campaign!",
         data=file_bytes,
