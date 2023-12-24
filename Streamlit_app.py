@@ -210,10 +210,29 @@ if st.button("Predict"):
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         )
 
-        st.text("Company Name:")
-        st.text("Full Campaign: $")
-        st.text("Half Campaign: $")
-        st.text("Quarter Campaign: $")
+        col_name,col_name_input = st.columns([1,2]) 
+        col_name.markdown(f"<div style='text-align: center; color: white; padding-top: 32px; font-size:18px;'>{option}</div>", unsafe_allow_html=True)
+        name_input_slot = col_name_input.empty()
+        company_name = name_input_slot.text_input('', '', key=f'input_{index}')
+
+        cols_campaign = st.columns([0.7, 0.1, 0.9] * 3) 
+        campaigns=["Full Campaign:","Half Campaign:","Quarter Campaign:"]
+        for j in range(3):
+
+            col_name = cols_campaign[j*3]
+            col_dollar = cols_campaign[j*3 + 1]
+            col_input = cols_campaign[j*3 + 2]
+            
+            # Display the option
+            col_option.markdown(f"<div style='text-align: center; color: white; padding-top: 32px; font-size:18px;'>{campaigns[j]}</div>", unsafe_allow_html=True)
+            
+            # Display the dollar sign
+            col_dollar.markdown(f"<div style='text-align: right; color: white; padding-top: 30px; font-size: 20px;'>$</div>", unsafe_allow_html=True)
+            
+            # Create the text input slot
+            text_input_slot = col_input.empty()
+            user_input = text_input_slot.text_input('', '', key=f'input_{index}')
+
 
     
 
