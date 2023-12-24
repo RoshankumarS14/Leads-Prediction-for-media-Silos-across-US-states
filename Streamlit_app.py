@@ -90,7 +90,7 @@ def set_predict_leads():
 if 'predict_leads' not in st.session_state:
     st.session_state.predict_leads = False
 
-st.button("Predict", on_click=set_predict_leads)
+st.button("Predict", on_click=set_predict_leads, use_container_width=True)
 
 if st.session_state.predict_leads:
     leads = []
