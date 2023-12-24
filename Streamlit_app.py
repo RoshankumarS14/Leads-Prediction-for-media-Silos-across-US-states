@@ -1,9 +1,8 @@
 import streamlit as st
 import numpy as np
 import pandas as pd
-from plot_utils import plot_gauge_Balance
-import plotly.graph_objects as go
-import plotly.express as px
+from plot_utils import plot_gauge_Balance, plot_gauge_APScale
+from plotly.subplots import make_subplots
 from openpyxl import load_workbook
 from openpyxl.drawing.image import Image as XLImage
 from PIL import Image 
@@ -134,85 +133,15 @@ if st.button("Predict"):
         """, unsafe_allow_html=True)
 
         with col_gauge:
-            # Define your values
-            current_price = int(average_AP_scales*10)
-            ask_price = 100
-            bid_price = 0
-            spread = 10
-        
-            # Create the gauge chart
-            fig = go.Figure()        
-            fig.add_trace(
-                go.Indicator(
-                    mode="gauge+number+delta",
-                    title={'text': "AP Scale"},
-                    value=current_price,
-                    domain={'x': [0, 1], 'y': [0, 1]},
-                    gauge={
-                        'shape': 'angular',
-                        'axis': {'range': [bid_price - spread, ask_price + spread]},
-                        'bar': {'color': "black", 'thickness': 0.2},
-                        'bgcolor': 'black',
-                        'borderwidth': 2,
-                        'bordercolor': 'black',
-                        'steps': [
-                            {'range': [80, 100], 'color': 'green'},
-                            {'range': [50, 80], 'color': '#30F54B'},
-                            {'range': [40, 50], 'color': 'yellow'},
-                            {'range': [30, 40], 'color': 'orange'},
-                            {'range': [0, 30], 'color': 'red'}
-                        ],
-                        'threshold': {
-                            'line': {'color': 'blue', 'width': 6},
-                            'thickness': 0.75,
-                            'value': current_price,
-                        }
-                    }
-                )
-            )
-        
+            trace1 = plot_gauge_APScale(int(average_AP_scales*10))
+            trace2 = plot_gauge_Balance(int(calculate_rating(np.log([10000 if i>10000 else i for i in input_budget if i>50]))))
+            # Create a subplot and add the gauges to it
+            fig = make_subplots(rows=2, cols=1, specs=[[{'type': 'indicator'}],[{'type': 'indicator'}]],vertical_spacing=0.2)
+            fig.append_trace(trace1, row=1, col=1)
+            fig.append_trace(trace2, row=2, col=1)
+            
             # Display the chart in Streamlit
             st.plotly_chart(fig, use_container_width=True)
-
-            current_price = int(calculate_rating(np.log([10000 if i>10000 else i for i in input_budget if i>50])))
-            ask_price = 100
-            bid_price = 50
-            spread = 5
-
-            # Create the gauge chart
-            fig2 = go.Figure()        
-            fig2.add_trace(
-                go.Indicator(
-                    mode="gauge+number+delta",
-                    title={'text': "Balance"},
-                    delta={'reference': ask_price, 'relative': False, 'increasing': {'color': "RebeccaPurple"}, 'decreasing': {'color': "#002b36"}},
-                    value=current_price,
-                    domain={'x': [0, 1], 'y': [0, 1]},
-                    gauge={
-                        'shape': 'angular',
-                        'axis': {'range': [bid_price - spread, ask_price + spread]},
-                        'bar': {'color': "black", 'thickness': 0.2},
-                        'bgcolor': 'black',
-                        'borderwidth': 2,
-                        'bordercolor': 'black',
-                        'steps': [
-                            {'range': [90, 100], 'color': 'green'},
-                            {'range': [85, 90], 'color': '#30F54B'},
-                            {'range': [80, 85], 'color': 'yellow'},
-                            {'range': [75, 80], 'color': 'orange'},
-                            {'range': [75, 50], 'color': 'red'}
-                        ],
-                        'threshold': {
-                            'line': {'color': 'blue', 'width': 6},
-                            'thickness': 0.75,
-                            'value': current_price,
-                        }
-                    }
-                )
-            )
-        
-            # Display the chart in Streamlit
-            st.plotly_chart(fig2, use_container_width=True)
 
         # Save the Plotly figure as an image file
         fig.write_image("fig.png")
