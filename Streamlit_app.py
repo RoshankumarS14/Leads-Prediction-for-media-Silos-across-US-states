@@ -142,9 +142,13 @@ if st.button("Predict"):
             
             # Display the chart in Streamlit
             st.plotly_chart(fig, use_container_width=True)
-
+        
+        trace3 = plot_gauge_APScale(int(average_AP_scales*10),title="")
+        fig2 = make_subplots(rows=1, cols=1, specs=[[{'type': 'indicator'}]])
+        fig2.append_trace(trace3, row=1, col=1)
+        
         # Save the Plotly figure as an image file
-        fig.write_image("fig.png")
+        fig2.write_image("fig.png")
 
         # Open the image file
         img = Image.open('fig.png')
