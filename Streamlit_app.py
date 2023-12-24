@@ -243,7 +243,15 @@ if st.button("Predict"):
         # Save the workbook
         wb.save('ProposalTemplate.xlsx')
 
-        st.download_button("Download","xlsx","ProposalTemplate.xlsx")
+        with open("ProposalTemplate.xlsx", "rb") as file:
+            file_bytes = file.read()
+        
+        st.download_button(
+            label="Download",
+            data=file_bytes,
+            file_name="your_file.xlsx",
+            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        )
 
     
 
