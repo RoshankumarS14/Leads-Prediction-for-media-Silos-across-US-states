@@ -226,7 +226,7 @@ for j in range(3):
     text_input_slot = col_input.empty()
     user_input = text_input_slot.text_input('', '', key=f'input_campaign{j}')
     
-file_name = "TJD" + st.session_state.company_name + ".xlsx"
+file_name = "TJD-" + st.session_state.company_name + ".xlsx"
 with open("new_file.xlsx", "rb") as file:
      file_bytes = file.read()
 st.download_button(
