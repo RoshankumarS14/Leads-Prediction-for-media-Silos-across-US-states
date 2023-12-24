@@ -36,7 +36,7 @@ def plot_gauge_Balance(value):
     )
     return trace
 
-def plot_gauge_APScale(value):
+def plot_gauge_APScale(value,title="AP Scale"):
 
     current_price = value
     ask_price = 100
@@ -45,7 +45,7 @@ def plot_gauge_APScale(value):
             
     trace = go.Indicator(
         mode="gauge+number+delta",
-        title={'text': "AP Scale"},
+        title={'text': title},
         value=current_price,
         domain={'x': [0, 1], 'y': [0, 1]},
         gauge={
