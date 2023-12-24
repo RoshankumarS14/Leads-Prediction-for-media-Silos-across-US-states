@@ -210,6 +210,11 @@ if st.button("Predict"):
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         )
 
+        st.text("Company Name:")
+        st.text("Full Campaign: $")
+        st.text("Half Campaign: $")
+        st.text("Quarter Campaign: $)
+
     
 
 
