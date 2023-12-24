@@ -185,6 +185,34 @@ if st.session_state.predict_leads:
     # Save the workbook
     wb.save('New-Template.xlsx')
 
+    if 'company_name' not in st.session_state:
+        st.session_state.company_name = ''
+    
+    col_name,col_name_input = st.columns([0.5,2]) 
+    col_name.markdown(f"<div style='text-align: center; color: white; padding-top: 32px; font-size:18px;'>Company Name</div>", unsafe_allow_html=True)
+    name_input_slot = col_name_input.empty()
+    st.session_state.company_name = name_input_slot.text_input('', '', key="Company_name")
+    
+    cols_campaign = st.columns([0.7, 0.1, 0.9] * 3) 
+    campaigns=["Full:","Half:","Quarter:"]
+    campaigns_values = []
+    for j in range(3):
+    
+        col_name = cols_campaign[j*3]
+        col_dollar_sign = cols_campaign[j*3 + 1]
+        col_input = cols_campaign[j*3 + 2]
+        
+        # Display the option
+        col_name.markdown(f"<div style='text-align: center; color: white; padding-top: 32px; font-size:18px; margin-bottom:60px;'>{campaigns[j]}</div>", unsafe_allow_html=True)
+        
+        # Display the dollar sign
+        col_dollar_sign.markdown(f"<div style='text-align: right; color: white; padding-top: 30px; font-size: 20px; margin-bottom:60px;'>$</div>", unsafe_allow_html=True)
+        
+        # Create the text input slot
+        text_input_slot = col_input.empty()
+        user_input = text_input_slot.text_input('', '', key=f'input_campaign{j}')
+        campaigns_values.append(user_input)
+
     # Copy the existing Excel file to a new file
     output_path = shutil.copy('New-Template.xlsx', 'new_file.xlsx')
 
@@ -204,35 +232,12 @@ if st.session_state.predict_leads:
     
     # Write DataFrame to Excel from cell AA11 for the third column
     result.iloc[:, 3].to_excel(writer, sheet_name='juliabid', startrow=10, startcol=26, header=False, index=False)
+
+    # Write DataFrame to Excel from cell AA11 for the third column
+    pd.Series([st.session_state.company_name,campaigns_values[0],campaigns_values[1],campaigns_values[2]]).to_excel(writer, sheet_name='juliabid', startrow=10, startcol=26, header=False, index=False)
     
     # Save the workbook
     writer.close()
-
-    if 'company_name' not in st.session_state:
-        st.session_state.company_name = ''
-    
-    col_name,col_name_input = st.columns([0.5,2]) 
-    col_name.markdown(f"<div style='text-align: center; color: white; padding-top: 32px; font-size:18px;'>Company Name</div>", unsafe_allow_html=True)
-    name_input_slot = col_name_input.empty()
-    st.session_state.company_name = name_input_slot.text_input('', '', key="Company_name")
-    
-    cols_campaign = st.columns([0.7, 0.1, 0.9] * 3) 
-    campaigns=["Full:","Half:","Quarter:"]
-    for j in range(3):
-    
-        col_name = cols_campaign[j*3]
-        col_dollar_sign = cols_campaign[j*3 + 1]
-        col_input = cols_campaign[j*3 + 2]
-        
-        # Display the option
-        col_name.markdown(f"<div style='text-align: center; color: white; padding-top: 32px; font-size:18px; margin-bottom:60px;'>{campaigns[j]}</div>", unsafe_allow_html=True)
-        
-        # Display the dollar sign
-        col_dollar_sign.markdown(f"<div style='text-align: right; color: white; padding-top: 30px; font-size: 20px; margin-bottom:60px;'>$</div>", unsafe_allow_html=True)
-        
-        # Create the text input slot
-        text_input_slot = col_input.empty()
-        user_input = text_input_slot.text_input('', '', key=f'input_campaign{j}')
         
     file_name = "TJD-" + st.session_state.company_name + ".xlsx"
     with open("new_file.xlsx", "rb") as file:
