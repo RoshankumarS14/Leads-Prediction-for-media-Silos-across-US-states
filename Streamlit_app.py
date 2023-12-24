@@ -244,7 +244,8 @@ if st.session_state.predict_leads:
     # Write DataFrame to Excel from cell AA11 for the third column
     result.iloc[:, 3].to_excel(writer, sheet_name='juliabid', startrow=10, startcol=26, header=False, index=False)
 
-    campaigns_values = [0 if i=="" else '{:.2f}'.format(float(i)) for i in campaigns_values] 
+    # campaigns_values = [0 if i=="" else '{:.2f}'.format(float(i)) for i in campaigns_values] 
+    campaigns_values = [0 if i=="" else float(i) for i in campaigns_values] 
     pd.Series(campaigns_values).to_excel(writer, sheet_name='juliabid', startrow=5, startcol=24, header=False, index=False)
 
      
