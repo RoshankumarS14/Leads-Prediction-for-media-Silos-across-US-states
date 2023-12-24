@@ -238,7 +238,7 @@ if st.session_state.predict_leads:
     campaigns_values = [0 if i=="" else '{:.2f}'.format(float(i)) for i in campaigns_values] 
     st.text(campaigns_values)
     st.text(st.session_state.company_name)
-    store_values = [st.session_state.company_name].extend(campaigns_values)
+    store_values = [st.session_state.company_name,].extend(campaigns_values)
     st.text(store_values)
     pd.Series(store_values).to_excel(writer, sheet_name='juliabid', startrow=4, startcol=24, header=False, index=False)
     
