@@ -2,3 +2,4 @@ streamlit
 openpyxl
 plotly-express
 pillow
+kaleido
