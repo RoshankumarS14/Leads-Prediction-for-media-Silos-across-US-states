@@ -175,6 +175,14 @@ if st.session_state.predict_leads:
     
     # Select the sheet
     sheet = wb['juliabid']
+
+    # Iterate over all images
+    for img in sheet._images.copy():  # Use copy to avoid modifying list while iterating
+        if isinstance(img.anchor, OneCellAnchor):
+            # Check if top left corner of image is in cell 'B36'
+            if img.anchor.from_cell.coord == 'B36':
+                # Remove image
+                sheet._images.remove(img)    
     
     # Create an Image object
     img = XLImage('resized_fig.png')
@@ -223,7 +231,7 @@ if st.session_state.predict_leads:
         mode='a',
         if_sheet_exists='overlay',
     )
-    
+     
     # Write DataFrame to Excel from cell X11 for the first column
     result.iloc[:, 0].to_excel(writer, sheet_name='juliabid', startrow=10, startcol=23, header=False, index=False)
     
@@ -233,8 +241,9 @@ if st.session_state.predict_leads:
     # Write DataFrame to Excel from cell AA11 for the third column
     result.iloc[:, 3].to_excel(writer, sheet_name='juliabid', startrow=10, startcol=26, header=False, index=False)
 
-    # Write DataFrame to Excel from cell AA11 for the third column
-    pd.Series([st.session_state.company_name,campaigns_values[0],campaigns_values[1],campaigns_values[2]]).to_excel(writer, sheet_name='juliabid', startrow=4, startcol=24, header=False, index=False)
+    campaigns_values = ['{:.2f}'.format(float(i)) for i in campaigns_values]
+    store_values = [st.session_state.company_name].extend(campaign_values)
+    pd.Series(store_values).to_excel(writer, sheet_name='juliabid', startrow=4, startcol=24, header=False, index=False)
     
     # Save the workbook
     writer.close()
