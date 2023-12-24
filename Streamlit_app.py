@@ -265,9 +265,9 @@ if st.button("Predict"):
         result.iloc[:, 3].to_excel(writer, sheet_name='juliabid', startrow=10, startcol=26, header=False, index=False)
         
         # Save the workbook
-        writer.save()
+        writer.close()
 
-        with open("ProposalTemplate.xlsx", "rb") as file:
+        with open("new_file.xlsx", "rb") as file:
             file_bytes = file.read()
         
         st.download_button(
