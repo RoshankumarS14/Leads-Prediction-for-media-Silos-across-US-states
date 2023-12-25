@@ -180,7 +180,7 @@ if st.session_state.predict_leads:
     
     # Select the sheet
     sheet = wb['juliabid'] 
-    
+    del wb['juliabid']._images[:-2]
     # Create an Image object
     img = XLImage('resized_fig.png')
     
