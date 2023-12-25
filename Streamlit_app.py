@@ -102,7 +102,7 @@ if st.session_state.predict_leads:
             CPLs.append(df[(df["Silo"]==silo) & (df["ST"]==state)]["CPL"])
         CPLs = pd.Series([CPL.values[0] if len(CPL)>0 else None for CPL in CPLs]).dropna()
         if len(CPLs)==0:
-            CPLs = pd.Series([df[(df["Silo"]==silo) & (df["ST"]=="US")]["CPL"]])
+            CPLs = pd.Series([df[(df["Silo"]==silo) & (df["ST"]=="US")]["CPL"]]).values[0]
             st.text(CPLs)
         average_CPL = CPLs.sum()/len(CPLs)
         st.text(average_CPL)
