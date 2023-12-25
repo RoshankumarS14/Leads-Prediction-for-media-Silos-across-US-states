@@ -141,7 +141,7 @@ if st.session_state.predict_leads:
             <table style="border: none;">
             <tr><td style="text-align: left; border: none;">AP Scale:</td><td style="text-align: right; border: none;">{int(average_AP_scales*10)}</td></tr>
             <tr><td style="text-align: left; border: none;">Balance:</td><td style="text-align: right; border: none;">{int(calculate_rating(np.log([10000 if i>10000 else i for i in input_budget if i>50])))}</td></tr>
-            <tr><td style="text-align: left; border: none;">Total Budget:</td><td style="text-align: right; border: none;">${str(int(sum(input_budget)))}</td></tr>
+            <tr><td style="text-align: left; border: none;">Overhead Funds:</td><td style="text-align: right; border: none;">Min Budget/Full</td></tr>
             </table>
             </pre>
             """, unsafe_allow_html=True)
@@ -153,6 +153,8 @@ if st.session_state.predict_leads:
             
             <tr><td style="text-align: left; border: none;">Target Leads:</td><td style="text-align: right; border: none;">{round(sum(leads)*adjuster)*2}</td></tr>
             <tr><td style="text-align: left; border: none;">Min Leads:</td><td style="text-align: right; border: none;">{round(sum(leads)*adjuster)}</td></tr>
+            <tr><td style="text-align: left; border: none;">Min Budget:</td><td style="text-align: right; border: none;">${str(int(sum(input_budget)))}</td></tr>
+            </table>
             </table>
             </pre>
             """, unsafe_allow_html=True)
