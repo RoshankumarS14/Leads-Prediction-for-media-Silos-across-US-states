@@ -22,6 +22,8 @@ states = df["ST"].unique()
 silos = df["Silo"].unique()
 ap_scale_silos = dict(df[["Silo","AP-Scale"]].values)
 
+st.image("photo_4920463312420973673_y.jpg")
+
 role = st.selectbox("Select the job role:",role_adjuster["Role"],4)
 input_states = st.multiselect("Select the states:",states)
 input_silos = st.multiselect("Select the Silos:",silos)
