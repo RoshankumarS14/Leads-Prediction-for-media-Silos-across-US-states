@@ -154,7 +154,7 @@ if st.session_state.predict_leads:
     # st.dataframe(result)
     # Convert the DataFrame to HTML and align all columns to the right
     df_html = result.to_html(classes='table table-striped')
-    df_html = df_html.replace('<table ','<table style="text-align:right; margin-bottom:40px; margin-top:50px; width:100%;" ')
+    df_html = df_html.replace('<table ','<table style="text-align:right; margin-bottom:40px; margin-top:50px; width:95%;" ')
 
     col_df,col_gauge = st.columns([1.5,1])
 
