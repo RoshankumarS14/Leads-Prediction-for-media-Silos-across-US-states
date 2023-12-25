@@ -24,6 +24,42 @@ ap_scale_silos = dict(df[["Silo","AP-Scale"]].values)
 
 st.image("logo.png")
 
+if 'company_name' not in st.session_state:
+    st.session_state.company_name = ''
+if 'user_role' not in st.session_state:
+    st.session_state.user_role = ''
+
+col_name,col_name_input,col_role,col_role_input = st.columns([0.5,1.6,0.25,1.7]) 
+col_name.markdown(f"<div style='text-align: center; color: white; padding-top: 32px; font-size:18px;'>Company:</div>", unsafe_allow_html=True)
+name_input_slot = col_name_input.empty()
+st.session_state.company_name = name_input_slot.text_input('', '', key="Company_name")
+col_role.markdown(f"<div style='text-align: center; color: white; padding-top: 32px; font-size:18px;'>Role:</div>", unsafe_allow_html=True)
+role_input_slot = col_role_input.empty()
+st.session_state.user_role = role_input_slot.text_input('', '', key="role")
+if len(st.session_state.user_role) > 18:
+   st.warning(f"Input is too long! Please limit your input to 18 characters.")
+
+cols_campaign = st.columns([0.7, 0.1, 0.9] * 3) 
+campaigns=["Full:","Half:","Quarter:"]
+campaigns_values = []
+    
+for j in range(3):
+
+    col_name = cols_campaign[j*3]
+    col_dollar_sign = cols_campaign[j*3 + 1]
+    col_input = cols_campaign[j*3 + 2]
+    
+    # Display the option
+    col_name.markdown(f"<div style='text-align: center; color: white; padding-top: 32px; font-size:18px; margin-bottom:60px;'>{campaigns[j]}</div>", unsafe_allow_html=True)
+    
+    # Display the dollar sign
+    col_dollar_sign.markdown(f"<div style='text-align: right; color: white; padding-top: 30px; font-size: 20px; margin-bottom:60px;'>$</div>", unsafe_allow_html=True)
+    
+    # Create the text input slot
+    text_input_slot = col_input.empty()
+    user_input = text_input_slot.text_input('', '', key=f'input_campaign{j}')
+    campaigns_values.append(user_input)
+
 role = st.selectbox("Select the job role:",role_adjuster["Role"],4)
 input_states = st.multiselect("Select the states:",states)
 input_silos = st.multiselect("Select the Silos:",silos)
@@ -203,42 +239,6 @@ if st.session_state.predict_leads:
     
     # Save the workbook
     wb.save('New-Template.xlsx')
-
-    if 'company_name' not in st.session_state:
-        st.session_state.company_name = ''
-    if 'user_role' not in st.session_state:
-        st.session_state.user_role = ''
-    
-    col_name,col_name_input,col_role,col_role_input = st.columns([0.5,1.6,0.25,1.7]) 
-    col_name.markdown(f"<div style='text-align: center; color: white; padding-top: 32px; font-size:18px;'>Company:</div>", unsafe_allow_html=True)
-    name_input_slot = col_name_input.empty()
-    st.session_state.company_name = name_input_slot.text_input('', '', key="Company_name")
-    col_role.markdown(f"<div style='text-align: center; color: white; padding-top: 32px; font-size:18px;'>Role:</div>", unsafe_allow_html=True)
-    role_input_slot = col_role_input.empty()
-    st.session_state.user_role = role_input_slot.text_input('', '', key="role")
-    if len(st.session_state.user_role) > 18:
-       st.warning(f"Input is too long! Please limit your input to 18 characters.")
-    
-    cols_campaign = st.columns([0.7, 0.1, 0.9] * 3) 
-    campaigns=["Full:","Half:","Quarter:"]
-    campaigns_values = []
-        
-    for j in range(3):
-    
-        col_name = cols_campaign[j*3]
-        col_dollar_sign = cols_campaign[j*3 + 1]
-        col_input = cols_campaign[j*3 + 2]
-        
-        # Display the option
-        col_name.markdown(f"<div style='text-align: center; color: white; padding-top: 32px; font-size:18px; margin-bottom:60px;'>{campaigns[j]}</div>", unsafe_allow_html=True)
-        
-        # Display the dollar sign
-        col_dollar_sign.markdown(f"<div style='text-align: right; color: white; padding-top: 30px; font-size: 20px; margin-bottom:60px;'>$</div>", unsafe_allow_html=True)
-        
-        # Create the text input slot
-        text_input_slot = col_input.empty()
-        user_input = text_input_slot.text_input('', '', key=f'input_campaign{j}')
-        campaigns_values.append(user_input)
 
     # Copy the existing Excel file to a new file
     output_path = shutil.copy('New-Template.xlsx', 'new_file.xlsx')
