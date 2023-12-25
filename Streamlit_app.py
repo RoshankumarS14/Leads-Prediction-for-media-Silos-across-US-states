@@ -169,7 +169,7 @@ if st.session_state.predict_leads:
         adjuster = role_adjuster[role_adjuster["Role"]==role]["Adjuster"].values[0]
         # Create formatted strings
 
-        col_result1,col_result2,_ = st.columns([1,1,0.3])
+        col_result1,col_result2 = st.columns([1,1])
 
         with col_result1:
             st.write(f"""
@@ -177,7 +177,7 @@ if st.session_state.predict_leads:
             <table style="border: none;">
             <tr><td style="text-align: left; border: none;">AP Scale:</td><td style="text-align: right; border: none;">{int(average_AP_scales*10)}</td></tr>
             <tr><td style="text-align: left; border: none;">Balance:</td><td style="text-align: right; border: none;">{int(calculate_rating(np.log([10000 if i>10000 else i for i in input_budget if i>50])))}</td></tr>
-            <tr><td style="text-align: left; border: none;">Overhead Funds:</td><td style="text-align: right; border: none;">10</td></tr>
+            <tr><td style="text-align: left; border: none;">Overhead Funds:</td><td style="text-align: right; border: none;">{int(sum(input_budget)/campaigns_values[0]})</td></tr>
             </table>
             </pre>
             """, unsafe_allow_html=True)
