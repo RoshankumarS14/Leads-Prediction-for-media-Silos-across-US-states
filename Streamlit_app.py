@@ -169,7 +169,7 @@ if st.session_state.predict_leads:
         adjuster = role_adjuster[role_adjuster["Role"]==role]["Adjuster"].values[0]
         # Create formatted strings
 
-        col_result1,col_result2 = st.columns([1,1])
+        col_result1,col_result2,_ = st.columns([1,1,0.3])
 
         with col_result1:
             st.write(f"""
