@@ -141,7 +141,7 @@ if st.session_state.predict_leads:
             <table style="border: none;">
             <tr><td style="text-align: left; border: none;">AP Scale:</td><td style="text-align: right; border: none;">{int(average_AP_scales*10)}</td></tr>
             <tr><td style="text-align: left; border: none;">Balance:</td><td style="text-align: right; border: none;">{int(calculate_rating(np.log([10000 if i>10000 else i for i in input_budget if i>50])))}</td></tr>
-            <tr><td style="text-align: left; border: none;">Overhead Funds:</td><td style="text-align: right; border: none;">Min Budget/Full</td></tr>
+            <tr><td style="text-align: left; border: none;">Overhead Funds:</td><td style="text-align: right; border: none;">10</td></tr>
             </table>
             </pre>
             """, unsafe_allow_html=True)
