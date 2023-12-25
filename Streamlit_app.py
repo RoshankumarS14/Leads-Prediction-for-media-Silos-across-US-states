@@ -103,13 +103,9 @@ if st.session_state.predict_leads:
         CPLs = pd.Series([CPL.values[0] if len(CPL)>0 else None for CPL in CPLs]).dropna()
         if len(CPLs)==0:
             CPLs = pd.Series([df[(df["Silo"]==silo) & (df["ST"]=="US")]["CPL"]]).values[0]
-            st.text(CPLs)
         average_CPL = CPLs.sum()/len(CPLs)
-        st.text(average_CPL)
         average_CPLs.append(average_CPL)
-        st.text(average_CPLs)
         leads.append(round(budget/average_CPL,1)) 
-        st.text(leads)
     AP_scales = [ap_scale_silos[silo]*lead for silo,lead in zip(input_silos,leads)]
     average_AP_scales = round(sum(AP_scales)/sum(leads),1)
 
