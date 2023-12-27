@@ -325,8 +325,8 @@ if insights:
     chat_prompt = ChatPromptTemplate.from_messages([system_message_prompt, human_message_prompt])
 
     # get a chat completion from the formatted messages
-    response = chat(chat_prompt.format_prompt(text=str(invoice_df)).to_messages())
-
+    response = chat(chat_prompt.format_prompt(text=invoice_df.to_json(orient='records')).to_messages())
+    st.write("Input:"+"\n"+chat_prompt.format_prompt(text=invoice_df.to_json(orient='records')).to_messages())
     st.write(response.content)
 
 
