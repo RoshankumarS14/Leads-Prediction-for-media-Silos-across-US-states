@@ -309,7 +309,7 @@ invoice = st.selectbox("Select the invoice:",df["Invoice"].unique())
 
 invoice_df = df[df["Invoice"]==invoice][["Silo","Lead Multiplier Based on AP Rating","Cost per Lead Based on Lead Equivalency","Remaining Budget Based on Time Left"]]
 openai_key = os.getenv("ACCESS_TOKEN")
-chat = ChatOpenAI(openai_api_key=openai_key,model="gpt-4")
+chat = ChatOpenAI(openai_api_key=openai_key,model="gpt-3")
 
 df_html = invoice_df.to_html(classes='table table-striped')
 df_html = df_html.replace('<table ','<table style="text-align:right; margin-bottom:40px; margin-top:50px;" ')
