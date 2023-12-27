@@ -300,14 +300,14 @@ df["Elap-C/Dur-C"] = round(df["Elap-C"]/df["Dur-C"]*100,2)
 df["Elap-Budget"] = round(df["Elap-C/Dur-C"]*df["Budget"]/100,2)
 df["Total Budget for Invoice"] = df["Invoice"].apply(lambda a : invoice_budget[float(a)])
 df["AP Rating"] = df["Silo"].apply(lambda a : silo_ap_rating[a] if a in silo_ap_rating.keys() else 5)
-df["Lead Multiplier Based on AP Rating"] = df["AP Rating"]/5*100
-df["Lead Equivelency Based on AP Rating"] = round(df["Lead Multiplier Based on AP Rating"]*df["Ad-Leads"]/100)
-df["Cost per Lead Based on Lead Equivalency"] = df[["Budget","Lead Equivelency Based on AP Rating"]].apply(lambda a : round(a[0]/a[1],2) if a[1]!=0 else 0,axis=1)
-df["Remaining Budget Based on Time Left"] = df["Budget"] - df["Elap-Budget"]
+df["APLM"] = df["AP Rating"]/5*100
+df["Lead Equivelency Based on AP Rating"] = round(df["APLM"]*df["Ad-Leads"]/100)
+df["CPL-LE"] = df[["Budget","Lead Equivelency Based on AP Rating"]].apply(lambda a : round(a[0]/a[1],2) if a[1]!=0 else 0,axis=1)
+df["R-Budget"] = df["Budget"] - df["Elap-Budget"]
 
 invoice = st.selectbox("Select the invoice:",df["Invoice"].unique())
 
-invoice_df = df[df["Invoice"]==invoice][["Silo","Lead Multiplier Based on AP Rating","Cost per Lead Based on Lead Equivalency","Remaining Budget Based on Time Left"]]
+invoice_df = df[df["Invoice"]==invoice][["Silo","APLM","CPL-LE","R-Budget"]].sort_values(["Silo"])
 openai_key = os.getenv("ACCESS_TOKEN")
 chat = ChatOpenAI(openai_api_key=openai_key,model="gpt-4-1106-preview")
 
@@ -318,7 +318,7 @@ st.markdown(df_html, unsafe_allow_html=True)
 insights = st.button("Generate Insights")
 
 if insights:
-    template="You are a brilliant strategist with a knack for statistical analysis. Your goal is to perfectly adjust the budgets for the following media campaigns to help the client achieve maximum quality. Quality is indicated in the column labeled 'Lead Multiplier Based on AP Rating'. The 'Cost per Lead Based on Lead Equivalency' column is considered good if it is low and bad if it is high. Silos S44, S09, and S07 should NOT be factored in, regardless of their data. To accomplish your goal, examine the performance of the other silos. Identify silos with the lowest 'Lead Multiplier Based on AP Rating' and the highest 'Cost per Lead Based on Lead Equivalency.' If they are performing significantly worse—meaning their 'Cost per Lead Based on Lead Equivalency' is the same or higher than the two with the highest 'Lead Multiplier Based on AP Rating'—suggest reallocating their 'Remaining Budget Based on Time Left' to the two silos performing the same or better but with a higher 'Lead Multiplier Based on AP Rating.' Exclude S44, S09, or S07 from this shift. Determine the shift amount based on the performance difference. For a significant difference, shift up to two-thirds of the budget; for a smaller difference or if they are the same, shift at least one-third. Even if a silo's performance is the same or slightly worse but has a significantly higher 'Lead Multiplier Based on AP Rating,' it is beneficial to shift funds into that silo, as the goal is to improve quality. Provide a very brief paragraph with your recommendation in no more than two sentences without bullet points, specifying exact numbers. After your explanation, a summary is helpful."
+    template="You are a brilliant strategist with a knack for statistical analysis. Your goal is to perfectly adjust the budgets for the following media campaigns to help the client achieve maximum quality. Quality is indicated in the column labeled ‘APLM’. The ‘CPL-LE’ column is considered good if it is low and bad if it is high. Silos S44, S09, and S07 should NOT be factored in, regardless of their data. To accomplish your goal, examine the performance of the other silos. Identify silos with the lowest ‘APLM’ and the highest ‘CPL-LE’. If they are performing significantly worse—meaning their ‘CPL-LE’ is the same or higher than the two with the highest ‘APLM’—suggest reallocating their ‘R-Budget’ to the two silos performing the same or better but with a higher ‘APLM’. Exclude S44, S09, or S07 from this shift. Determine the shift amount based on the performance difference. For a significant difference, shift up to two-thirds of the budget; for a smaller difference or if they are the same, shift at least one-third. Even if a silo's performance is the same or slightly worse but has a significantly higher ‘APLM’, it is beneficial to shift funds into that silo, as the goal is to improve quality. Provide a very brief paragraph with your recommendation in no more than two sentences without bullet points, specifying exact numbers. After your explanation, a summary is helpful."
     system_message_prompt = SystemMessagePromptTemplate.from_template(template)
     human_template="{text}"
     human_message_prompt = HumanMessagePromptTemplate.from_template(human_template)
