@@ -8,6 +8,13 @@ from openpyxl.drawing.spreadsheet_drawing import OneCellAnchor
 from openpyxl.drawing.image import Image as XLImage
 from PIL import Image 
 import shutil
+import os
+from langchain.prompts.chat import (
+    ChatPromptTemplate,
+    SystemMessagePromptTemplate,
+    HumanMessagePromptTemplate,
+)
+from langchain.chat_models import ChatOpenAI
 
 st.set_page_config(
     page_title="Leads Prediction",
@@ -281,6 +288,46 @@ if st.session_state.predict_leads:
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         use_container_width=True
     )
+
+
+df = pd.read_excel("ArcaData-TestData.xlsx")
+df = df.loc[:,:"CLF"].iloc[:-1]
+
+invoice_budget = dict(pd.pivot_table(df,"Budget","Invoice",aggfunc=sum)[:].reset_index().values)
+silo_ap_rating = {"S01": 5,"S02": 6,"S03": 4,"S04": 3,"S05": 5,"S06": 5,"S07": 7,"S08": 7,"S09": 7,"S26": 8,"S28": 7,"S30": 2,"S41": 5,"H01": 8}
+
+df["Elap-C/Dur-C"] = round(df["Elap-C"]/df["Dur-C"]*100,2)
+df["Elap-Budget"] = round(df["Elap-C/Dur-C"]*df["Budget"]/100,2)
+df["Total Budget for Invoice"] = df["Invoice"].apply(lambda a : invoice_budget[float(a)])
+df["AP Rating"] = df["Silo"].apply(lambda a : silo_ap_rating[a] if a in silo_ap_rating.keys() else 5)
+df["Lead Multiplier Based on AP Rating"] = df["AP Rating"]/5*100
+df["Lead Equivelency Based on AP Rating"] = round(df["Lead Multiplier Based on AP Rating"]*df["Ad-Leads"]/100)
+df["Cost per Lead Based on Lead Equivalency"] = df[["Budget","Lead Equivelency Based on AP Rating"]].apply(lambda a : round(a[0]/a[1],2) if a[1]!=0 else 0,axis=1)
+df["Remaining Budget Based on Time Left"] = df["Budget"] - df["Elap-Budget"]
+
+invoice = st.selectbox("Select the invoice:",df["Invoice"].unique())
+
+invoice_df = df[df["Invoice"]==invoice][["Silo","Lead Multiplier Based on AP Rating","Cost per Lead Based on Lead Equivalency","Remaining Budget Based on Time Left"]]
+openai_key = os.getenv("ACCESS_TOKEN")
+chat = ChatOpenAI(openai_api_key=openai_key,model="gpt-3.5-turbo")
+
+df_html = invoice_df.to_html(classes='table table-striped')
+df_html = df_html.replace('<table ','<table style="text-align:right; margin-bottom:40px; margin-top:50px;" ')
+st.markdown(df_html, unsafe_allow_html=True)
+
+insights = st.button("Generate Insights")
+
+if insights:
+    template="You are a brilliant strategist with a knack for statistical analysis. Your goal is to perfectly adjust the budgets for the following media campaigns to help the client achieve maximum quality. Quality is indicated in the column labeled 'Lead Multiplier Based on AP Rating'. The 'Cost per Lead Based on Lead Equivalency' column is considered good if it is low and bad if it is high. Silos S44, S09, and S07 should NOT be factored in, regardless of their data. To accomplish your goal, examine the performance of the other silos. Identify silos with the lowest 'Lead Multiplier Based on AP Rating' and the highest 'Cost per Lead Based on Lead Equivalency.' If they are performing significantly worse—meaning their 'Cost per Lead Based on Lead Equivalency' is the same or higher than the two with the highest 'Lead Multiplier Based on AP Rating'—suggest reallocating their 'Remaining Budget Based on Time Left' to the two silos performing the same or better but with a higher 'Lead Multiplier Based on AP Rating.' Exclude S44, S09, or S07 from this shift. Determine the shift amount based on the performance difference. For a significant difference, shift up to two-thirds of the budget; for a smaller difference or if they are the same, shift at least one-third. Even if a silo's performance is the same or slightly worse but has a significantly higher 'Lead Multiplier Based on AP Rating,' it is beneficial to shift funds into that silo, as the goal is to improve quality. Provide a very brief paragraph with your recommendation in no more than two sentences without bullet points, specifying exact numbers. After your explanation, a summary is helpful."
+    system_message_prompt = SystemMessagePromptTemplate.from_template(template)
+    human_template="{text}"
+    human_message_prompt = HumanMessagePromptTemplate.from_template(human_template)
+    chat_prompt = ChatPromptTemplate.from_messages([system_message_prompt, human_message_prompt])
+
+    # get a chat completion from the formatted messages
+    response = chat(chat_prompt.format_prompt(text=str(invoice_df)).to_messages())
+
+    st.write(response.content)
 
 
     
