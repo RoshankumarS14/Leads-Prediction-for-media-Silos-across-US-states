@@ -307,7 +307,7 @@ df["R-Budget"] = df["Budget"] - df["Elap-Budget"]
 
 invoice = st.selectbox("Select the invoice:",df["Invoice"].unique())
 
-invoice_df = df[df["Invoice"]==invoice][["Silo","APLM","CPL-LE","R-Budget"]].sort_values(["Silo"])
+invoice_df = df[df["Invoice"]==invoice][["Silo","APLM","CPL-LE","R-Budget"]].sort_values(["Silo"]).reset_index(drop=True)
 openai_key = os.getenv("ACCESS_TOKEN")
 chat = ChatOpenAI(openai_api_key=openai_key,model="gpt-4-1106-preview")
 
