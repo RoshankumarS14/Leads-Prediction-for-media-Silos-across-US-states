@@ -10,6 +10,7 @@ from PIL import Image
 import shutil
 from plotly.io import to_image
 import io
+from openpyxl import Workbook
 
 st.set_page_config(
     page_title="Leads Prediction",
@@ -229,8 +230,13 @@ if st.session_state.predict_leads:
     new_height = 155
     img = img.resize((new_width, new_height))
     
-    # Save the resized image
-    img.save('resized_fig.png')
+    # # Save the resized image
+    # img.save('resized_fig.png')
+
+    # Save the resized image to a BytesIO object
+    img_byte_arr = io.BytesIO()
+    img.save(img_byte_arr, format='PNG')
+    img_byte_arr = img_byte_arr.getvalue()
     
     # Load the workbook
     wb = load_workbook('New-Template.xlsx')
@@ -238,8 +244,8 @@ if st.session_state.predict_leads:
     # Select the sheet
     sheet = wb['juliabid'] 
     del wb['juliabid']._images[:-2]
-    # Create an Image object
-    img = XLImage('resized_fig.png')
+    # Create an Image object from BytesIO object
+    img = XLImage(io.BytesIO(img_byte_arr))
     
     # Add the image to the sheet
     sheet.add_image(img, 'B36')
