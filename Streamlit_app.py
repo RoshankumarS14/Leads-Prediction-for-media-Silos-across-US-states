@@ -243,7 +243,7 @@ if st.session_state.predict_leads:
     
     # Select the sheet
     sheet = wb['juliabid'] 
-    del wb['juliabid']._images[:-2]
+    # del wb['juliabid']._images[:-2]
     # Create an Image object from BytesIO object
     img = XLImage(io.BytesIO(img_byte_arr))
     
