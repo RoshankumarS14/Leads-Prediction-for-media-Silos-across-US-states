@@ -246,7 +246,7 @@ if st.session_state.predict_leads:
 
     # Create a Pandas Excel writer using openpyxl as the engine
     writer = pd.ExcelWriter(
-        output_path,
+        'New-Template.xlsx',
         engine='openpyxl',
         mode='a',
         if_sheet_exists='overlay',
