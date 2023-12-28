@@ -297,6 +297,9 @@ if st.session_state.predict_leads:
     # Write DataFrame to Excel from cell Y6 for the campaigns_values
     for i, value in enumerate(campaigns_values):
         sheet.cell(row=i+6, column=25, value=value if value != "" else 0.0)
+
+    sheet.cell(row=5,column=25,value=st.session_state.company_name)
+    sheet.cell(row=6,column=26,value=st.session_state.user_role)
     
     # Save the workbook to a BytesIO object
     excel_byte_arr = io.BytesIO()
