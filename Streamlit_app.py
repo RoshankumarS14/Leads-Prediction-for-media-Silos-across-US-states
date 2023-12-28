@@ -270,7 +270,7 @@ if st.session_state.predict_leads:
     writer.close()
         
     file_name = "TJD-" + st.session_state.company_name + ".xlsx"
-    with open("new_file.xlsx", "rb") as file:
+    with open("New-Template.xlsx", "rb") as file:
          file_bytes = file.read()
     st.download_button(
         label="Create Campaign!",
