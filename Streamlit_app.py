@@ -8,7 +8,7 @@ from openpyxl.drawing.spreadsheet_drawing import OneCellAnchor
 from openpyxl.drawing.image import Image as XLImage
 from PIL import Image 
 import shutil
-
+import io
 
 st.set_page_config(
     page_title="Leads Prediction",
