@@ -241,9 +241,6 @@ if st.session_state.predict_leads:
     # Save the workbook
     wb.save('New-Template.xlsx')
 
-    # Copy the existing Excel file to a new file
-    output_path = shutil.copy('New-Template.xlsx', 'new_file.xlsx')
-
     # Create a Pandas Excel writer using openpyxl as the engine
     writer = pd.ExcelWriter(
         'New-Template.xlsx',
