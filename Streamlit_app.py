@@ -211,11 +211,16 @@ if st.session_state.predict_leads:
     fig2 = make_subplots(rows=1, cols=1, specs=[[{'type': 'indicator'}]])
     fig2.append_trace(trace3, row=1, col=1)
     
-    # Save the Plotly figure as an image file
-    fig2.write_image("fig.png")
+    # # Save the Plotly figure as an image file
+    # fig2.write_image("fig.png")
 
-    # Open the image file
-    img = Image.open('fig.png')
+    # # Open the image file
+    # img = Image.open('fig.png')
+
+    fig2_bytes = to_image(fig2, format="png")
+
+    # Open the image file from memory
+    img = Image.open(io.BytesIO(fig2_bytes))
     
     # Resize the image
     width, height = img.size
