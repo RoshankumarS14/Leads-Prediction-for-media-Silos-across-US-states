@@ -299,7 +299,7 @@ if st.session_state.predict_leads:
         sheet.cell(row=i+6, column=25, value=value if value != "" else 0.0)
 
     sheet.cell(row=5,column=25,value=st.session_state.company_name)
-    sheet.cell(row=6,column=26,value=st.session_state.user_role)
+    sheet.cell(row=7,column=27,value=st.session_state.user_role)
     
     # Save the workbook to a BytesIO object
     excel_byte_arr = io.BytesIO()
