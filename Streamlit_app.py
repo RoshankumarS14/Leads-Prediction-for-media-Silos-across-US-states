@@ -250,43 +250,64 @@ if st.session_state.predict_leads:
     # Add the image to the sheet
     sheet.add_image(img, 'B36')
     
-    # Save the workbook
-    wb.save('New-Template.xlsx')
+    # # Save the workbook
+    # wb.save('New-Template.xlsx')
 
-    # Create a Pandas Excel writer using openpyxl as the engine
-    writer = pd.ExcelWriter(
-        'New-Template.xlsx',
-        engine='openpyxl',
-        mode='a',
-        if_sheet_exists='overlay',
-    )
+    # # Create a Pandas Excel writer using openpyxl as the engine
+    # writer = pd.ExcelWriter(
+    #     'New-Template.xlsx',
+    #     engine='openpyxl',
+    #     mode='a',
+    #     if_sheet_exists='overlay',
+    # )
      
+    # # Write DataFrame to Excel from cell X11 for the first column
+    # result.iloc[:, 0].to_excel(writer, sheet_name='juliabid', startrow=10, startcol=23, header=False, index=False)
+    
+    # # Write DataFrame to Excel from cell Y11 for the second column
+    # pd.Series(input_budget).to_excel(writer, sheet_name='juliabid', startrow=10, startcol=24, header=False, index=False)
+    
+    # # Write DataFrame to Excel from cell AA11 for the third column
+    # result.iloc[:, 3].to_excel(writer, sheet_name='juliabid', startrow=10, startcol=26, header=False, index=False)
+
+    # # campaigns_values = [0 if i=="" else '{:.2f}'.format(float(i)) for i in campaigns_values] 
+    # campaigns_values = [0 if i=="" else float(i) for i in campaigns_values] 
+    # pd.Series(campaigns_values).to_excel(writer, sheet_name='juliabid', startrow=5, startcol=24, header=False, index=False)
+
+     
+    # pd.Series([st.session_state.company_name]).to_excel(writer, sheet_name='juliabid', startrow=4, startcol=24, header=False, index=False)
+    # pd.Series([st.session_state.user_role]).to_excel(writer, sheet_name='juliabid', startrow=6, startcol=26, header=False, index=False)
+    
+    # # Save the workbook
+    # writer.close()
+
     # Write DataFrame to Excel from cell X11 for the first column
-    result.iloc[:, 0].to_excel(writer, sheet_name='juliabid', startrow=10, startcol=23, header=False, index=False)
+    for i, value in enumerate(result.iloc[:, 0]):
+        sheet.cell(row=i+11, column=24, value=value)
     
     # Write DataFrame to Excel from cell Y11 for the second column
-    pd.Series(input_budget).to_excel(writer, sheet_name='juliabid', startrow=10, startcol=24, header=False, index=False)
+    for i, value in enumerate(input_budget):
+        sheet.cell(row=i+11, column=25, value=value)
     
     # Write DataFrame to Excel from cell AA11 for the third column
-    result.iloc[:, 3].to_excel(writer, sheet_name='juliabid', startrow=10, startcol=26, header=False, index=False)
-
-    # campaigns_values = [0 if i=="" else '{:.2f}'.format(float(i)) for i in campaigns_values] 
+    for i, value in enumerate(result.iloc[:, 3]):
+        sheet.cell(row=i+11, column=27, value=value)
+        
     campaigns_values = [0 if i=="" else float(i) for i in campaigns_values] 
-    pd.Series(campaigns_values).to_excel(writer, sheet_name='juliabid', startrow=5, startcol=24, header=False, index=False)
-
-     
-    pd.Series([st.session_state.company_name]).to_excel(writer, sheet_name='juliabid', startrow=4, startcol=24, header=False, index=False)
-    pd.Series([st.session_state.user_role]).to_excel(writer, sheet_name='juliabid', startrow=6, startcol=26, header=False, index=False)
+    # Write DataFrame to Excel from cell Y6 for the campaigns_values
+    for i, value in enumerate(campaigns_values):
+        sheet.cell(row=i+6, column=25, value=value if value != "" else 0.0)
     
-    # Save the workbook
-    writer.close()
+    # Save the workbook to a BytesIO object
+    excel_byte_arr = io.BytesIO()
+    wb.save(excel_byte_arr)
         
     file_name = "TJD-" + st.session_state.company_name + ".xlsx"
     with open("New-Template.xlsx", "rb") as file:
          file_bytes = file.read()
     st.download_button(
         label="Create Campaign!",
-        data=file_bytes,
+        data=excel_byte_arr.getvalue(),
         file_name=file_name,
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         use_container_width=True
