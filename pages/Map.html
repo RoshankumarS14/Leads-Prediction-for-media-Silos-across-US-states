@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>US Cities Population Map</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css"/>
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+  <style>
+    #map { height: 400px; }
+    #calculate-population { margin: 10px; }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <button id="calculate-population">Calculate Population</button>
+  <script>
+    var map = L.map('map').setView([37.8, -96], 4);
+    var cities = []; // This will hold the city data
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    var drawnItems = new L.FeatureGroup();
+    map.addLayer(drawnItems);
+
+    var drawControl = new L.Control.Draw({
+      edit: {
+        featureGroup: drawnItems
+      },
+      draw: {
+        polyline: false,
+        polygon: false,
+        rectangle: false,
+        marker: false,
+        circlemarker: false,
+        circle: true
+      }
+    });
+    map.addControl(drawControl);
+
+    map.on(L.Draw.Event.CREATED, function (event) {
+      var layer = event.layer;
+      drawnItems.addLayer(layer);
+    });
+
+    // Function to load and parse the CSV file
+    function loadAndParseCSV() {
+      fetch('US_cities_population.csv')
+      .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok: ' + response.statusText);
+      }
+      return response.text();
+    })
+        .then(csvData => {
+          Papa.parse(csvData, {
+            header: true,
+            skipEmptyLines: true,
+            complete: function(results) {
+              console.log("Parsed data:", results.data);
+              cities = results.data; // Store the parsed data
+              // Add city markers to the map
+              cities.forEach(function(city) {
+                var lat = parseFloat(city.lat);
+                var lon = parseFloat(city.lon);
+                var population = parseInt(city.population, 10);
+                if (!isNaN(lat) && !isNaN(lon) && !isNaN(population)) {
+                  var marker = L.marker([lat, lon]).addTo(map);
+                  marker.bindPopup(city.name + ': Population ' + population);
+                }
+              });
+            }
+          });
+        })
+        .catch(error => console.error('Error loading the CSV file:', error));
+    }
+
+    // Call the function to load and parse the CSV when the page loads
+    loadAndParseCSV();
+
+    // Function to calculate the aggregated population within all drawn circles
+    function calculateTotalPopulation() {
+      var totalPopulation = 0;
+      drawnItems.eachLayer(function(layer) {
+        if (layer instanceof L.Circle) {
+          cities.forEach(function(city) {
+            if (layer.getBounds().contains(L.latLng(city.lat, city.lon))) {
+              totalPopulation += parseInt(city.population, 10);
+            }
+          });
+        }
+      });
+      alert('Total Population in selected areas: ' + totalPopulation);
+    }
+
+    // Add event listener to the button
+    document.getElementById('calculate-population').addEventListener('click', calculateTotalPopulation);
+  </script>
+</body>
+</html>
