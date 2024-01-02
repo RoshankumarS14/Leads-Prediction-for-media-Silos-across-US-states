@@ -3,7 +3,7 @@ import streamlit.components.v1 as components
 import base64
 
 # Path to your HTML file with the Leaflet map
-html_file_path = 'map.html'
+html_file_path = 'Map.html'
 
 # Path to your CSV file
 csv_file_path = 'US_cities_population.csv'
