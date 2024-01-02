@@ -2,6 +2,12 @@ import streamlit as st
 import streamlit.components.v1 as components
 import base64
 
+st.set_page_config(
+    page_title="US Population Map",
+    page_icon="🗺️",
+    initial_sidebar_state="collapsed"
+)
+
 st.title("🗺️ US Population Map")
 # Path to your HTML file with the Leaflet map
 html_file_path = 'Map.html'
