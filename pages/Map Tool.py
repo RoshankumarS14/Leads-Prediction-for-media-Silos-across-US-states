@@ -6,7 +6,7 @@ import base64
 html_file_path = 'Map.html'
 
 # Path to your CSV file
-csv_file_path = 'US_cities_population.csv'
+csv_file_path = 'US_Population.csv'
 
 # Read the contents of the CSV file and encode it to base64
 with open(csv_file_path, 'r', encoding='utf-8') as csv_file:
