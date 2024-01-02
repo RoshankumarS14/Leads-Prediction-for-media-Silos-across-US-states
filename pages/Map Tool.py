@@ -2,6 +2,7 @@ import streamlit as st
 import streamlit.components.v1 as components
 import base64
 
+st.title("🗺️ US Population Map")
 # Path to your HTML file with the Leaflet map
 html_file_path = 'Map.html'
 
