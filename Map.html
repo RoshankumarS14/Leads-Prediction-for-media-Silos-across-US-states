@@ -23,7 +23,7 @@
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 18,
-      attribution: '© OpenStreetMap contributors'
+      attribution: '© Access AI'
     }).addTo(map);
 
     var drawnItems = new L.FeatureGroup();
@@ -70,10 +70,10 @@
                 var lat = parseFloat(city.lat);
                 var lon = parseFloat(city.lon);
                 var population = parseInt(city.population, 10);
-                if (!isNaN(lat) && !isNaN(lon) && !isNaN(population)) {
-                  var marker = L.marker([lat, lon]).addTo(map);
-                  marker.bindPopup(city.name + ': Population ' + population);
-                }
+                // if (!isNaN(lat) && !isNaN(lon) && !isNaN(population)) {
+                //   var marker = L.marker([lat, lon]).addTo(map);
+                //   marker.bindPopup(city.name + ': Population ' + population);
+                // }
               });
             }
           });
