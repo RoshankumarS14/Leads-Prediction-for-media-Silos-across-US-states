@@ -42,7 +42,12 @@
         rectangle: false,
         marker: false,
         circlemarker: false,
-        circle: true
+            circle: {
+      metric: false, // Disable metric units
+      feet: false, // Disable feet units
+      nautic: false, // Disable nautical miles
+      imperial: true // Enable imperial units (miles)
+    }
       }
     });
     map.addControl(drawControl);
