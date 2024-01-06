@@ -54,8 +54,7 @@ if calculate:
     st.write(f"The total population of the cities within the circle is {total_population}.")
     
     state_wise_pop = pd.DataFrame(df["state"].value_counts()/len(df)*100)
-    st.dataframe(state_wise_pop)
-    state_wise_pop = state_wise_pop.rename(columns={"state":"Percentage Population"})
+    state_wise_pop = state_wise_pop.rename(columns={"count":"Percentage Population"})
     state_wise_pop["Percentage Population"] = state_wise_pop["Percentage Population"].apply(lambda a : round(a,2))
     st.write(state_wise_pop)
 
