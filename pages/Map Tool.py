@@ -26,6 +26,7 @@ if not _RELEASE:
     import streamlit as st
     st.subheader("Population Map - US")
     clicked_coords = my_component()
+    st.write(clicked_coords)
     # st.markdown(clicked_coords)
 
 # Read the csv file into a pandas dataframe
