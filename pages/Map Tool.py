@@ -1,30 +1,58 @@
-import streamlit as st
+import os
 import streamlit.components.v1 as components
-import base64
+import geopy.distance
+import pandas as pd
+import streamlit as st
 
-st.set_page_config(
-    page_title="US Population Map",
-    page_icon="🗺️",
-    initial_sidebar_state="collapsed"
-)
+_RELEASE = False
 
-st.title("🗺️ US Population Map")
-# Path to your HTML file with the Leaflet map
-html_file_path = 'Map.html'
+if not _RELEASE:
+    _component_func = components.declare_component(
+        "my_component",
+        url="https://a60b-2405-201-e060-2007-9531-e2a4-d93a-3dab.ngrok-free.app/",
+    )
+else:
+    parent_dir = os.path.dirname(os.path.abspath(__file__))
+    build_dir = os.path.join(parent_dir, "frontend/build")
+    _component_func = components.declare_component("my_component", path=build_dir)
 
-# Path to your CSV file
-csv_file_path = 'US_Population.csv'
 
-# Read the contents of the CSV file and encode it to base64
-with open(csv_file_path, 'r', encoding='utf-8') as csv_file:
-    csv_content = csv_file.read()
-    csv_base64 = base64.b64encode(csv_content.encode()).decode()
+def my_component(key=None):
+    component_value = _component_func(key=key, default=0)
+    return component_value
 
-# Embed the base64 encoded CSV content into the HTML
-with open(html_file_path, 'r', encoding='utf-8') as html_file:
-    html_content = html_file.read()
-    html_content = html_content.replace('fetch(\'US_cities_population.csv\')',
-                                        f'fetch(\'data:text/csv;base64,{csv_base64}\')')
 
-# Use Streamlit's components API to render the HTML, CSS, and JavaScript
-components.html(html_content, height=600)
+if not _RELEASE:
+    import streamlit as st
+    st.subheader("Population Map - US")
+    clicked_coords = my_component()
+    # st.markdown(clicked_coords)
+
+# Read the csv file into a pandas dataframe
+data = pd.read_csv("US_Population.csv")
+
+calculate = st.button("Get Population")
+
+if calculate:
+    # Get the center and radius from the typescript component
+    center = clicked_coords.get("center")
+    radius = clicked_coords.get("radius")/1000
+
+
+    # Define a function to calculate the distance between two points
+    def distance(point1, point2):
+        return geopy.distance.distance(point1, point2).km
+
+    # Filter the dataframe to keep only the cities that are within the radius
+    df = data[data.apply(lambda row: distance((center["lat"],center["lng"]), (row["lat"], row["lon"])) <= radius, axis=1)]
+    # Calculate the total population of the filtered cities
+    total_population = df["population"].sum()
+
+    # Display the result
+    # st.write(f"The total population of the cities within {radius} km of {center} is {total_population}.")
+    st.write(f"The total population of the cities within the circle is {total_population}.")
+
+    state_wise_pop = pd.DataFrame(df["state"].value_counts()/len(df)*100).rename(columns={"state":"Percentage Population"})
+    state_wise_pop["Percentage Population"] = state_wise_pop["Percentage Population"].apply(lambda a : round(a,2))
+    st.write(state_wise_pop)
+
