@@ -26,7 +26,6 @@ if not _RELEASE:
     import streamlit as st
     st.subheader("Population Map - US")
     clicked_coords = my_component()
-    st.write(clicked_coords)
     # st.markdown(clicked_coords)
 
 # Read the csv file into a pandas dataframe
@@ -34,19 +33,24 @@ data = pd.read_csv("US_Population.csv")
 
 calculate = st.button("Get Population")
 
+# Define a function to calculate the distance between two points
+def distance(point1, point2):
+    return geopy.distance.distance(point1, point2).km
+
 if calculate:
     st.balloons()
     # Get the center and radius from the typescript component
-    center = clicked_coords.get("center")
-    radius = clicked_coords.get("radius")/1000
 
+    dfs = []
+    for coords in clicked_coords:
+        center = coords.get("center")
+        radius = coords.get("radius")/1000
 
-    # Define a function to calculate the distance between two points
-    def distance(point1, point2):
-        return geopy.distance.distance(point1, point2).km
+        # Filter the dataframe to keep only the cities that are within the radius
+        df_filtered = data[data.apply(lambda row: distance((center["lat"],center["lng"]), (row["lat"], row["lon"])) <= radius, axis=1)]
+        dfs.append(df_filtered)
 
-    # Filter the dataframe to keep only the cities that are within the radius
-    df = data[data.apply(lambda row: distance((center["lat"],center["lng"]), (row["lat"], row["lon"])) <= radius, axis=1)]
+    df = pd.concat(dfs,ignore_index=True)
     # Calculate the total population of the filtered cities
     total_population = df["population"].sum()
 
