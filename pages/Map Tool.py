@@ -34,6 +34,7 @@ data = pd.read_csv("US_Population.csv")
 calculate = st.button("Get Population")
 
 if calculate:
+    st.balloons()
     # Get the center and radius from the typescript component
     center = clicked_coords.get("center")
     radius = clicked_coords.get("radius")/1000
