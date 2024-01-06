@@ -51,6 +51,7 @@ if calculate:
         dfs.append(df_filtered)
 
     df = pd.concat(dfs,ignore_index=True)
+    df.drop_duplicates(inplace=True)
     # Calculate the total population of the filtered cities
     total_population = df["population"].sum()
 
