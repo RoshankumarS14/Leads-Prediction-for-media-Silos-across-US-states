@@ -7,9 +7,15 @@ from geopy.geocoders import Nominatim
 
 _RELEASE = False
 
-parent_dir = os.path.dirname(os.path.abspath(__file__))
-build_dir = os.path.join(parent_dir, "frontend/build")
-_component_func = components.declare_component("my_component", path=build_dir)
+if not _RELEASE:
+    _component_func = components.declare_component(
+        "my_component",
+        url="https://us-population-map.onrender.com/",
+    )
+else:
+    parent_dir = os.path.dirname(os.path.abspath(__file__))
+    build_dir = os.path.join(parent_dir, "frontend/build")
+    _component_func = components.declare_component("my_component", path=build_dir)
 
 if "selected_states" not in st.session_state:
     st.session_state["selected_states"]=[]
