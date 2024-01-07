@@ -7,15 +7,9 @@ from geopy.geocoders import Nominatim
 
 _RELEASE = False
 
-if not _RELEASE:
-    _component_func = components.declare_component(
-        "my_component",
-        url="https://a60b-2405-201-e060-2007-9531-e2a4-d93a-3dab.ngrok-free.app/",
-    )
-else:
-    parent_dir = os.path.dirname(os.path.abspath(__file__))
-    build_dir = os.path.join(parent_dir, "frontend/build")
-    _component_func = components.declare_component("my_component", path=build_dir)
+parent_dir = os.path.dirname(os.path.abspath(__file__))
+build_dir = os.path.join(parent_dir, "frontend/build")
+_component_func = components.declare_component("my_component", path=build_dir)
 
 if "selected_states" not in st.session_state:
     st.session_state["selected_states"]=[]
@@ -95,6 +89,6 @@ if calculate:
     st.write(f"The total population of the cities within the circle is {total_population}.")
     
     state_wise_pop = pd.DataFrame(df["state"].value_counts()/len(df)*100)
-    state_wise_pop = state_wise_pop.rename(columns={"count":"Percentage Population"})
+    state_wise_pop = state_wise_pop.rename(columns={"state":"Percentage Population"})
     state_wise_pop["Percentage Population"] = state_wise_pop["Percentage Population"].apply(lambda a : round(a,2))
     st.write(state_wise_pop)
