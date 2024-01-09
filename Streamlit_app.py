@@ -320,11 +320,11 @@ if calculate:
     st.write(f"The total population of the cities within the circle is {total_population}.")
 
     state_wise_pop = pd.pivot_table(data=df,index="state",values="population",aggfunc=sum)
-    st.dataframe(state_wise_pop)
-    state_wise_pop = state_wise_pop.rename(columns={"count":"Percentage Population"})
-    state_wise_pop["Percentage Population"] = state_wise_pop["Percentage Population"].apply(lambda a : round(a,2))
+    state_wise_pop["percentage"] = state_wise_pop["population"]/total_population*100
+    state_wise_pop["percentage"] = state_wise_pop["percentage"].apply(lambda a : round(a,2))
     state_wise_pop.reset_index(inplace=True)
-    state_wise_pop.columns = ["State","Percentage Population"] 
+    state_wise_pop.columns = ["State","Population","Percentage Population"] 
+    st.dataframe(state_wise_pop)
     st.session_state["state_wise_pop"] = state_wise_pop
     df_html = state_wise_pop.to_html(classes='table table-striped',index=False)
     df_html = df_html.replace('<table ','<table style="text-align:right; margin-bottom:40px; margin-top:50px; width:95%;" ')
