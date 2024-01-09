@@ -324,7 +324,7 @@ if calculate:
     state_wise_pop["percentage"] = state_wise_pop["percentage"].apply(lambda a : round(a,2))
     state_wise_pop.reset_index(inplace=True)
     state_wise_pop.columns = ["State","Population","Percentage Population"] 
-    st.dataframe(state_wise_pop)
+
     st.session_state["state_wise_pop"] = state_wise_pop
     df_html = state_wise_pop.to_html(classes='table table-striped',index=False)
     df_html = df_html.replace('<table ','<table style="text-align:right; margin-bottom:40px; margin-top:50px; width:95%;" ')
