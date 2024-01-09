@@ -318,8 +318,9 @@ if calculate:
     # Display the result
     # st.write(f"The total population of the cities within {radius} km of {center} is {total_population}.")
     st.write(f"The total population of the cities within the circle is {total_population}.")
-    
-    state_wise_pop = pd.DataFrame(df["state"].value_counts()/len(df)*100)
+
+    state_wise_pop = pd.pivot_table(data=df,index="state",values="population",aggfunc=sum)
+    st.dataframe(state_wise_pop)
     state_wise_pop = state_wise_pop.rename(columns={"count":"Percentage Population"})
     state_wise_pop["Percentage Population"] = state_wise_pop["Percentage Population"].apply(lambda a : round(a,2))
     state_wise_pop.reset_index(inplace=True)
