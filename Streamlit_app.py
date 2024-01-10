@@ -248,7 +248,7 @@ if "states_json" not in st.session_state:
 
 st.session_state["states"] = st.multiselect("Selected States:",st.session_state["selected_states"],st.session_state["selected_states"])
 
-calculate = st.button("Calculate Population!",use_container_width=True)
+calculate = st.button("Predict!",use_container_width=True)
 
 def set_ad_campaign():
     st.session_state.ad_campaign = True
