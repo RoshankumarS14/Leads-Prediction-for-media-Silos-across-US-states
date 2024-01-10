@@ -363,9 +363,9 @@ if calculate:
         # Display the map in Streamlit
         st.plotly_chart(fig,use_container_width=True)
 
-    st.button("Predict", on_click=set_predict_leads, use_container_width=True)
+#     st.button("Predict", on_click=set_predict_leads, use_container_width=True)
 
-if st.session_state.predict_leads:
+# if st.session_state.predict_leads:
     leads = []
     input_budget = [float(i) for i in input_budget]
     state_wise_pop = st.session_state["state_wise_pop"]
