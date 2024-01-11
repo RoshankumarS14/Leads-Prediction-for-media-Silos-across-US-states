@@ -271,7 +271,6 @@ if "state_df" not in st.session_state:
 
 if calculate:
 
-    st.balloons()
     dfs = []
     circle_count=0
     circles = []
