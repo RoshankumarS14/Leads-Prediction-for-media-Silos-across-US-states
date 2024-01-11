@@ -16,6 +16,7 @@ from PIL import Image
 import io
 from openpyxl import Workbook
 from openpyxl import load_workbook
+from map_utils import get_centre_zoom
 
 st.set_page_config(
     page_title="Leads Prediction",
@@ -337,7 +338,8 @@ if calculate:
         'highlight': [1 for i in st.session_state["states"]]  # 1 means highlight
     })
     st.session_state["state_df"] = state_df
-    # st.dataframe(states_json["features"])
+
+    center_lat,center_lon,zoom_level = get_centre_zoom(st.session_state["states_json"],state_df["state])
     
     # Create a choropleth map
     fig = px.choropleth_mapbox(state_df, geojson=st.session_state["states_json"], locations='state', color='highlight',
@@ -348,9 +350,9 @@ if calculate:
     # Update the layout
     fig.update_geos(showcountries=False, showcoastlines=True, showland=True, fitbounds="locations")
     fig.update_layout(mapbox_style="mapbox://styles/tjd2024/clr7tijl9000501qn7ib47qzk", 
-                    mapbox_zoom=2.5, 
+                    mapbox_zoom=zoom_level, 
                     mapbox_accesstoken ="pk.eyJ1IjoidGpkMjAyNCIsImEiOiJjbHIyNmU2Z2oweTRmMnFuMWN1dmN1N3V4In0.9dU2pjRURk4qs31aBAV4lg",
-                    mapbox_center = {"lat": 37.0902, "lon": -95.7129},
+                    mapbox_center = {"lat": center_lat, "lon": center_lon},
                     coloraxis=dict(showscale=False))
     # fig.update_layout(height=300, margin={"r":0,"t":0,"l":0,"b":0})
 
