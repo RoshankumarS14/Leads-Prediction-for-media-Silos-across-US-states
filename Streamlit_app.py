@@ -482,6 +482,7 @@ if calculate:
                     mapbox_accesstoken ="pk.eyJ1IjoidGpkMjAyNCIsImEiOiJjbHIyNmU2Z2oweTRmMnFuMWN1dmN1N3V4In0.9dU2pjRURk4qs31aBAV4lg",
                     mapbox_center = {"lat": center_lat, "lon": center_lon},
                     coloraxis=dict(showscale=False))
+    fig3.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
     
     fig3_bytes = to_image(fig3, format="png")
     map_img = Image.open(io.BytesIO(fig3_bytes))
