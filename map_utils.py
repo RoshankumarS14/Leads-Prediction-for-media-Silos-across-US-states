@@ -23,3 +23,5 @@ def get_centre_zoom(json_data,states)
 
     # Calculate the zoom level based on the maximum dimension
     zoom_level = 8 - max(width, height)
+
+    return center_lat,center_lon,zoom_level
