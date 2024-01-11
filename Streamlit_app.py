@@ -528,13 +528,13 @@ if calculate:
     file_name = "TJD-" + st.session_state.company_name + ".xlsx"
     with open("New-Template.xlsx", "rb") as file:
          file_bytes = file.read()
-    st.download_button(
+    if st.download_button(
         label="Create Campaign!",
         data=excel_byte_arr.getvalue(),
         file_name=file_name,
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        use_container_width=True
-    )
+        use_container_width=True):
+            st.experimental_rerun()
 
 
 
