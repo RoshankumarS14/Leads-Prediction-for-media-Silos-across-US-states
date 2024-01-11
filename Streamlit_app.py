@@ -249,6 +249,8 @@ if "states_json" not in st.session_state:
 
 st.session_state["states"] = st.multiselect("Selected States:",st.session_state["selected_states"],st.session_state["selected_states"])
 
+st.session_state["rerun_flag"]=False
+
 calculate = st.button("Predict!",use_container_width=True)
 
 def set_ad_campaign():
@@ -534,8 +536,9 @@ if calculate:
         file_name=file_name,
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         use_container_width=True):
-            rerun_flag=True
-if rerun_flag:
+            st.session_state["rerun_flag"]=True
+            
+if st.session_state["rerun_flag"]:
     st.experimental_rerun()
 
 
