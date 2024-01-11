@@ -191,7 +191,7 @@ def create_circle_feature(center, radius_miles, num_points=64, properties=None):
 def distance(point1, point2):
     return geopy.distance.distance(point1, point2).km
 
-def refresh()
+def refresh():
     st.experimental_rerun()
 
 def calculate_rating(numbers):
