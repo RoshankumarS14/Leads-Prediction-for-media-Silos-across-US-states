@@ -191,6 +191,9 @@ def create_circle_feature(center, radius_miles, num_points=64, properties=None):
 def distance(point1, point2):
     return geopy.distance.distance(point1, point2).km
 
+def refresh()
+    st.experimental_rerun()
+
 def calculate_rating(numbers):
     # Calculate the standard deviation
     std_dev = np.std(numbers)
@@ -535,10 +538,11 @@ if calculate:
         data=excel_byte_arr.getvalue(),
         file_name=file_name,
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        use_container_width=True):
-            st.session_state["rerun_flag"]=True
-            
-if st.session_state["rerun_flag"]:
+        use_container_width=True,
+        on_click=refresh):
+            rerun_flag=True
+
+if rerun_flag:
     st.experimental_rerun()
 
 
