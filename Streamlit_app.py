@@ -339,7 +339,7 @@ if calculate:
     })
     st.session_state["state_df"] = state_df
 
-    center_lat,center_lon,zoom_level = get_centre_zoom(st.session_state["states_json"],state_df["state])
+    center_lat,center_lon,zoom_level = get_centre_zoom(st.session_state["states_json"],state_df["state"])
     
     # Create a choropleth map
     fig = px.choropleth_mapbox(state_df, geojson=st.session_state["states_json"], locations='state', color='highlight',
