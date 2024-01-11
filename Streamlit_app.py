@@ -534,8 +534,9 @@ if calculate:
         file_name=file_name,
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         use_container_width=True):
-            st.experimental_rerun()
-
+            rerun_flag=True
+if rerun_flag:
+    st.experimental_rerun()
 
 
 
