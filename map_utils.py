@@ -1,6 +1,6 @@
 import geopandas as gpd    
 
-def get_centre_zoom(json_data,states)
+def get_centre_zoom(json_data,states):
     # Convert the GeoJSON data to a GeoDataFrame
     gdf = gpd.GeoDataFrame.from_features((json_data))
 
