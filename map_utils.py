@@ -22,7 +22,7 @@ def get_centre_zoom(json_data,states):
     center_lon = gdf[gdf['NAME'].isin(states)]['longitude'].mean()
 
     # Calculate the zoom level based on the maximum dimension
-    zoom_level = 10 - max(width, height)
+    zoom_level = 8 - max(width, height)
     if zoom_level<=2.5:
         zoom_level=2.5
 
