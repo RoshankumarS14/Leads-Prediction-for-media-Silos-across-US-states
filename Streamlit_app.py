@@ -225,7 +225,7 @@ map_url = "https://us-population-map.onrender.com/"
  
 if not _RELEASE:
 
-    col_head,col_but = st.columns([2,1])
+    col_head,col_but = st.columns([3,1])
     with col_head:
         st.subheader("Population Map - US")
     with col_but:
