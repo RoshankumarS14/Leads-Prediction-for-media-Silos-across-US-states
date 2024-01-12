@@ -222,12 +222,16 @@ def calculate_rating(numbers):
 
 # URL of the map
 map_url = "https://us-population-map.onrender.com/"
-
-# Create a button that opens the link in a new tab
-st.markdown(f'<a href="{map_url}" target="_blank"><input type="button" value="Open Map" style="color: white; background-color: #FF4B4B; border: none; border-radius: 5px; padding: 10px 20px;"></a>', unsafe_allow_html=True)
-    
+ 
 if not _RELEASE:
-    st.subheader("Population Map - US")
+
+    col_head,col_but = st.columns([2,1])
+    with col_head:
+        st.subheader("Population Map - US")
+    with col_but:
+        # Create a button that opens the link in a new tab
+        st.markdown(f'<a href="{map_url}" target="_blank"><input type="button" value="Open Map" style="color: white; background-color: #FF4B4B; border: none; border-radius: 5px; padding: 10px 20px;"></a>', unsafe_allow_html=True)
+   
     clicked_coords = my_component()
  
     # st.markdown(clicked_coords)
