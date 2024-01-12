@@ -87,7 +87,7 @@ col_enter,col_total = st.columns([3,1])
 with col_enter:
     st.text("Enter the budget for each silos:")
 with col_total:
-    st.text("Total Budget: "+str(st.session_state["running_budget"]))
+    st.text("Sub Total: $"+str(st.session_state["running_budget"]))
 
 # Calculate the number of rows
 num_rows = len(input_silos) // 3
