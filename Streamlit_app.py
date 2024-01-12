@@ -86,8 +86,10 @@ if "running_budget" not in st.session_state:
 col_enter,col_total = st.columns([3,1])
 with col_enter:
     st.text("Enter the budget for each silos:")
-with col_total:
-    st.text("Sub Total: $"+str(st.session_state["running_budget"]))
+# Create a placeholder for the subtotal
+subtotal_placeholder = col_total.empty()
+# with col_total:
+#     st.text("Sub Total: $"+str(st.session_state["running_budget"]))
 
 # Calculate the number of rows
 num_rows = len(input_silos) // 3
@@ -127,6 +129,7 @@ for i in range(num_rows):
         user_input = text_input_slot.text_input('', '', key=f'input_{index}')
         input_budget.append(user_input)
         st.session_state["running_budget"] += int(user_input) if user_input!="" else 0
+        subtotal_placeholder.text("Sub Total: $"+str(st.session_state["running_budget"]))
 
 
 _RELEASE = False
