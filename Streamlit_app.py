@@ -83,7 +83,7 @@ input_budget = []
 if "running_budget" not in st.session_state:
     st.session_state["running_budget"] = 0
 
-col_enter,col_total = st.columns([2,1])
+col_enter,col_total = st.columns([3,1])
 with col_enter:
     st.text("Enter the budget for each silos:")
 with col_total:
