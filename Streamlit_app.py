@@ -541,7 +541,7 @@ if calculate:
         file_name=file_name,
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         use_container_width=True,
-        on_click=refresh):
+        ):
             st.session_state["rerun_flag"]=True
 
 if st.session_state["rerun_flag"]:
