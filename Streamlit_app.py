@@ -25,6 +25,16 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
+# Get the session state
+state = get_state()
+
+# Check if the button has been clicked
+if state.button_clicked:
+    # Reset the state
+    state.button_clicked = False
+    # Rerun the app
+    st.experimental_rerun()
+
 # URL of the map
 map_url = "https://us-population-map.onrender.com/"
 
@@ -558,10 +568,12 @@ if calculate:
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         use_container_width=True,
         ):
-            st.session_state["rerun_flag"]=True
+                state.button_clicked = True
+                # Rerun the app
+                st.experimental_rerun()
 
-if st.session_state["rerun_flag"]:
-    st.experimental_rerun()
+# if st.session_state["rerun_flag"]:
+#     st.experimental_rerun()
 
 
 
