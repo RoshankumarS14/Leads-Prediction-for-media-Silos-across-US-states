@@ -126,7 +126,7 @@ for i in range(num_rows):
         text_input_slot = col_input.empty()
         user_input = text_input_slot.text_input('', '', key=f'input_{index}')
         input_budget.append(user_input)
-        st.session_state["running_budget"] += int(user_input)
+        st.session_state["running_budget"] += int(user_input) if user_input!="" else 0
 
 
 _RELEASE = False
