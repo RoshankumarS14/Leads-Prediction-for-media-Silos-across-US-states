@@ -18,19 +18,18 @@ from openpyxl import Workbook
 from openpyxl import load_workbook
 from map_utils import get_centre_zoom
 
+# URL of the map
+map_url = "https://us-population-map.onrender.com/"
+
+# Create a script that opens a new tab
+st.markdown(f'<script>window.open("{map_url}", "_blank")</script>', unsafe_allow_html=True)
+
 st.set_page_config(
     page_title="Leads Prediction",
     page_icon="📈",
     layout="centered",
     initial_sidebar_state="collapsed"
 )
-
-# URL of the map
-map_url = "https://us-population-map.onrender.com/"
-
-# Create a script that opens a new tab
-st.markdown(f'<script>window.open("{map_url}", "_blank")</script>', unsafe_allow_html=True)
-st.write("check")
 
 st.image("logo.png")
 
