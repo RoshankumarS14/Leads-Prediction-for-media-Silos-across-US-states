@@ -129,6 +129,8 @@ else:
 if "selected_states" not in st.session_state:
     st.session_state["selected_states"]=[]
 
+if "rerun_flag" not in st.session_state:
+    st.session_state["rerun_flag"]=False
 
 def my_component(key=None):
     component_value = _component_func(key=key, default=0)
@@ -540,9 +542,9 @@ if calculate:
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         use_container_width=True,
         on_click=refresh):
-            rerun_flag=True
+            st.session_state["rerun_flag"]=True
 
-if rerun_flag:
+if st.session_state["rerun_flag"]:
     st.experimental_rerun()
 
 
