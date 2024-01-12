@@ -17,7 +17,6 @@ import io
 from openpyxl import Workbook
 from openpyxl import load_workbook
 from map_utils import get_centre_zoom
-from streamlit_session_state import get_state
 
 st.set_page_config(
     page_title="Leads Prediction",
@@ -26,21 +25,12 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Get the session state
-state = get_state()
 
-# Check if the button has been clicked
-if state.button_clicked:
-    # Reset the state
-    state.button_clicked = False
-    # Rerun the app
+if "rerun_flag" not in st.session_state:
+    st.session_state["rerun_flag"]=False
+
+if st.session_state["rerun_flag"]:
     st.experimental_rerun()
-
-# URL of the map
-map_url = "https://us-population-map.onrender.com/"
-
-# Create a script that opens a new tab
-st.markdown(f'<script>window.open("{map_url}", "_blank")</script>', unsafe_allow_html=True)
 
 st.image("logo.png")
 
@@ -145,9 +135,6 @@ else:
 
 if "selected_states" not in st.session_state:
     st.session_state["selected_states"]=[]
-
-if "rerun_flag" not in st.session_state:
-    st.session_state["rerun_flag"]=False
 
 def my_component(key=None):
     component_value = _component_func(key=key, default=0)
@@ -399,7 +386,8 @@ if calculate:
         st.plotly_chart(fig,use_container_width=True)
 
 #     st.button("Predict", on_click=set_predict_leads, use_container_width=True)
-
+  if st.session_state["rerun_flag"]:
+    st.experimental_rerun()
 # if st.session_state.predict_leads:
     leads = []
     input_budget = [float(i) for i in input_budget]
@@ -569,12 +557,10 @@ if calculate:
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         use_container_width=True,
         ):
-                state.button_clicked = True
-                # Rerun the app
-                st.experimental_rerun()
+                st.session_state["rerun_flag"]=True
 
-# if st.session_state["rerun_flag"]:
-#     st.experimental_rerun()
+if st.session_state["rerun_flag"]:
+    st.experimental_rerun()
 
 
 
