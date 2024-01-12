@@ -80,8 +80,15 @@ role = st.selectbox("Select the job role:",role_adjuster["Role"],4)
 # input_states = st.multiselect("Select the states:",states)
 input_silos = st.multiselect("Select the Silos:",silos)
 input_budget = []
+if "running_budget" not in st.session_state:
+    st.session_state["running_budget"] = 0
 
-st.text("Enter the budget for each of the media silos:")
+col_enter,col_total = st.columns([2,1])
+with col_enter:
+    st.text("Enter the budget for each silos:")
+with col_total:
+    st.text("Total Budget: "+str(st.session_state["running_budget"]))
+
 # Calculate the number of rows
 num_rows = len(input_silos) // 3
 if len(input_silos) % 3 != 0:
@@ -119,6 +126,7 @@ for i in range(num_rows):
         text_input_slot = col_input.empty()
         user_input = text_input_slot.text_input('', '', key=f'input_{index}')
         input_budget.append(user_input)
+        st.session_state["running_budget"] += int(user_input)
 
 
 _RELEASE = False
