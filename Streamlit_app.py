@@ -289,7 +289,8 @@ if "state_wise_pop" not in st.session_state:
 
 if "state_df" not in st.session_state:
     st.session_state["state_df"] = pd.DataFrame()
-
+if st.session_state["rerun_flag"]:
+      st.experimental_rerun()
 if calculate:
 
     dfs = []
@@ -386,8 +387,8 @@ if calculate:
         st.plotly_chart(fig,use_container_width=True)
 
 #     st.button("Predict", on_click=set_predict_leads, use_container_width=True)
-  if st.session_state["rerun_flag"]:
-    st.experimental_rerun()
+    if st.session_state["rerun_flag"]:
+      st.experimental_rerun()
 # if st.session_state.predict_leads:
     leads = []
     input_budget = [float(i) for i in input_budget]
