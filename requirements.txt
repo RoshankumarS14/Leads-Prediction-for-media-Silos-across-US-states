@@ -7,3 +7,4 @@ langchain
 openai
 geopy
 geopandas
+streamlit-session-state 
