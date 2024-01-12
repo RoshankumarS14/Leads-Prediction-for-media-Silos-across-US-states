@@ -25,6 +25,12 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
+# URL of the map
+map_url = "https://us-population-map.onrender.com/"
+
+# Create a script that opens a new tab
+st.markdown(f'<script>window.open("{map_url}", "_blank")</script>', unsafe_allow_html=True)
+
 st.image("logo.png")
 
 df_silo = pd.read_excel("Silo-Data-(12-04-23).xlsx")
