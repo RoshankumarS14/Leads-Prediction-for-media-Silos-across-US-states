@@ -512,7 +512,7 @@ if calculate:
     # Update the layout
     fig3.update_geos(showcountries=False, showcoastlines=True, showland=True, fitbounds="locations")
     fig3.update_layout(mapbox_style="mapbox://styles/mapbox/streets-v11", 
-                    mapbox_zoom=zoom_level+1, 
+                    mapbox_zoom=zoom_level+0.5, 
                     mapbox_accesstoken ="pk.eyJ1IjoidGpkMjAyNCIsImEiOiJjbHIyNmU2Z2oweTRmMnFuMWN1dmN1N3V4In0.9dU2pjRURk4qs31aBAV4lg",
                     mapbox_center = {"lat": center_lat, "lon": center_lon},
                     coloraxis=dict(showscale=False))
