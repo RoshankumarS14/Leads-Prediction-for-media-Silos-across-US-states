@@ -130,7 +130,7 @@ for i in range(num_rows):
         input_budget.append(user_input)
         st.session_state["running_budget"] += float(user_input) if user_input!="" else 0
         # subtotal_placeholder.text("Sub Total: $"+str(st.session_state["running_budget"]))
-        subtotal_placeholder.text("Sub Total: $"+str(sum([float(i) if i!="" else 0 for i in input_budget])))
+        subtotal_placeholder.text("Sub Total: $"+'{:.2f}'.format((sum([float(i) if i!="" else 0 for i in input_budget]))))
 
 
 _RELEASE = False
