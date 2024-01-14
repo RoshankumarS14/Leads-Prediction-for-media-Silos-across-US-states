@@ -241,7 +241,9 @@ if not _RELEASE:
     with col_clr:
         clear_map = st.button("Clear Map")
         if clear_map:
-            st.write("Clear")
+            st.session_state["states_json"]['features']=st.session_state["states_json"]['features'][:52]
+            circle_count=0
+            circles = []
     with col_but:
         # Create a button that opens the link in a new tab
         st.markdown(f'<a href="{map_url}" target="_blank"><input type="button" value="Open Map" style="color: white; background-color: #FF4B4B; border: none; border-radius: 10px; padding: 5px 10px;"></a>', unsafe_allow_html=True)
