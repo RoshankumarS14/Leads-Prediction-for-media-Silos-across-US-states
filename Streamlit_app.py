@@ -244,6 +244,7 @@ if not _RELEASE:
             st.session_state["states_json"]['features']=st.session_state["states_json"]['features'][:52]
             circle_count=0
             circles = []
+            clicked_coords = 0
             st.dataframe(st.session_state["states_json"]['features'])
             st.write(circle_count,circles)
     with col_but:
