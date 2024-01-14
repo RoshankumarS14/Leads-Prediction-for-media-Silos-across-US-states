@@ -3,7 +3,7 @@ import math
 import streamlit as st
 
 # Dynamic zoom level adjustment
-def calculate_zoom_level(width, height, num_states):
+def calculate_zoom_level(width, height, states, gdf):
     zoom_levels = []
 
     for state in states:
