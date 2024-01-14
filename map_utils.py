@@ -4,14 +4,28 @@ import streamlit as st
 
 # Dynamic zoom level adjustment
 def calculate_zoom_level(width, height, num_states):
-    base_zoom = 5.5  # starting point for zoom level
-    area_factor = width * height  # area covered by the states
-    distribution_factor = math.sqrt(num_states)  # accounts for the number of states
+    zoom_levels = []
 
-    # Adjust zoom based on the area and distribution of states
-    adjusted_zoom = base_zoom - (distribution_factor/area_factor)
-    st.write(max(0, min(adjusted_zoom, 12)))
-    return max(3, min(adjusted_zoom, 12))  # Ensure zoom level is within reasonable bounds
+    for state in states:
+        bounds = gdf[gdf['NAME'] == state].total_bounds  # minx, miny, maxx, maxy
+    
+        # Calculate the width and height of the bounding box
+        width = bounds[2] - bounds[0]
+        height = bounds[3] - bounds[1]
+    
+        # Calculate the zoom level based on the maximum dimension
+        zoom_level = 8 - max(width, height)
+        zoom_levels.append(zoom_level)
+
+    # Calculate the zoom level for the overall bounding box
+    bounds = gdf[gdf['NAME'].isin(states)].total_bounds  # minx, miny, maxx, maxy
+    width = bounds[2] - bounds[0]
+    height = bounds[3] - bounds[1]
+    overall_zoom_level = 8 - max(width, height)
+    
+    # Calculate the final zoom level as a weighted average of the individual and overall zoom levels
+    zoom_level = 0.7 * max(zoom_levels) + 0.3 * overall_zoom_level
+    return center_lat,center_lon,zoom_level
     
 def get_centre_zoom(json_data,states):
     # Convert the GeoJSON data to a GeoDataFrame
@@ -39,7 +53,7 @@ def get_centre_zoom(json_data,states):
     if zoom_level<=3:
         zoom_level=3
 
-    return center_lat,center_lon,zoom_level
-    # return center_lat,center_lon,calculate_zoom_level(width, height, len(states))
+    # return center_lat,center_lon,zoom_level
+    return center_lat,center_lon,calculate_zoom_level(width, height, states,gdf)
 
 
