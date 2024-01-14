@@ -1,5 +1,17 @@
 import geopandas as gpd    
+import math
 
+
+# Dynamic zoom level adjustment
+def calculate_zoom_level(width, height, num_states):
+    base_zoom = 8  # starting point for zoom level
+    area_factor = width * height  # area covered by the states
+    distribution_factor = math.sqrt(num_states)  # accounts for the number of states
+
+    # Adjust zoom based on the area and distribution of states
+    adjusted_zoom = base_zoom - (area_factor / distribution_factor)
+    return max(0, min(adjusted_zoom, 12))  # Ensure zoom level is within reasonable bounds
+    
 def get_centre_zoom(json_data,states):
     # Convert the GeoJSON data to a GeoDataFrame
     gdf = gpd.GeoDataFrame.from_features((json_data))
@@ -26,4 +38,7 @@ def get_centre_zoom(json_data,states):
     if zoom_level<=3:
         zoom_level=3
 
-    return center_lat,center_lon,zoom_level
+    # return center_lat,center_lon,zoom_level
+    return calculate_zoom_level(width, height, len(states))
+
+
