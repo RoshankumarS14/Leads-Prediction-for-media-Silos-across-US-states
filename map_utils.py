@@ -39,6 +39,6 @@ def get_centre_zoom(json_data,states):
         zoom_level=3
 
     # return center_lat,center_lon,zoom_level
-    return calculate_zoom_level(width, height, len(states))
+    return center_lat,center_lon,calculate_zoom_level(width, height, len(states))
 
 
