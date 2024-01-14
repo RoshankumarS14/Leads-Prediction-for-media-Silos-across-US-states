@@ -318,6 +318,7 @@ if calculate:
     circle_count=0
     circles = []
     if type(clicked_coords)==list:
+        st.write("Entered list")
         for coords in clicked_coords:
             center = coords.get("center")
             radius = coords.get("radius")/1000
