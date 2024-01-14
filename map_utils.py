@@ -25,7 +25,7 @@ def calculate_zoom_level(width, height, states, gdf):
     
     # Calculate the final zoom level as a weighted average of the individual and overall zoom levels
     zoom_level = 0.7 * max(zoom_levels) + 0.3 * overall_zoom_level
-    return center_lat,center_lon,zoom_level
+    return zoom_level
     
 def get_centre_zoom(json_data,states):
     # Convert the GeoJSON data to a GeoDataFrame
@@ -53,7 +53,7 @@ def get_centre_zoom(json_data,states):
     if zoom_level<=3:
         zoom_level=3
 
-    # return center_lat,center_lon,zoom_level
-    return center_lat,center_lon,calculate_zoom_level(width, height, states,gdf)
+    zoom_level = calculate_zoom_level(width, height, states,gdf)
+    return center_lat,center_lon,zoom_level
 
 
