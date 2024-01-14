@@ -4,7 +4,7 @@ import streamlit as st
 
 # Dynamic zoom level adjustment
 def calculate_zoom_level(width, height, num_states):
-    base_zoom = 6  # starting point for zoom level
+    base_zoom = 5.5  # starting point for zoom level
     area_factor = width * height  # area covered by the states
     distribution_factor = math.sqrt(num_states)  # accounts for the number of states
 
