@@ -277,7 +277,8 @@ if "states" not in st.session_state:
 
 if "states_json" not in st.session_state:
     st.session_state["states_json"]=states_json
-
+st.write(st.session_state["states_json"])
+st.write(len(st.session_state["states_json"]))
 st.session_state["states"] = st.multiselect("Selected States:",st.session_state["selected_states"],st.session_state["selected_states"])
 
 st.session_state["rerun_flag"]=False
