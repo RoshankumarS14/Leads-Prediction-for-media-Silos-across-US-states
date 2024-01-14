@@ -244,7 +244,7 @@ if not _RELEASE:
             st.write("Clear")
     with col_but:
         # Create a button that opens the link in a new tab
-        st.markdown(f'<a href="{map_url}" target="_blank"><input type="button" value="Open Map" style="color: white; background-color: #FF4B4B; border: none; border-radius: 5px; padding: 10px 20px;"></a>', unsafe_allow_html=True)
+        st.markdown(f'<a href="{map_url}" target="_blank"><input type="button" value="Open Map" style="color: white; background-color: #FF4B4B; border: none; border-radius: 10px; padding: 5px 10px;"></a>', unsafe_allow_html=True)
    
     clicked_coords = my_component()
  
