@@ -235,9 +235,12 @@ map_url = "https://us-population-map.onrender.com/"
  
 if not _RELEASE:
 
-    col_head,col_but = st.columns([4,1])
+    col_head,col_clr,col_but = st.columns([4,1])
     with col_head:
         st.subheader("Population Map - US")
+    with col_clr:
+        if st.markdown(f'<input type="button" value="Open Map" style="color: white; background-color: #FF4B4B; border: none; border-radius: 5px; padding: 10px 20px;">', unsafe_allow_html=True):
+            st.write("Clear")
     with col_but:
         # Create a button that opens the link in a new tab
         st.markdown(f'<a href="{map_url}" target="_blank"><input type="button" value="Open Map" style="color: white; background-color: #FF4B4B; border: none; border-radius: 5px; padding: 10px 20px;"></a>', unsafe_allow_html=True)
@@ -278,7 +281,6 @@ if "states" not in st.session_state:
 if "states_json" not in st.session_state:
     st.session_state["states_json"]=states_json
 
-st.write(len(st.session_state["states_json"]['features']))
 st.session_state["states"] = st.multiselect("Selected States:",st.session_state["selected_states"],st.session_state["selected_states"])
 
 st.session_state["rerun_flag"]=False
