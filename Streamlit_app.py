@@ -396,7 +396,8 @@ if calculate:
                     mapbox_center = {"lat": center_lat, "lon": center_lon},
                     coloraxis=dict(showscale=False))
     # fig.update_layout(height=300, margin={"r":0,"t":0,"l":0,"b":0})
-
+    st.dataframe(st.session_state["states_json"]['features'])
+    st.write(circle_count,circles)
     c1,c2 = st.columns([1.3,2])
     
     with c1:
