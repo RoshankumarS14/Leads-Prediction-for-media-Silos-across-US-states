@@ -239,7 +239,8 @@ if not _RELEASE:
     with col_head:
         st.subheader("Population Map - US")
     with col_clr:
-        if st.markdown(f'<input type="button" value="Open Map" style="color: white; background-color: #FF4B4B; border: none; border-radius: 5px; padding: 10px 20px;">', unsafe_allow_html=True):
+        clear_map = st.button("Clear Map")
+        if clear_map:
             st.write("Clear")
     with col_but:
         # Create a button that opens the link in a new tab
