@@ -10,6 +10,7 @@ def calculate_zoom_level(width, height, num_states):
 
     # Adjust zoom based on the area and distribution of states
     adjusted_zoom = base_zoom - (area_factor / distribution_factor)
+    st.write(max(0, min(adjusted_zoom, 12)))
     return max(0, min(adjusted_zoom, 12))  # Ensure zoom level is within reasonable bounds
     
 def get_centre_zoom(json_data,states):
