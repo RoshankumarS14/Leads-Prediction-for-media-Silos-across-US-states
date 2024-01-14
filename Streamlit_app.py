@@ -245,8 +245,7 @@ if not _RELEASE:
             circle_count=0
             circles = []
             clicked_coords = 0
-            st.dataframe(st.session_state["states_json"]['features'])
-            st.write(circle_count,circles)
+            st.session_state["selected_states"]=[]
     with col_but:
         # Create a button that opens the link in a new tab
         st.markdown(f'<a href="{map_url}" target="_blank"><input type="button" value="Open Map" style="color: white; background-color: #FF4B4B; border: none; border-radius: 10px; padding: 5px 10px;"></a>', unsafe_allow_html=True)
@@ -318,7 +317,7 @@ if calculate:
     circle_count=0
     circles = []
     if type(clicked_coords)==list:
-        st.write("Entered list")
+        
         for coords in clicked_coords:
             center = coords.get("center")
             radius = coords.get("radius")/1000
@@ -398,8 +397,7 @@ if calculate:
                     mapbox_center = {"lat": center_lat, "lon": center_lon},
                     coloraxis=dict(showscale=False))
     # fig.update_layout(height=300, margin={"r":0,"t":0,"l":0,"b":0})
-    st.dataframe(st.session_state["states_json"]['features'])
-    st.write(circle_count,circles)
+    
     c1,c2 = st.columns([1.3,2])
     
     with c1:
