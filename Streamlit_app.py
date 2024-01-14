@@ -244,7 +244,7 @@ if not _RELEASE:
             st.session_state["states_json"]['features']=st.session_state["states_json"]['features'][:52]
             circle_count=0
             circles = []
-            st.write(st.session_state["states_json"]['features'])
+            st.dataframe(st.session_state["states_json"]['features'])
             st.write(circle_count,circles)
     with col_but:
         # Create a button that opens the link in a new tab
