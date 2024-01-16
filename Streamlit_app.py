@@ -18,8 +18,7 @@ from openpyxl import Workbook
 from openpyxl import load_workbook
 from map_utils import get_centre_zoom
 import matplotlib.pyplot as plt
-from matplotlib.backends.backend_pdf 
-import PdfPages
+from matplotlib.backends.backend_pdf import PdfPages
 from io import BytesIO
 
 st.set_page_config(
