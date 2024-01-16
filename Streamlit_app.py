@@ -620,11 +620,11 @@ if st.session_state.download_clicked:
     st.download_button(
             label="Download PDF",
             data=st.session_state["pdf_byte_arr"].getvalue(),
-            file_name=file_name = "TJD-" + st.session_state.company_name + ".pdf",
+            file_name="TJD-" + st.session_state.company_name + ".pdf",
             mime="application/pdf",
             use_container_width=True,
         ) 
-    st.experimental_rerun()
+    
 
 
 
