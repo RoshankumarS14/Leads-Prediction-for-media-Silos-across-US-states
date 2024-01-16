@@ -532,7 +532,7 @@ if calculate:
     # Resize the image
     width, height = map_img.size
     new_width = 362
-    new_height = 310
+    new_height = 311
     map_img = map_img.resize((new_width, new_height))
 
     # Save the resized image to a BytesIO object
