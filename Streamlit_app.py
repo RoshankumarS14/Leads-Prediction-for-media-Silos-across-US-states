@@ -494,7 +494,7 @@ if calculate:
     img = Image.open(io.BytesIO(fig2_bytes))
     # Resize the image
     width, height = img.size
-    new_width = 364
+    new_width = 361
     new_height = 182
     img = img.resize((new_width, new_height))
     # Save the resized image to a BytesIO object
