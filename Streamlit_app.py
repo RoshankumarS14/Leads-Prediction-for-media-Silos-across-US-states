@@ -233,6 +233,13 @@ def calculate_rating(numbers):
     
     return rating
 
+def download_button_callback():
+    # Set the session state variable to True
+    st.session_state.download_clicked = True
+
+if 'download_clicked' not in st.session_state:
+    st.session_state.download_clicked = False
+
 # URL of the map
 map_url = "https://us-population-map.onrender.com/"
  
@@ -597,11 +604,14 @@ if calculate:
         file_name=file_name,
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         use_container_width=True,
+        on_click=download_button_callback
         ):
-        st.write("Entered if")
         st.session_state["rerun_flag"]=True
+            
+# Placeholder for the second download button
+second_button_placeholder = st.empty()
 
-if st.session_state["rerun_flag"]:
+if st.session_state.download_clicked:
     # Button for PDF download
     st.download_button(
             label="Download PDF",
