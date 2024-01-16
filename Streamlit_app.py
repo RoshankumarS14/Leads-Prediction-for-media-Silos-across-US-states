@@ -616,14 +616,7 @@ if calculate:
 second_button_placeholder = st.empty()
 
 if st.session_state.download_clicked:
-    # Button for PDF download
-    st.download_button(
-            label="Download PDF",
-            data=st.session_state["pdf_byte_arr"].getvalue(),
-            file_name="TJD-" + st.session_state.company_name + ".pdf",
-            mime="application/pdf",
-            use_container_width=True,
-        ) 
+    st.experimental_rerun()
     
 
 
