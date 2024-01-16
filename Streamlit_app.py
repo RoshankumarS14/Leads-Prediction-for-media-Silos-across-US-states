@@ -616,7 +616,7 @@ if calculate:
 second_button_placeholder = st.empty()
 
 if st.session_state.download_clicked:
-    st.experimental_rerun()
+    pass
     
 
 
