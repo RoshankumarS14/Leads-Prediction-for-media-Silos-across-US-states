@@ -317,6 +317,9 @@ if 'predict_leads' not in st.session_state:
 if "state_wise_pop" not in st.session_state:
     st.session_state["state_wise_pop"] = pd.DataFrame()
 
+# if "pdf_byte_arr" not in st.session_state:
+#     st.session_state["pdf_byte_arr"] = None
+
 if "state_df" not in st.session_state:
     st.session_state["state_df"] = pd.DataFrame()
 if st.session_state["rerun_flag"]:
@@ -597,6 +600,7 @@ if calculate:
     pdf_pages.savefig(plt.gcf(), bbox_inches='tight')
     pdf_pages.close()
     pdf_byte_arr.seek(0)  # Go to the start of the BytesIO object
+    st.session_state["pdf_byte_arr"] = pdf_byte_arr
     
     if st.download_button(
         label="Create Campaign!",
@@ -615,7 +619,7 @@ if st.session_state.download_clicked:
     # Button for PDF download
     st.download_button(
             label="Download PDF",
-            data=pdf_byte_arr.getvalue(),
+            data=st.session_state["pdf_byte_arr"].getvalue(),
             file_name=file_name.replace('.xlsx', '.pdf'),
             mime="application/pdf",
             use_container_width=True,
