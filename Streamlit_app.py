@@ -515,7 +515,7 @@ if calculate:
     # Create an Image object from BytesIO object
     img = XLImage(io.BytesIO(img_byte_arr))
     # Add the image to the sheet
-    sheet.add_image(img, 'B36')
+    sheet.add_image(img, 'C36')
 
     state_df = st.session_state["state_df"]
     fig3 = px.choropleth_mapbox(state_df, geojson=st.session_state["states_json"], locations='state', color='highlight',
@@ -548,7 +548,7 @@ if calculate:
     # Create an Image object from BytesIO object
     map_img = XLImage(io.BytesIO(map_img_byte_arr))
     # Add the image to the sheet
-    sheet.add_image(map_img, 'B20')
+    sheet.add_image(map_img, 'C20')
 
     # Write DataFrame to Excel from cell X11 for the first column
     for i, value in enumerate(result.iloc[:, 0]):
