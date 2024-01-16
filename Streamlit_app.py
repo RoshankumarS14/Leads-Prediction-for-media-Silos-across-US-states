@@ -17,6 +17,10 @@ import io
 from openpyxl import Workbook
 from openpyxl import load_workbook
 from map_utils import get_centre_zoom
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_pdf 
+import PdfPages
+from io import BytesIO
 
 st.set_page_config(
     page_title="Leads Prediction",
@@ -576,6 +580,18 @@ if calculate:
     file_name = "TJD-" + st.session_state.company_name + ".xlsx"
     with open("New-Template.xlsx", "rb") as file:
          file_bytes = file.read()
+
+    excel_byte_arr.seek(0)  # Go to the start of the BytesIO object
+    df_excel = pd.read_excel(excel_byte_arr)
+    # Create a plot from the data
+    df_excel.plot()
+    # Save the plot to a PDF in a BytesIO object
+    pdf_byte_arr = BytesIO()
+    pdf_pages = PdfPages(pdf_byte_arr)
+    pdf_pages.savefig(plt.gcf(), bbox_inches='tight')
+    pdf_pages.close()
+    pdf_byte_arr.seek(0)  # Go to the start of the BytesIO object
+    
     if st.download_button(
         label="Create Campaign!",
         data=excel_byte_arr.getvalue(),
@@ -583,7 +599,15 @@ if calculate:
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         use_container_width=True,
         ):
-                st.session_state["rerun_flag"]=True
+            # Button for PDF download
+        if st.download_button(
+            label="Download PDF",
+            data=pdf_byte_arr.getvalue(),
+            file_name=file_name.replace('.xlsx', '.pdf'),
+            mime="application/pdf",
+            use_container_width=True,
+        ):    
+            st.session_state["rerun_flag"]=True
 
 if st.session_state["rerun_flag"]:
     st.experimental_rerun()
