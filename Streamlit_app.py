@@ -492,7 +492,7 @@ if calculate:
 
     fig2_bytes = to_image(fig2, format="png")
     img = Image.open(io.BytesIO(fig2_bytes))
-    crop_area = (50, 50, 500, 500)
+    crop_area = (70, 70, 600, 500)
 
     # Crop the image
     img_cropped = img.crop(crop_area)
