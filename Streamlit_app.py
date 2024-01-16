@@ -598,17 +598,17 @@ if calculate:
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         use_container_width=True,
         ):
-            # Button for PDF download
-        if st.download_button(
+        st.session_state["rerun_flag"]=True
+
+if st.session_state["rerun_flag"]:
+    # Button for PDF download
+    st.download_button(
             label="Download PDF",
             data=pdf_byte_arr.getvalue(),
             file_name=file_name.replace('.xlsx', '.pdf'),
             mime="application/pdf",
             use_container_width=True,
-        ):    
-            st.session_state["rerun_flag"]=True
-
-if st.session_state["rerun_flag"]:
+        ) 
     st.experimental_rerun()
 
 
