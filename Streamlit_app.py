@@ -598,6 +598,7 @@ if calculate:
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         use_container_width=True,
         ):
+        st.write("Entered if")
         st.session_state["rerun_flag"]=True
 
 if st.session_state["rerun_flag"]:
