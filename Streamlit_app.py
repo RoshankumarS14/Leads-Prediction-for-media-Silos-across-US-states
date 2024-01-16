@@ -17,9 +17,7 @@ import io
 from openpyxl import Workbook
 from openpyxl import load_workbook
 from map_utils import get_centre_zoom
-import matplotlib.pyplot as plt
-from matplotlib.backends.backend_pdf import PdfPages
-from io import BytesIO
+
 
 st.set_page_config(
     page_title="Leads Prediction",
@@ -233,13 +231,6 @@ def calculate_rating(numbers):
     
     return rating
 
-def download_button_callback():
-    # Set the session state variable to True
-    st.session_state.download_clicked = True
-
-if 'download_clicked' not in st.session_state:
-    st.session_state.download_clicked = False
-
 # URL of the map
 map_url = "https://us-population-map.onrender.com/"
  
@@ -316,9 +307,6 @@ if 'predict_leads' not in st.session_state:
 
 if "state_wise_pop" not in st.session_state:
     st.session_state["state_wise_pop"] = pd.DataFrame()
-
-if "pdf_byte_arr" not in st.session_state:
-    st.session_state["pdf_byte_arr"] = None
 
 if "state_df" not in st.session_state:
     st.session_state["state_df"] = pd.DataFrame()
@@ -600,7 +588,6 @@ if calculate:
     pdf_pages.savefig(plt.gcf(), bbox_inches='tight')
     pdf_pages.close()
     pdf_byte_arr.seek(0)  # Go to the start of the BytesIO object
-    st.session_state["pdf_byte_arr"] = pdf_byte_arr
     
     if st.download_button(
         label="Create Campaign!",
@@ -608,16 +595,11 @@ if calculate:
         file_name=file_name,
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         use_container_width=True,
-        on_click=download_button_callback
         ):
-        st.session_state["rerun_flag"]=True
-            
-# Placeholder for the second download button
-second_button_placeholder = st.empty()
+            st.session_state["rerun_flag"]=True
 
-if st.session_state.download_clicked:
-    st.rerun()
-    
+if st.session_state["rerun_flag"]:
+    st.experimental_rerun()
 
 
 
