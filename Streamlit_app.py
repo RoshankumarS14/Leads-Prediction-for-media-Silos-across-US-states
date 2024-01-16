@@ -317,8 +317,8 @@ if 'predict_leads' not in st.session_state:
 if "state_wise_pop" not in st.session_state:
     st.session_state["state_wise_pop"] = pd.DataFrame()
 
-# if "pdf_byte_arr" not in st.session_state:
-#     st.session_state["pdf_byte_arr"] = None
+if "pdf_byte_arr" not in st.session_state:
+    st.session_state["pdf_byte_arr"] = None
 
 if "state_df" not in st.session_state:
     st.session_state["state_df"] = pd.DataFrame()
