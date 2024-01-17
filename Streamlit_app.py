@@ -3,10 +3,8 @@ import streamlit.components.v1 as components
 import geopy.distance
 import pandas as pd
 import streamlit as st
-from geopy.geocoders import Nominatim
 import json
 import plotly.express as px
-import math
 import numpy as np
 from plot_utils import plot_gauge_Balance, plot_gauge_APScale
 from plotly.subplots import make_subplots
@@ -16,7 +14,7 @@ from PIL import Image
 import io
 from openpyxl import Workbook
 from openpyxl import load_workbook
-from map_utils import get_centre_zoom
+from map_utils import get_centre_zoom,create_circle_feature,get_state_name
 
 
 st.set_page_config(
@@ -152,59 +150,6 @@ if "selected_states" not in st.session_state:
 def my_component(key=None):
     component_value = _component_func(key=key, default=0)
     return component_value
-
-def get_state_name(lat, lon):
-    geolocator = Nominatim(user_agent="my_geocoder")
-    location = geolocator.reverse((lat, lon), exactly_one=True)
-    address = location.raw['address']
-    state = address.get('state', '')
-    return state
-
-def create_circle_feature(center, radius_miles, num_points=64, properties=None):
-    """
-    Create a GeoJSON feature representing a circle with a given center, radius, and number of points.
-    :param center: Tuple of (longitude, latitude)
-    :param radius: Radius in degrees (small values)
-    :param num_points: Number of points to generate the circle
-    :param properties: Dictionary of properties for the feature
-    :return: GeoJSON feature dictionary
-    """
-    if properties is None:
-        properties = {}
-
-    # Earth's radius in miles
-    earth_radius_miles = 3960.0
-
-    # Calculate the radius in degrees latitude
-    radius_lat = radius_miles / earth_radius_miles * (180 / math.pi)
-
-    # Calculate the radius in degrees longitude, adjusting for the latitude
-    radius_lng = radius_miles / (earth_radius_miles * math.cos(math.radians(center[1]))) * (180 / math.pi)
-
-    # Apply the scale factor to the radius
-    radius_lat *= 0.6
-    radius_lng *= 0.6
-
-    # Calculate the points of the circle
-    circle_points = []
-    for i in range(num_points):
-        angle = math.radians(float(i) / num_points * 360)
-        dx = radius_lng * math.cos(angle)
-        dy = radius_lat * math.sin(angle)
-        point = (center[0] + dx, center[1] + dy)
-        circle_points.append(point)
-    circle_points.append(circle_points[0])  # Ensure the polygon is closed
-
-    # Create the GeoJSON feature
-    feature = {
-        "type": "Feature",
-        "properties": properties,
-        "geometry": {
-            "type": "Polygon",
-            "coordinates": [circle_points]
-        }
-    }
-    return feature
 
 # Define a function to calculate the distance between two points
 def distance(point1, point2):
