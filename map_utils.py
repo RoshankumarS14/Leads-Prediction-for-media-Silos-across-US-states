@@ -1,6 +1,7 @@
 import geopandas as gpd    
 import math
 import streamlit as st
+from geopy.geocoders import Nominatim
 
 # Dynamic zoom level adjustment
 def calculate_zoom_level(width, height, states, gdf):
