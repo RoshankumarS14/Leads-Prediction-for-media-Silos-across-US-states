@@ -6,7 +6,7 @@ import streamlit as st
 import json
 import plotly.express as px
 import numpy as np
-from plot_utils import plot_gauge_Balance, plot_gauge_APScale
+from plot_utils import plot_gauge_Balance, plot_gauge_APScale, calculate_rating
 from plotly.subplots import make_subplots
 from plotly.io import to_image
 from openpyxl.drawing.image import Image as XLImage
@@ -153,24 +153,6 @@ def my_component(key=None):
 
 def refresh():
     st.experimental_rerun()
-
-def calculate_rating(numbers):
-    # Calculate the standard deviation
-    std_dev = np.std(numbers)
-    
-    # Calculate the mean of the numbers
-    mean = np.mean(numbers)
-    
-    # Normalize the standard deviation to a scale of 0 to 1
-    normalized_std_dev = std_dev / mean if mean != 0 else 0
-    
-    # Calculate the rating
-    rating = 100 * (1 - normalized_std_dev)
-    
-    # Make sure the rating is within the scale of 1 to 100
-    rating = max(min(rating, 100), 1)
-    
-    return rating
 
 # URL of the map
 map_url = "https://us-population-map.onrender.com/"
