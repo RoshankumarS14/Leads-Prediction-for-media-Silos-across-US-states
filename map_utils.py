@@ -2,6 +2,7 @@ import geopandas as gpd
 import math
 import streamlit as st
 from geopy.geocoders import Nominatim
+import geopy.distance
 
 # Dynamic zoom level adjustment
 def calculate_zoom_level(width, height, states, gdf):
@@ -110,5 +111,9 @@ def create_circle_feature(center, radius_miles, num_points=64, properties=None):
         }
     }
     return feature
+
+# Define a function to calculate the distance between two points
+def distance(point1, point2):
+    return geopy.distance.distance(point1, point2).km
 
 
