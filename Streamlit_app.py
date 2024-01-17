@@ -415,14 +415,14 @@ if calculate:
 
     fig2_bytes = to_image(fig2, format="png")
     img = Image.open(io.BytesIO(fig2_bytes))
-    crop_area = (70, 70, 650, 450)
+    crop_area = (68, 70, 650, 450)
 
     # Crop the image
     img_cropped = img.crop(crop_area)
     # Resize the image
     width, height = img_cropped.size
     new_width = 337
-    new_height = 176
+    new_height = 178
     img = img_cropped.resize((new_width, new_height))
     # Save the resized image to a BytesIO object
     img_byte_arr = io.BytesIO()
@@ -459,7 +459,7 @@ if calculate:
     # Resize the image
     width, height = map_img.size
     new_width = 337
-    new_height = 297
+    new_height = 299
     map_img = map_img.resize((new_width, new_height))
 
     # Save the resized image to a BytesIO object
