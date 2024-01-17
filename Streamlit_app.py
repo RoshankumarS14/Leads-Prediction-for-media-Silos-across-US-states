@@ -14,7 +14,7 @@ from PIL import Image
 import io
 from openpyxl import Workbook
 from openpyxl import load_workbook
-from map_utils import get_centre_zoom,create_circle_feature,get_state_name
+from map_utils import get_centre_zoom, create_circle_feature, get_state_name, distance
 
 
 st.set_page_config(
@@ -150,10 +150,6 @@ if "selected_states" not in st.session_state:
 def my_component(key=None):
     component_value = _component_func(key=key, default=0)
     return component_value
-
-# Define a function to calculate the distance between two points
-def distance(point1, point2):
-    return geopy.distance.distance(point1, point2).km
 
 def refresh():
     st.experimental_rerun()
