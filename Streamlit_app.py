@@ -475,7 +475,7 @@ if calculate:
     excel_byte_arr2 = io.BytesIO()
     wb2.save(excel_byte_arr2)
         
-    file_name = "TJD-" + st.session_state.company_name + "-" + st.session_state.user_role + ".xlsx"
+    file_name = "TJD-" + "".join(st.session_state.company_name.split()) + "-" + st.session_state.user_role + ".xlsx"
     with open("New-Template.xlsx", "rb") as file:
          file_bytes = file.read()
     
