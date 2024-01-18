@@ -314,7 +314,7 @@ if calculate:
     
     # Update the layout
     fig.update_geos(showcountries=False, showcoastlines=True, showland=True, fitbounds="locations")
-    fig.update_layout(mapbox_style="mapbox://styles/tjd2024/clrj8msyq00os01qqg8y43yvz", 
+    fig.update_layout(mapbox_style="https://api.mapbox.com/styles/v1/tjd2024/clrj8msyq00os01qqg8y43yvz.html?title=copy&access_token=pk.eyJ1IjoidGpkMjAyNCIsImEiOiJjbHIyNjkwcXowMW54MmxrODV3enRzMHAyIn0.w19GzIPKQ-Nr4GaZWDCzjA&zoomwheel=true&fresh=true#2/37.75/-92.25", 
                     mapbox_zoom=zoom_level, 
                     mapbox_accesstoken ="pk.eyJ1IjoidGpkMjAyNCIsImEiOiJjbHIyNjkwcXowMW54MmxrODV3enRzMHAyIn0.w19GzIPKQ-Nr4GaZWDCzjA",
                     mapbox_center = {"lat": center_lat, "lon": center_lon},
