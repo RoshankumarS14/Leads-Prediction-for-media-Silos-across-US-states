@@ -417,7 +417,7 @@ if calculate:
     img = get_image(fig2,337,178,(66,66,650,420))
     sheet.add_image(img, 'C36')
     
-    img2 = get_image(fig2,337,208,(66,66,650,420))
+    img2 = get_image(fig2,337,193,(66,66,650,420))
     sheet2.add_image(img2, 'C36')
 
     state_df = st.session_state["state_df"]
@@ -438,7 +438,7 @@ if calculate:
     map_img = get_image(fig3,337,299)
     sheet.add_image(map_img, 'C20')
 
-    map_img2 = get_image(fig3,337,330)
+    map_img2 = get_image(fig3,337,315)
     sheet2.add_image(map_img2, 'C20')
 
     # Write DataFrame to Excel from cell X11 for the first column
