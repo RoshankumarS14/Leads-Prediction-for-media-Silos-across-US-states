@@ -94,10 +94,14 @@ def calculate_rating(numbers):
     
     return rating
 
-def get_image(fig,new_width,new_height):
+def get_image(fig,new_width,new_height,crop=None):
     fig_bytes = to_image(fig, format="png")
     img = Image.open(io.BytesIO(fig_bytes))
             
+    if crop!=None:
+        crop_area = crop
+        img = img.crop(crop_area)
+                
     # Resize the image
     width, height = img.size
     img = img.resize((new_width, new_height))
