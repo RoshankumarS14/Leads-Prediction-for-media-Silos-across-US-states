@@ -364,13 +364,7 @@ if calculate:
     with col_df:
         # Display the DataFrame
         st.markdown(df_html, unsafe_allow_html=True)
-        # st.write("AP Scale: "+str(average_AP_scales))
-        # st.write("Total Budget: $"+str(sum(input_budget)))
-        # st.write("Target Leads: "+str(round(sum(leads))*2))
-        # st.write("Min Leads: "+str(round(sum(leads))))
-    
         adjuster = role_adjuster[role_adjuster["Role"]==role]["Adjuster"].values[0]
-        # Create formatted strings
 
         col_result1,col_result2 = st.columns([1,1])
 
@@ -415,12 +409,16 @@ if calculate:
     
     # Load the workbook
     wb = load_workbook('New-Template-(01-17-24).xlsx')
+    wb2 = load_workbook('New-Template-(01-17-24).xlsx')
     # Select the sheet
-    sheet = wb['juliabid'] 
+    sheet = wb['juliabid']
+    sheet2 = wb['juliabid'] 
     
     img = get_image(fig2,337,178,(66,66,650,420))
-    # Add the image to the sheet
     sheet.add_image(img, 'C36')
+    
+    img2 = get_image(fig2,337,208,(66,66,650,420))
+    sheet2.add_image(img2, 'C36')
 
     state_df = st.session_state["state_df"]
     fig3 = px.choropleth_mapbox(state_df, geojson=st.session_state["states_json"], locations='state', color='highlight',
@@ -440,43 +438,64 @@ if calculate:
     map_img = get_image(fig3,337,299)
     sheet.add_image(map_img, 'C20')
 
+    map_img2 = get_image(fig3,337,330)
+    sheet2.add_image(map_img2, 'C20')
+
     # Write DataFrame to Excel from cell X11 for the first column
     for i, value in enumerate(result.iloc[:, 0]):
         sheet.cell(row=i+11, column=24, value=value)
+        sheet2.cell(row=i+11, column=24, value=value)
     
     # Write DataFrame to Excel from cell Y11 for the second column
     for i, value in enumerate(input_budget):
         sheet.cell(row=i+11, column=25, value=value)
+        sheet2.cell(row=i+11, column=25, value=value)
     
     # Write DataFrame to Excel from cell AA11 for the third column
     for i, value in enumerate(leads):
         sheet.cell(row=i+11, column=27, value=value)
+        sheet2.cell(row=i+11, column=27, value=value)
         
     campaigns_values = [0 if i=="" else float(i) for i in campaigns_values] 
     # Write DataFrame to Excel from cell Y6 for the campaigns_values
     for i, value in enumerate(campaigns_values):
         sheet.cell(row=i+6, column=25, value=value if value != "" else 0.0)
+        sheet2.cell(row=i+6, column=25, value=value if value != "" else 0.0)
 
     sheet.cell(row=5,column=25,value=st.session_state.company_name)
     sheet.cell(row=7,column=27,value=st.session_state.user_role)
+    sheet2.cell(row=5,column=25,value=st.session_state.company_name)
+    sheet2.cell(row=7,column=27,value=st.session_state.user_role)
     
     # Save the workbook to a BytesIO object
     excel_byte_arr = io.BytesIO()
     wb.save(excel_byte_arr)
+
+    # Save the workbook to a BytesIO object
+    excel_byte_arr2 = io.BytesIO()
+    wb2.save(excel_byte_arr2)
         
-    file_name = "TJD-" + st.session_state.company_name + ".xlsx"
+    file_name = "TJD-" + st.session_state.company_name + "-" + st.session_state.user_role + ".xlsx"
     with open("New-Template.xlsx", "rb") as file:
          file_bytes = file.read()
     
-    if st.download_button(
+    st.download_button(
         label="Create Campaign!",
         data=excel_byte_arr.getvalue(),
         file_name=file_name,
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         use_container_width=True,
-        ):
-            st.session_state["rerun_flag"]=True
-
+        )
+    
+    st.download_button(
+        label="Create Campaign! (Julia)",
+        data=excel_byte_arr2.getvalue(),
+        file_name=file_name,
+        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        use_container_width=True,
+        key="Julia"
+        )
+            
 if st.session_state["rerun_flag"]:
     st.experimental_rerun()
 
