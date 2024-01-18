@@ -412,7 +412,7 @@ if calculate:
     wb2 = load_workbook('New-Template-(01-17-24).xlsx')
     # Select the sheet
     sheet = wb['juliabid']
-    sheet2 = wb['juliabid'] 
+    sheet2 = wb2['juliabid'] 
     
     img = get_image(fig2,337,178,(66,66,650,420))
     sheet.add_image(img, 'C36')
