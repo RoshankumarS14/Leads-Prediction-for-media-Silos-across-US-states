@@ -413,29 +413,30 @@ if calculate:
     fig2 = make_subplots(rows=1, cols=1, specs=[[{'type': 'indicator'}]])
     fig2.append_trace(trace3, row=1, col=1)
 
-    fig2_bytes = to_image(fig2, format="png")
-    img = Image.open(io.BytesIO(fig2_bytes))
-    crop_area = (66, 70, 650, 450)
+    # fig2_bytes = to_image(fig2, format="png")
+    # img = Image.open(io.BytesIO(fig2_bytes))
+    # crop_area = (66, 70, 650, 450)
 
-    # Crop the image
-    img_cropped = img.crop(crop_area)
-    # Resize the image
-    width, height = img_cropped.size
-    new_width = 337
-    new_height = 178
-    img = img_cropped.resize((new_width, new_height))
-    # Save the resized image to a BytesIO object
-    img_byte_arr = io.BytesIO()
-    img.save(img_byte_arr, format='PNG')
-    img_byte_arr = img_byte_arr.getvalue()
+    # # Crop the image
+    # img_cropped = img.crop(crop_area)
+    # # Resize the image
+    # width, height = img_cropped.size
+    # new_width = 337
+    # new_height = 178
+    # img = img_cropped.resize((new_width, new_height))
+    # # Save the resized image to a BytesIO object
+    # img_byte_arr = io.BytesIO()
+    # img.save(img_byte_arr, format='PNG')
+    # img_byte_arr = img_byte_arr.getvalue()
     
     # Load the workbook
     wb = load_workbook('New-Template-(01-17-24).xlsx')
     # Select the sheet
     sheet = wb['juliabid'] 
     
-    # Create an Image object from BytesIO object
-    img = XLImage(io.BytesIO(img_byte_arr))
+    # # Create an Image object from BytesIO object
+    # img = XLImage(io.BytesIO(img_byte_arr))
+    img = get_image(fig2,337,178,(66,70,650,450))
     # Add the image to the sheet
     sheet.add_image(img, 'C36')
 
@@ -453,22 +454,6 @@ if calculate:
                     mapbox_center = {"lat": center_lat, "lon": center_lon},
                     coloraxis=dict(showscale=False))
     fig3.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
-    
-    # fig3_bytes = to_image(fig3, format="png")
-    # map_img = Image.open(io.BytesIO(fig3_bytes))
-    # # Resize the image
-    # width, height = map_img.size
-    # new_width = 337
-    # new_height = 299
-    # map_img = map_img.resize((new_width, new_height))
-
-    # # Save the resized image to a BytesIO object
-    # map_img_byte_arr = io.BytesIO()
-    # map_img.save(map_img_byte_arr, format='PNG')
-    # map_img_byte_arr = map_img_byte_arr.getvalue()
-
-    # # Create an Image object from BytesIO object
-    # map_img = XLImage(io.BytesIO(map_img_byte_arr))
 
     map_img = get_image(fig3,337,299)
     sheet.add_image(map_img, 'C20')
