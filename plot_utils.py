@@ -89,5 +89,22 @@ def calculate_rating(numbers):
     rating = max(min(rating, 100), 1)
     
     return rating
+
+def get_image(fig,new_width,new_height)
+    fig_bytes = to_image(fig, format="png")
+    img = Image.open(io.BytesIO(fig_bytes))
+            
+    # Resize the image
+    width, height = map_img.size
+    img = img.resize((new_width, new_height))
+
+    # Save the resized image to a BytesIO object
+    img_byte_arr = io.BytesIO()
+    img.save(img_byte_arr, format='PNG')
+    img_byte_arr = img_byte_arr.getvalue()
+
+    # Create an Image object from BytesIO object
+    img = XLImage(io.BytesIO(img_byte_arr))
+    return img
         
            
