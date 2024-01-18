@@ -412,31 +412,13 @@ if calculate:
     trace3 = plot_gauge_APScale(int(average_AP_scales*10),title="")
     fig2 = make_subplots(rows=1, cols=1, specs=[[{'type': 'indicator'}]])
     fig2.append_trace(trace3, row=1, col=1)
-
-    # fig2_bytes = to_image(fig2, format="png")
-    # img = Image.open(io.BytesIO(fig2_bytes))
-    # crop_area = (66, 70, 650, 450)
-
-    # # Crop the image
-    # img_cropped = img.crop(crop_area)
-    # # Resize the image
-    # width, height = img_cropped.size
-    # new_width = 337
-    # new_height = 178
-    # img = img_cropped.resize((new_width, new_height))
-    # # Save the resized image to a BytesIO object
-    # img_byte_arr = io.BytesIO()
-    # img.save(img_byte_arr, format='PNG')
-    # img_byte_arr = img_byte_arr.getvalue()
     
     # Load the workbook
     wb = load_workbook('New-Template-(01-17-24).xlsx')
     # Select the sheet
     sheet = wb['juliabid'] 
     
-    # # Create an Image object from BytesIO object
-    # img = XLImage(io.BytesIO(img_byte_arr))
-    img = get_image(fig2,337,178,(66,70,650,450))
+    img = get_image(fig2,337,178,(66,66,650,420))
     # Add the image to the sheet
     sheet.add_image(img, 'C36')
 
