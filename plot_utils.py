@@ -99,7 +99,7 @@ def get_image(fig,new_width,new_height):
     img = Image.open(io.BytesIO(fig_bytes))
             
     # Resize the image
-    width, height = map_img.size
+    width, height = img.size
     img = img.resize((new_width, new_height))
 
     # Save the resized image to a BytesIO object
