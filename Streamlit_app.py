@@ -316,7 +316,7 @@ if calculate:
     fig.update_geos(showcountries=False, showcoastlines=True, showland=True, fitbounds="locations")
     fig.update_layout(mapbox_style="mapbox://styles/tjd2024/clrj8msyq00os01qqg8y43yvz", 
                     mapbox_zoom=zoom_level, 
-                    mapbox_accesstoken ="pk.eyJ1IjoidGpkMjAyNCIsImEiOiJjbHIyNmU2Z2oweTRmMnFuMWN1dmN1N3V4In0.9dU2pjRURk4qs31aBAV4lg",
+                    mapbox_accesstoken ="pk.eyJ1IjoidGpkMjAyNCIsImEiOiJjbHIyNjkwcXowMW54MmxrODV3enRzMHAyIn0.w19GzIPKQ-Nr4GaZWDCzjA",
                     mapbox_center = {"lat": center_lat, "lon": center_lon},
                     coloraxis=dict(showscale=False))
     # fig.update_layout(height=300, margin={"r":0,"t":0,"l":0,"b":0})
