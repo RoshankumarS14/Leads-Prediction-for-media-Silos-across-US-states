@@ -5,7 +5,7 @@ import streamlit as st
 import json
 import plotly.express as px
 import numpy as np
-from plot_utils import plot_gauge_Balance, plot_gauge_APScale, calculate_rating
+from plot_utils import plot_gauge_Balance, plot_gauge_APScale, calculate_rating, get_image
 from plotly.subplots import make_subplots
 from plotly.io import to_image
 from openpyxl.drawing.image import Image as XLImage
@@ -454,22 +454,23 @@ if calculate:
                     coloraxis=dict(showscale=False))
     fig3.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
     
-    fig3_bytes = to_image(fig3, format="png")
-    map_img = Image.open(io.BytesIO(fig3_bytes))
-    # Resize the image
-    width, height = map_img.size
-    new_width = 337
-    new_height = 299
-    map_img = map_img.resize((new_width, new_height))
+    # fig3_bytes = to_image(fig3, format="png")
+    # map_img = Image.open(io.BytesIO(fig3_bytes))
+    # # Resize the image
+    # width, height = map_img.size
+    # new_width = 337
+    # new_height = 299
+    # map_img = map_img.resize((new_width, new_height))
 
-    # Save the resized image to a BytesIO object
-    map_img_byte_arr = io.BytesIO()
-    map_img.save(map_img_byte_arr, format='PNG')
-    map_img_byte_arr = map_img_byte_arr.getvalue()
+    # # Save the resized image to a BytesIO object
+    # map_img_byte_arr = io.BytesIO()
+    # map_img.save(map_img_byte_arr, format='PNG')
+    # map_img_byte_arr = map_img_byte_arr.getvalue()
 
-    # Create an Image object from BytesIO object
-    map_img = XLImage(io.BytesIO(map_img_byte_arr))
-    # Add the image to the sheet
+    # # Create an Image object from BytesIO object
+    # map_img = XLImage(io.BytesIO(map_img_byte_arr))
+
+    map_img = get_image(fig3,337,299)
     sheet.add_image(map_img, 'C20')
 
     # Write DataFrame to Excel from cell X11 for the first column
