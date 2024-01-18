@@ -94,7 +94,7 @@ def calculate_rating(numbers):
     
     return rating
 
-def get_image(fig,new_width,new_height)
+def get_image(fig,new_width,new_height):
     fig_bytes = to_image(fig, format="png")
     img = Image.open(io.BytesIO(fig_bytes))
             
