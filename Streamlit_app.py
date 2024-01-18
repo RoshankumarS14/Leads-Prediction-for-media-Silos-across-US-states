@@ -417,7 +417,7 @@ if calculate:
     img = get_image(fig2,337,178,(66,66,650,420))
     sheet.add_image(img, 'C36')
     
-    img2 = get_image(fig2,337,193,(66,66,650,420))
+    img2 = get_image(fig2,337,188,(66,66,650,420))
     sheet2.add_image(img2, 'C36')
 
     state_df = st.session_state["state_df"]
