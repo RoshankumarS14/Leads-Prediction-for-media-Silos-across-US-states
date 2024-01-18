@@ -1,5 +1,9 @@
 import plotly.graph_objects as go
 import numpy as np
+from plotly.io import to_image
+from openpyxl.drawing.image import Image as XLImage
+from PIL import Image 
+import io
 
 def plot_gauge_Balance(value):
             
