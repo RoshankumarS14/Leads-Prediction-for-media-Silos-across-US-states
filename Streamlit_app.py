@@ -334,6 +334,7 @@ if calculate:
     if st.session_state["rerun_flag"]:
       st.experimental_rerun()
 # if st.session_state.predict_leads:
+    adjuster = role_adjuster[role_adjuster["Role"]==role]["Adjuster"].values[0]
     leads = []
     input_budget = [float(i) for i in input_budget]
     state_wise_pop = st.session_state["state_wise_pop"]
@@ -345,6 +346,7 @@ if calculate:
                 lead += state_budget/df_silo[(df_silo["Silo"]==silo) & (df_silo["ST"]==state)]["CPL"].values[0]
             else:
                 lead += state_budget/df_silo[(df_silo["Silo"]==silo) & (df_silo["ST"]=="US")]["CPL"].values[0]
+        lead = lead*adjuster
         leads.append(lead)
     AP_scales = [ap_scale_silos[silo]*lead for silo,lead in zip(input_silos,leads)]
     average_AP_scales = round(sum(AP_scales)/sum(leads),1)
@@ -364,8 +366,6 @@ if calculate:
     with col_df:
         # Display the DataFrame
         st.markdown(df_html, unsafe_allow_html=True)
-        adjuster = role_adjuster[role_adjuster["Role"]==role]["Adjuster"].values[0]
-
         col_result1,col_result2 = st.columns([1,1])
 
         with col_result1:
@@ -384,8 +384,8 @@ if calculate:
             <pre>
             <table style="border: none;">
             
-            <tr><td style="text-align: left; border: none;">Target Leads:</td><td style="text-align: right; border: none;">{round(sum(leads)*adjuster)*2}</td></tr>
-            <tr><td style="text-align: left; border: none;">Min Leads:</td><td style="text-align: right; border: none;">{round(sum(leads)*adjuster)}</td></tr>
+            <tr><td style="text-align: left; border: none;">Target Leads:</td><td style="text-align: right; border: none;">{round(sum(leads))*2}</td></tr>
+            <tr><td style="text-align: left; border: none;">Min Leads:</td><td style="text-align: right; border: none;">{round(sum(leads))}</td></tr>
             <tr><td style="text-align: left; border: none;">Min Budget:</td><td style="text-align: right; border: none;">${str(int(sum(input_budget)))}</td></tr>
             </table>
             </table>
