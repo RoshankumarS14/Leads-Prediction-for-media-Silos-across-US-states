@@ -186,7 +186,8 @@ if not _RELEASE:
             pass    
 
 # Read the csv file into a pandas dataframe
-data = pd.read_csv("US_Population4.csv")
+data = pd.read_csv("US_Population.csv")
+data2 = pd.read_csv("US Population (cities).csv")
 
 # US state names and abbreviations
 us_state_abbreviations = {
@@ -247,6 +248,8 @@ if calculate:
 
             # Filter the dataframe to keep only the cities that are within the radius
             df_filtered = data[data.apply(lambda row: distance((center["lat"],center["lng"]), (row["lat"], row["lon"])) <= radius, axis=1)]
+            if len(df_filtered)==0:
+                df_filtered = data2[data2.apply(lambda row: distance((center["lat"],center["lng"]), (row["lat"], row["lon"])) <= radius, axis=1)]
             dfs.append(df_filtered)
 
             circle_count+=1
