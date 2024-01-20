@@ -271,7 +271,8 @@ if calculate:
             circles.append("CircularState"+str(circle_count))
             
 
-    selected_states = [us_state_abbreviations[state] for state in st.session_state["states"]]
+    # selected_states = [us_state_abbreviations[state] for state in st.session_state["states"]]
+    selected_states = st.session_state["states"]
     if len(selected_states)>=1:
         dfs.append(data[data["state"].isin(selected_states)])
     
