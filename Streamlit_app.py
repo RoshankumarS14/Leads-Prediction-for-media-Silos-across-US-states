@@ -186,7 +186,7 @@ if not _RELEASE:
             pass    
 
 # Read the csv file into a pandas dataframe
-data = pd.read_csv("US_Population.csv")
+data = pd.read_csv("US_Population2.csv")
 
 # US state names and abbreviations
 us_state_abbreviations = {
