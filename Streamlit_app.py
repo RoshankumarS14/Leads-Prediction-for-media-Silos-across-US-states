@@ -186,7 +186,7 @@ if not _RELEASE:
             pass    
 
 # Read the csv file into a pandas dataframe
-data = pd.read_csv("US_Population3.csv")
+data = pd.read_csv("US_Population2.csv")
 
 # US state names and abbreviations
 us_state_abbreviations = {
@@ -271,8 +271,8 @@ if calculate:
             circles.append("CircularState"+str(circle_count))
             
 
-    # selected_states = [us_state_abbreviations[state] for state in st.session_state["states"]]
-    selected_states = st.session_state["states"]
+    selected_states = [us_state_abbreviations[state] for state in st.session_state["states"]]
+    # selected_states = st.session_state["states"]
     if len(selected_states)>=1:
         dfs.append(data[data["state"].isin(selected_states)])
     
