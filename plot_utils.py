@@ -1,6 +1,7 @@
 import plotly.graph_objects as go
 import numpy as np
 from plotly.io import to_image
+from plotly.io._kaleido import to_image as to_image_kaleido
 from openpyxl.drawing.image import Image as XLImage
 from PIL import Image 
 import io
@@ -95,7 +96,8 @@ def calculate_rating(numbers):
     return rating
 
 def get_image(fig,new_width,new_height,crop=None):
-    fig_bytes = to_image(fig, format="png")
+    fig_bytes = to_image_kaleido(fig, format="png", scale=6)
+    # fig_bytes = to_image(fig, format="png")
     img = Image.open(io.BytesIO(fig_bytes))
             
     if crop!=None:
