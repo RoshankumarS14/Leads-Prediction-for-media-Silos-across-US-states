@@ -97,7 +97,7 @@ def calculate_rating(numbers):
 
 def get_image(fig,new_width,new_height,crop=None):
     # fig_bytes = to_image_kaleido(fig, format="svg", scale=10)
-    fig_bytes = to_image(fig, format="svg")
+    fig_bytes = to_image(fig, format="png")
     img = Image.open(io.BytesIO(fig_bytes))
             
     if crop!=None:
