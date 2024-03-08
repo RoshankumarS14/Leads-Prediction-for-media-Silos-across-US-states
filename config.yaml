@@ -1,0 +1,14 @@
+credentials:
+  usernames:
+    trae:
+      email: trae
+      name: Trae Nunnink
+      password: $2b$12$8Ex3lArrmQooHb6XUpgsHOyU7no3MJNyWV2xzuh2GBrJlhkU8Ntz2 # To be replaced with hashed password
+    julia:
+      email: julia
+      name: Julia
+      password: $2b$12$to5LXQSEmlAyCwQgeabaMOCIDMjd9k.fRFAdi7AxsH64GWm28B5tK # To be replaced with hashed password
+cookie:
+  expiry_days: 30
+  key: random_signature_key # Must be string
+  name: random_cookie_name
