@@ -165,20 +165,22 @@ else:
             subtotal_placeholder.text("Sub Total: $"+'{:.2f}'.format((sum([float(i) if i!="" else 0 for i in input_budget]))))
     
     
-    _RELEASE = False
+_RELEASE = False
+
+if not _RELEASE:
+    _component_func = components.declare_component(
+        "my_component",
+        url="https://us-population-map.onrender.com/",
+    )
+else:
+    parent_dir = os.path.dirname(os.path.abspath(__file__))
+    build_dir = os.path.join(parent_dir, "frontend/build")
+    _component_func = components.declare_component("my_component", path=build_dir)
     
-    if not _RELEASE:
-        _component_func = components.declare_component(
-            "my_component",
-            url="https://us-population-map.onrender.com/",
-        )
-    else:
-        parent_dir = os.path.dirname(os.path.abspath(__file__))
-        build_dir = os.path.join(parent_dir, "frontend/build")
-        _component_func = components.declare_component("my_component", path=build_dir)
-    
-    if "selected_states" not in st.session_state:
-        st.session_state["selected_states"]=[]
+if "selected_states" not in st.session_state:
+    st.session_state["selected_states"]=[]
+
+if st.session_state["authentication_status"]:
     
     # URL of the map
     map_url = "https://us-population-map.onrender.com/"
