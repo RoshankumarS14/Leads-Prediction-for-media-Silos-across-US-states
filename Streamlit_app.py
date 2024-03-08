@@ -26,7 +26,18 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
+with open('config.yaml') as file:
+    config = yaml.load(file, Loader=SafeLoader)
 
+authenticator = stauth.Authenticate(
+    config['credentials'],
+    config['cookie']['name'],
+    config['cookie']['key'],
+    config['cookie']['expiry_days'],
+)
+
+st.session_state["name"], st.session_state["athentication_status"], st.session_state["username"] = authenticator.login('Login', 'main')
+    
 if "rerun_flag" not in st.session_state:
     st.session_state["rerun_flag"]=False
 
@@ -45,7 +56,14 @@ if 'company_name' not in st.session_state:
 if 'user_role' not in st.session_state:
     st.session_state.user_role = ''
 
-
+if st.session_state["authentication_status"] == False:
+    st.error('Username/password is incorrect')
+elif st.session_state["authentication_status"] == None:
+    st.warning('Please enter your username and password')
+else:
+    authenticator.logout('Logout', 'sidebar')
+    st.sidebar.write(f'Welcome *{st.session_state["name"]}*')
+    
 col_name,col_name_input,col_role,col_role_input = st.columns([0.5,1.6,0.25,1.7]) 
 col_name.markdown(f"<div style='text-align: center; color: white; padding-top: 32px; font-size:18px;'>Company:</div>", unsafe_allow_html=True)
 name_input_slot = col_name_input.empty()
