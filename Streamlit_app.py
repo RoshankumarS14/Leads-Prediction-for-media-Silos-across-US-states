@@ -98,10 +98,10 @@ else:
         col_input = cols_campaign[j*3 + 2]
         
         # Display the option
-        col_name.markdown(f"<div style='text-align: center; color: white; padding-top: 32px; font-size:18px; margin-bottom:60px;'>{campaigns[j]}</div>", unsafe_allow_html=True)
+        col_name.markdown(f"<div style='text-align: center; color: white; padding-top: 32px; font-size:18px; margin-bottom:20px;'>{campaigns[j]}</div>", unsafe_allow_html=True)
         
         # Display the dollar sign
-        col_dollar_sign.markdown(f"<div style='text-align: right; color: white; padding-top: 30px; font-size: 20px; margin-bottom:60px;'>$</div>", unsafe_allow_html=True)
+        col_dollar_sign.markdown(f"<div style='text-align: right; color: white; padding-top: 30px; font-size: 20px; margin-bottom:20px;'>$</div>", unsafe_allow_html=True)
         
         # Create the text input slot
         text_input_slot = col_input.empty()
