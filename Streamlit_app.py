@@ -108,10 +108,7 @@ else:
         user_input = text_input_slot.text_input('', '', key=f'input_campaign{j}')
         campaigns_values.append(user_input)
 
-    cols_percentage = st.columns([0.7, 0.9, 0.1] * 3) 
-    col_per = cols_percentage[3]
-    col_per_val = cols_percentage[4]
-    col_symbol = cols_percentage[5]
+    col_per,col_per_val,col_symbol = st.columns([1,0.7, 0.9, 0.1,1]) 
     
     # Display the option
     col_per.markdown(f"<div style='text-align: center; color: white; padding-top: 32px; font-size:18px; margin-bottom:60px;'>Global Adjuster</div>", unsafe_allow_html=True)
