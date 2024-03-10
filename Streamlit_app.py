@@ -107,6 +107,21 @@ else:
         text_input_slot = col_input.empty()
         user_input = text_input_slot.text_input('', '', key=f'input_campaign{j}')
         campaigns_values.append(user_input)
+
+    cols_percentage = st.columns([0.7, 0.9, 0.1] * 3) 
+    col_per = cols_percentage[3]
+    col_per_val = cols_percentage[4]
+    col_symbol = cols_percentage[5]
+    
+    # Display the option
+    col_per.markdown(f"<div style='text-align: center; color: white; padding-top: 32px; font-size:18px; margin-bottom:60px;'>Global Adjuster</div>", unsafe_allow_html=True)
+    
+    # Display the dollar sign
+    col_symbol.markdown(f"<div style='text-align: right; color: white; padding-top: 30px; font-size: 20px; margin-bottom:60px;'>%</div>", unsafe_allow_html=True)
+    
+    # Create the text input slot
+    per_input_slot = col_per_val.empty()
+    global_adjuster = per_input_slot.text_input('', '', key="percentage")
     
     role = st.selectbox("Select the job role:",role_adjuster["Role"],4)
     # input_states = st.multiselect("Select the states:",states)
