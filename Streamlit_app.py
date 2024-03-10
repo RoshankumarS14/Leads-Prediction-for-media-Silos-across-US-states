@@ -111,7 +111,7 @@ else:
     _,col_per,col_per_val,col_symbol,_ = st.columns([1,0.7, 0.9, 0.1,1]) 
     
     # Display the option
-    col_per.markdown(f"<div style='text-align: center; color: white; padding-top: 32px; font-size:18px; margin-bottom:60px;'>Global Adjuster</div>", unsafe_allow_html=True)
+    col_per.markdown(f"<div style='text-align: center; color: white; padding-top: 32px; font-size:18px; margin-bottom:60px;'>Global Adjuster:</div>", unsafe_allow_html=True)
     
     # Display the dollar sign
     col_symbol.markdown(f"<div style='text-align: right; color: white; padding-top: 30px; font-size: 20px; margin-bottom:60px;'>%</div>", unsafe_allow_html=True)
@@ -389,7 +389,8 @@ if st.session_state["authentication_status"]:
             leads.append(lead)
         AP_scales = [ap_scale_silos[silo]*lead for silo,lead in zip(input_silos,leads)]
         average_AP_scales = round(sum(AP_scales)/sum(leads),1)
-        leads = [round(i,1) for i in leads]
+        leads_adjuster = 1 if global_adjuster=="" else int(global_adjuster)/100
+        leads = [round(i*leads_adjuster,1) for i in leads]
     
         result = pd.DataFrame({"Silo":input_silos,"Budget":input_budget,"Leads":leads})
         result["Budget"] = result["Budget"].apply(lambda a: "$ " + '{:.2f}'.format(a))
