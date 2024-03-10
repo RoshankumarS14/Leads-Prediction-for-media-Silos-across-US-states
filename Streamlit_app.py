@@ -108,7 +108,7 @@ else:
         user_input = text_input_slot.text_input('', '', key=f'input_campaign{j}')
         campaigns_values.append(user_input)
 
-    _col_per,col_per_val,col_symbol,_ = st.columns([1,0.7, 0.9, 0.1,1]) 
+    _,col_per,col_per_val,col_symbol,_ = st.columns([1,0.7, 0.9, 0.1,1]) 
     
     # Display the option
     col_per.markdown(f"<div style='text-align: center; color: white; padding-top: 32px; font-size:18px; margin-bottom:60px;'>Global Adjuster</div>", unsafe_allow_html=True)
