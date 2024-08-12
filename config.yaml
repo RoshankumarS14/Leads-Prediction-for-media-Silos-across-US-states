@@ -8,6 +8,10 @@ credentials:
       email: julia
       name: Julia
       password: $2b$12$to5LXQSEmlAyCwQgeabaMOCIDMjd9k.fRFAdi7AxsH64GWm28B5tK # To be replaced with hashed password
+    emma:
+      email: emma
+      name: Emma Nunnink
+      password: $2b$12$8n.bYr0lx8aLY2SpZJ0Mcec2HCUsb.uzBtJadGQNpLAjlUqbF9b1i
 cookie:
   expiry_days: 30
   key: random_signature_key # Must be string
