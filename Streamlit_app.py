@@ -180,13 +180,11 @@ else:
 _RELEASE = False
 
 if not _RELEASE:
-    st.text("Entered if")
     _component_func = components.declare_component(
         "my_component",
         url="https://us-population-map.onrender.com/",
     )
 else:
-    st.text("Entered else")
     parent_dir = os.path.dirname(os.path.abspath(__file__))
     build_dir = os.path.join(parent_dir, "frontend/build")
     _component_func = components.declare_component("my_component", path=build_dir)
