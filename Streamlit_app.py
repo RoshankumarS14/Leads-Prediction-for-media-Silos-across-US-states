@@ -17,6 +17,7 @@ from map_utils import get_centre_zoom, create_circle_feature, get_state_name, di
 import streamlit_authenticator as stauth
 import yaml
 from yaml.loader import SafeLoader
+import requests
 
 
 st.set_page_config(
