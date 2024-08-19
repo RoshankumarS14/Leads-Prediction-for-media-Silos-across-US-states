@@ -191,8 +191,8 @@ if not _RELEASE:
             st.write("URL is accessible from this environment.")
         else:
             st.write(f"URL returned a status code: {response.status_code}")
-except requests.ConnectionError:
-    st.write("Failed to connect to the URL.")
+    except requests.ConnectionError:
+        st.write("Failed to connect to the URL.")
 else:
     parent_dir = os.path.dirname(os.path.abspath(__file__))
     build_dir = os.path.join(parent_dir, "frontend/build")
