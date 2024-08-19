@@ -184,6 +184,7 @@ if not _RELEASE:
         "my_component",
         url="https://us-population-map.onrender.com/",
     )
+    result1 = _component_func()
 else:
     parent_dir = os.path.dirname(os.path.abspath(__file__))
     build_dir = os.path.join(parent_dir, "frontend/build")
