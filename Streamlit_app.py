@@ -184,6 +184,15 @@ if not _RELEASE:
         "my_component",
         url="https://us-population-map.onrender.com/",
     )
+    url = "https://us-population-map.onrender.com/"
+    try:
+        response = requests.get(url)
+        if response.status_code == 200:
+            st.write("URL is accessible from this environment.")
+        else:
+            st.write(f"URL returned a status code: {response.status_code}")
+except requests.ConnectionError:
+    st.write("Failed to connect to the URL.")
 else:
     parent_dir = os.path.dirname(os.path.abspath(__file__))
     build_dir = os.path.join(parent_dir, "frontend/build")
