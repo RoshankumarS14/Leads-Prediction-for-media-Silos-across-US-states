@@ -182,7 +182,7 @@ _RELEASE = False
 if not _RELEASE:
     _component_func = components.declare_component(
         "my_component",
-        url="https://us-population-map.onrender.com/",
+        url="http://3.15.197.40:3000/",
     )
 
 else:
